@@ -5,8 +5,9 @@ cd ..\FusionEngine
 start .\start.bat
 
 cd ..
-start .\start-rasa.bat
+call .\venv\Scripts\activate
+cd rasaDemo
+start rasa run --enable-api -m .\models\ --cors “*”
 
-
-cd WebAppAssistantV2
+cd ..\WebAppAssistantV2
 start .\start_web_app.bat
