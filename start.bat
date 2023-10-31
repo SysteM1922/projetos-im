@@ -1,4 +1,4 @@
-
+:: Not working properly
 
 cd mmiframeworkV2
 start .\start.bat
