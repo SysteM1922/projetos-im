@@ -21,7 +21,6 @@ async def message_handler(driver: Driver, message: str):
 async def main():
 
     driver = Driver()
-    driver.reject_cookies()
 
     mmi_cli_out_add = f"wss://{HOST}:8005/IM/USER1/APP"
 

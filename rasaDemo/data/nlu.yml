@@ -71,3 +71,9 @@ nlu:
     - Mudar a cor do [triangulo](shape) para  [preto](color)
     - Por o [circulo](shape) em  [branco](color)
     - Mudar para [azul](color) o [circulo](shape) 
+
+- intent: search_product
+  examples: |
+    - Quero [comprar](action) [uma lata de atum](product)
+    - Quero [comprar](action) [uma lata de salsichas](product)
+    - Quero [comprar](action) [uma lata de feijão](product)

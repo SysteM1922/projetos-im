@@ -11,6 +11,8 @@ class Driver():
         self.page = self.driver.get("https://www.mercadao.pt/store/pingo-doce")
         self.driver.maximize_window()
 
+        self.reject_cookies()
+
     def close(self):
         self.driver.close()
 
