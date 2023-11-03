@@ -1,5 +1,8 @@
 version: "3.1"
 nlu:
+- synonym: carrinho
+  examples: |
+    - carrinho de compras
 - intent: greet
   examples: |
     - Oi Assistente
@@ -72,8 +75,31 @@ nlu:
     - Por o [circulo](shape) em  [branco](color)
     - Mudar para [azul](color) o [circulo](shape) 
 
-- intent: search_product
+- intent: return
   examples: |
-    - Quero [comprar](action) [uma lata de atum](product)
-    - Quero [comprar](action) [uma lata de salsichas](product)
-    - Quero [comprar](action) [uma lata de feijão](product)
+    - Voltar atrás
+    - Voltar
+    - Andar para trás
+    - Página anterior
+    - Anterior
+
+- intent: scroll
+  examples: |
+    - [Subir](action) a página
+    - Andar para [cima](action)
+    - Para [cima](action)
+    - Scroll para [cima](action)
+    - [Cima](action)
+    - [Subir](action)
+    - [Descer](action) a página
+    - Andar para [baixo](action)
+    - Para [baixo](action)
+    - Scroll para [baixo](action)
+    - [Baixo](action)
+    - [Descer](action)
+
+- intent: add_to_cart
+  examples: |
+    - [Adicionar](action) ao [carrinho](place)
+    - [Meter](action) no [carrinho](place)
+    - [Colocar](action) no [carrinho](place)

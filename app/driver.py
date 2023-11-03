@@ -3,15 +3,30 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.chrome.options import Options
 
 class Driver():
 
     def __init__(self):
         self.driver = webdriver.Chrome()
-        self.page = self.driver.get("https://www.mercadao.pt/store/pingo-doce")
+        
+        self.driver.get("https://www.mercadao.pt/store/pingo-doce")
         self.driver.maximize_window()
 
         self.reject_cookies()
+
+    def return_to_previous_page(self):
+        self.driver.back()
+
+    def scroll_down(self):
+        self.driver.execute_script("window.scrollBy(0, 400);")
+
+    def scroll_up(self):
+        self.driver.execute_script("window.scrollBy(0, -400);")
+
+    def add_to_cart(self):
+        add_to_cart_btn = self.driver.find_element(By.CSS_SELECTOR, ".pdo-add-btn")
+        add_to_cart_btn.click()
 
     def close(self):
         self.driver.close()

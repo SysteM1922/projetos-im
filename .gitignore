@@ -163,4 +163,4 @@ cython_debug/
 CAroot.crt
 FusionEngine/
 mmiframeworkV2/
-WebAppAssistantV2/
+rasaDemo/.rasa/cache

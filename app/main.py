@@ -2,27 +2,40 @@ from driver import Driver
 import websockets
 import ssl
 import asyncio
+import xml.etree.ElementTree as ET
 import json
 
-HOST = "localhost"
+HOST = "127.0.0.1:8005"
 
 def process_message(message: str):
     if message == "OK":
         return "OK"
     else:
-        json_message = json.loads(message)
-        print("Command: ", json_message["text"])
-        return json_message
+        json_command = ET.fromstring(message).find(".//command").text
+        command = json.loads(json_command)["nlu"]
+        return json.loads(command)
 
 async def message_handler(driver: Driver, message: str):
     message = process_message(message)
-    print(f"Received message: {message}")
+    print(f"Message: {message}")
+
+    if message == "OK":
+        pass
+    elif message["intent"]["name"] == "return":
+        driver.return_to_previous_page()
+    elif message["intent"]["name"] == "scroll":
+        if message["entities"][0]["value"] == "cima":
+            driver.scroll_up()
+        elif message["entities"][0]["value"] == "baixo":
+            driver.scroll_down()
+    elif message["intent"]["name"] == "add_to_cart":
+        driver.add_to_cart()
 
 async def main():
 
     driver = Driver()
 
-    mmi_cli_out_add = f"wss://{HOST}:8005/IM/USER1/APP"
+    mmi_cli_out_add = f"wss://{HOST}/IM/USER1/APP"
 
     # SSL config
     ssl_context = ssl.SSLContext(protocol=ssl.PROTOCOL_TLS_CLIENT)

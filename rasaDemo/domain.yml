@@ -6,13 +6,14 @@ intents:
 - deny
 - light_switch
 - change_color
-- search_product
+- return
+- scroll
+- add_to_cart
 entities:
 - place
 - switch
 - shape
 - color
-- product
 - action
 slots:
   switch:
@@ -39,18 +40,13 @@ slots:
     mappings:
     - type: from_entity
       entity: color
-  product:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_entity
-      entity: product
   action:
     type: text
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: action
+  
 
 responses:
   utter_greet:
