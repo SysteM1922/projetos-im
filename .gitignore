@@ -164,3 +164,4 @@ CAroot.crt
 FusionEngine/
 mmiframeworkV2/
 rasaDemo/.rasa/cache
+rasaDemo/models
