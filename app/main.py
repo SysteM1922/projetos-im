@@ -21,15 +21,18 @@ async def message_handler(driver: Driver, message: str):
 
     if message == "OK":
         pass
-    elif message["intent"]["name"] == "return":
-        driver.return_to_previous_page()
-    elif message["intent"]["name"] == "scroll":
-        if message["entities"][0]["value"] == "cima":
-            driver.scroll_up()
-        elif message["entities"][0]["value"] == "baixo":
-            driver.scroll_down()
-    elif message["intent"]["name"] == "add_to_cart":
-        driver.add_to_cart()
+    elif message["intent"]["name"]:
+        if message["intent"]["name"] == "return":
+            driver.return_to_previous_page()
+        elif message["intent"]["name"] == "scroll":
+            if message["entities"][0]["value"] == "cima":
+                driver.scroll_up()
+            elif message["entities"][0]["value"] == "baixo":
+                driver.scroll_down()
+        elif message["intent"]["name"] == "add_to_cart":
+            driver.add_to_cart()
+    else:
+        print("Command not found")
 
 async def main():
 

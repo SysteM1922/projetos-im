@@ -220,7 +220,7 @@
                     if (noise >= 0.6) {
                         noiseCount++;
                     }
-                    else if (casa_viva >= 0.4) { // 0.6 original
+                    else if (casa_viva >= 0.6) {
                         casa_vivaCount++;
 
                         if (!isOnKWS) {
@@ -252,7 +252,8 @@
             // then take 1s of data
             sensor.takeSample(500, 16000, () => { }).then(onSampleComplete);
         };
-        InitializeKWS();
+        //InitializeKWS();
+
 
         import { interpolateGreens } from "https://cdn.skypack.dev/d3-scale-chromatic@3"
 
@@ -261,7 +262,6 @@
         recognition.continuous = false;
         recognition.interimResults = true;
         recognition.lang = 'pt-PT';
-
 
 
         var circle = SVG.find('.st0');//.fill('#ccc');    
@@ -278,7 +278,7 @@
             console.error("REC ERROR" + event.error);
             transcriptDiv.innerHTML = firstSent;
             circle.animate(20, 0, 'now').attr({ fill: '#000' });
-            startkws();
+            //startkws();
         };
 
         recognition.onresult = function (event) {
@@ -308,14 +308,16 @@
 
                         sendMMI(final_transcript);
                         circle.animate(20, 0, 'now').attr({ fill: '#000' });
-                        startkws();
+                        //startkws();
+
                     } else {
                         transcriptDiv.innerHTML = "<span style='color:#ff9494'><b>Desculpe nao consegui ententer.</b></span>";
                     }
 
                     resetfunc = setTimeout(function () {
                         transcriptDiv.innerHTML = firstSent;
-                    }, 3000);
+                        recognition.start();
+                    }, 1000);
 
                     speechActive = false;
                 } else {
@@ -334,9 +336,14 @@
             }
         };
 
+        $(".mic").on('click', function () {
+            recognition.start();
+            console.log("start");
+        })
+
 
         var vadActive = false;
-        var speechActive = false;
+        var speechActive = true;
 
         async function main() {
             const myvad = await vad.MicVAD.new({
@@ -371,8 +378,12 @@
                 },
             })
             //myvad.start()
+
+
+
+
         }
-        main()
+        //main()
 
         if ('speechSynthesis' in window) {
             console.log('Your browser <strong>supports</strong> speech synthesis.');
@@ -414,9 +425,6 @@
         var mmiCli_1 = null;
         mmiCli_1 = new MMIClient(null, mmi_fusion + "SPEECHIN");
 
-
-
-
         function sendMMI(final_transcript) {
 
             var obj = new Object();
@@ -431,12 +439,8 @@
                         setValue(JSON.stringify(result))));
 
             });
-
-            /*
-              
-                      */
         }
-        // sendMMI("mudar para azul o circulo");
+        // sendMMI("mudar para verde o circulo");
 
 
         var mmiCli_Out_add = "wss://" + host + ":8005/IM/USER1/";
@@ -497,7 +501,7 @@
         /////////////////////////////////////////
 
 
-        // sendMMI("Ligar as luzes")
+        //sendMMI("Ligar as luzes")
     </script>
 
 
