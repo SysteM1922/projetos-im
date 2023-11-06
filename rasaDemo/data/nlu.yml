@@ -1,8 +1,6 @@
 version: "3.1"
 nlu:
-- synonym: carrinho
-  examples: |
-    - carrinho de compras
+
 - intent: greet
   examples: |
     - Oi Assistente
@@ -100,6 +98,25 @@ nlu:
 
 - intent: add_to_cart
   examples: |
-    - [Adicionar](action) ao [carrinho](place)
-    - [Meter](action) no [carrinho](place)
-    - [Colocar](action) no [carrinho](place)
+    - Adicionar ao carrinho
+    - Meter no carrinho
+    - Colocar no carrinho
+    - Adicionar [3](number) ao carrinho
+    - Meter [2](number) no carrinho
+    - Colocar [1](number) no carrinho
+
+- regex: number
+  examples: |
+    - \d{1,3}
+
+- synonym: carrinho
+  examples: |
+    - carrinho de compras
+
+- intent: search_product
+  examples: |
+    - Quero um melão
+    - Procurar por açucar amarelo
+    - Vamos comprar pão
+    - Estou à procura de chocolate
+    - Quero comprar peixe

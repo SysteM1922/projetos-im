@@ -3,7 +3,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
+import time
 
 class Driver():
 
@@ -27,6 +28,15 @@ class Driver():
     def add_to_cart(self):
         add_to_cart_btn = self.driver.find_element(By.CSS_SELECTOR, ".pdo-add-btn")
         add_to_cart_btn.click()
+
+    def search_product(self, product):
+        try:
+            self.driver.find_element(By.CSS_SELECTOR, ".pdo-navbar-search .clear > .pdo-inline-block > .ng-star-inserted").click()
+        except:
+            pass
+        self.driver.find_element(By.ID, "search").send_keys(product)
+        time.sleep(1)
+        self.driver.find_element(By.ID, "search").send_keys(Keys.ENTER)
 
     def close(self):
         self.driver.close()
