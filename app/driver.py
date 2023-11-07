@@ -25,9 +25,11 @@ class Driver():
     def scroll_up(self):
         self.driver.execute_script("window.scrollBy(0, -400);")
 
-    def add_to_cart(self):
+    def add_to_cart(self, qty=1):
         add_to_cart_btn = self.driver.find_element(By.CSS_SELECTOR, ".pdo-add-btn")
         add_to_cart_btn.click()
+
+        
 
     def search_product(self, product):
         try:

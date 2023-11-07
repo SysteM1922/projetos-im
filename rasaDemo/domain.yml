@@ -4,56 +4,23 @@ intents:
 - goodbye
 - affirm
 - deny
-- light_switch
-- change_color
 - return
 - scroll
 - add_to_cart
 - search_product
+- quit
+- insert_number
 entities:
-- place
-- switch
-- shape
-- color
 - action
 - product
+- number
 slots:
-  switch:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_entity
-      entity: switch
-  place:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_entity
-      entity: place
-  shape:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_entity
-      entity: shape
-  color:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_entity
-      entity: color
   action:
     type: text
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: action
-  product:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_entity
-      entity: product
   number:
     type: text
     influence_conversation: true
