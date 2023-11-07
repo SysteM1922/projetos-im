@@ -13,11 +13,13 @@ intents:
 - see_cart
 - filter_items
 - checkout
+- change_store
 entities:
 - action
 - product
 - number
 - filter
+- store
 slots:
   action:
     type: text
@@ -39,6 +41,17 @@ slots:
     - Relevância 
     - Preço mais alto
     - Preço mais baixo
+    mappings:
+    - type: custom
+  store:
+    type: categorical
+    values:
+    - Pingo  Doce
+    - Pingo Doce Madeira
+    - Sol Mar
+    - Mercadão Solidário
+    - Saúde
+    - Medicamentos
     mappings:
     - type: custom
 

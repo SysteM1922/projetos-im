@@ -15,6 +15,7 @@ numeros = {"um": 1, "uma": 1, "dois": 2, "duas": 2, "três": 3, "tres": 3,
 filters = {"Relevância": 1, "promoções": 2, "Promoção": 2, "nomes": 3, "Nome": 3, "Preço baixo": 4, "Preço crescente": 4,
            "Preço mais baixo": 4, "Preço decrescente": 5, "Preço alto": 5, "Preço mais alto": 5 }
 
+stores = {"Pingo Doce": 1, "Madeira": 2, "Pingo Doce Madeira": 2, "Sol Mar": 3,"solmar": 3,"Pingo Doce Solmar": 3, "Pingo Doce Sol Mar": 3, "Pingo Doce Açores": 3, "Mercadão Solidário": 4, "Saúde": 5, "Medicamentos": 6 }
 
 not_quit = True
 
@@ -80,6 +81,14 @@ async def message_handler(driver: Driver, message: str):
         
         elif intent == "checkout":
             driver.checkout()
+
+        elif intent == "change_store":
+            if len(message["entities"]) > 0:
+                store = message["entities"][0]["value"]
+                if store.lower() in [x.lower() for x in stores.keys()]:
+                    driver.change_store(stores[store])
+            else:
+                driver.change_store("")
 
         elif intent == "quit":
             global not_quit

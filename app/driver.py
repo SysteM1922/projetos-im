@@ -65,6 +65,22 @@ class Driver():
 
         checkout_btn.click()   
 
+    def change_store(self, store: int):
+        if store == "":
+            self.driver.get("https://www.mercadao.pt")
+        else:
+            if store == 1:
+                self.driver.get("https://www.mercadao.pt/store/pingo-doce")
+            elif store == 2:
+                self.driver.get("https://www.mercadao.pt/store/pingo-doce-madeira")
+            elif store == 3:
+                self.driver.get("https://www.mercadao.pt/store/solmar-acores")
+            elif store == 4:
+                self.driver.get("https://www.mercadao.pt/store/mercadao-solidario")
+            elif store == 5:
+                self.driver.get("https://www.mercadao.pt/store/bem-estar")
+            elif store == 6:
+                self.driver.get("https://www.mercadao.pt/store/medicamentos")
 
 
     def close(self):

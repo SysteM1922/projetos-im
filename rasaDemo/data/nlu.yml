@@ -144,3 +144,19 @@ nlu:
     - Finalizar compra
     - Comprar os produtos
     - Fazer checkout
+
+- intent: change_store
+  examples: |
+    - Mudar de loja
+    - Quero mudar de loja
+    - Quero mudar de loja para [Sol Mar](store)
+    - Quero mudar de loja para [Pingo Doce Sol Mar](store)
+    - Ir para o [Pingo Doce](store)
+    - Ir para a [Madeira](store)
+    - Ir para o [Pingo Doce Solmar](store)
+    - Ir para o [solmar](store)
+    - Mudar para o [Pingo Doce Madeira](store)
+    - Mudar para o [Mercadão Solidário](store)
+    - Mudar para a [Saúde](store)
+    - Mudar para [Medicamentos](store)
+    - Mudar para o [Pingo Doce Açores](store)
