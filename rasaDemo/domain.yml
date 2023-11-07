@@ -10,6 +10,7 @@ intents:
 - scroll
 - add_to_cart
 - search_product
+- see_cart
 entities:
 - place
 - switch
@@ -60,6 +61,7 @@ slots:
     mappings:
     - type: from_entity
       entity: number
+
 
 responses:
   utter_greet:

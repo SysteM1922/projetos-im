@@ -120,3 +120,11 @@ nlu:
     - Vamos comprar pão
     - Estou à procura de chocolate
     - Quero comprar peixe
+
+- intent: see_cart
+  examples: |
+    - Ver o carrinho
+    - Ver o carrinho de compras
+    - Ver o que está no carrinho
+    - Abrir o carrinho
+    - Quero ver o que está no carrinho

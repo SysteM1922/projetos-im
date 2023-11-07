@@ -42,6 +42,8 @@ async def message_handler(driver: Driver, message: str):
                     driver.search_product(" ".join(words[idx+1:]))
                     return
             driver.search_product(message["text"])
+        elif message["intent"]["name"] == "see_cart":
+            driver.see_cart()
                 
 
     else:
