@@ -11,10 +11,12 @@ intents:
 - quit
 - insert_number
 - see_cart
+- filter_items
 entities:
 - action
 - product
 - number
+- filter
 slots:
   action:
     type: text
@@ -28,6 +30,16 @@ slots:
     mappings:
     - type: from_entity
       entity: number
+  filter:
+    type: categorical
+    values:
+    - Nome
+    - Promoção
+    - Relevância 
+    - Preço mais alto
+    - Preço mais baixo
+    mappings:
+    - type: custom
 
 
 responses:

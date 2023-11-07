@@ -126,3 +126,15 @@ nlu:
     - Ver o que está no carrinho
     - Abrir o carrinho
     - Quero ver o que está no carrinho
+
+- intent: filter_items
+  examples: |
+    - Filtrar por [Relevância](filter)
+    - Ordenar por [Preço mais baixo](filter)
+    - Ordena por [Preço mais alto](filter)
+    - Filtra por [Nome](filter)
+    - Filtra por [Promoção](filter)
+    - Ver os produtos em [Promoção](filter)
+    - Ver produtos com [Preço crescente](filter)
+    - Ver produtos com [Preço decrescente](filter)
+    - Ordenar

@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 import time
 
@@ -29,8 +29,6 @@ class Driver():
         add_to_cart_btn = self.driver.find_element(By.CSS_SELECTOR, ".pdo-add-btn")
         add_to_cart_btn.click()
 
-        
-
     def search_product(self, product):
         try:
             self.driver.find_element(By.CSS_SELECTOR, ".pdo-navbar-search .clear > .pdo-inline-block > .ng-star-inserted").click()
@@ -45,6 +43,19 @@ class Driver():
         check_cart_btn.click()
 
 
+    def filter_items(self, filter):
+        if filter == "":
+            self.driver.find_element(By.CSS_SELECTOR, ".filter-label > .pdo-block").click()
+        else: 
+            try:
+                self.driver.find_element(By.CSS_SELECTOR, ".dropdown-item:nth-child(2) .ui-radiobutton-label")
+            except NoSuchElementException:
+                print("No Such Element Exception")
+                self.driver.find_element(By.CSS_SELECTOR, ".filter-label > .pdo-block").click()
+
+            self.driver.find_element(By.CSS_SELECTOR, ".dropdown-item:nth-child({}) .ui-radiobutton-label".format(filter)).click()
+            
+            
     def close(self):
         self.driver.close()
 
