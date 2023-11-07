@@ -62,6 +62,9 @@ async def message_handler(driver: Driver, message: str):
         elif intent == "quit":
             global not_quit
             not_quit = False
+        elif message["intent"]["name"] == "see_cart":
+            driver.see_cart()
+                
 
     else:
         print("Command not found")

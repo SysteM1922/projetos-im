@@ -10,6 +10,7 @@ intents:
 - search_product
 - quit
 - insert_number
+- see_cart
 entities:
 - action
 - product
@@ -27,6 +28,7 @@ slots:
     mappings:
     - type: from_entity
       entity: number
+
 
 responses:
   utter_greet:

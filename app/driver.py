@@ -40,6 +40,11 @@ class Driver():
         time.sleep(1)
         self.driver.find_element(By.ID, "search").send_keys(Keys.ENTER)
 
+    def see_cart(self):
+        check_cart_btn = self.driver.find_element(By.CSS_SELECTOR, "pdo-nav-cart > .pdo-button-cart")
+        check_cart_btn.click()
+
+
     def close(self):
         self.driver.close()
 
