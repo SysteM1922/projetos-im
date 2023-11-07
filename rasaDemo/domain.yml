@@ -12,6 +12,7 @@ intents:
 - insert_number
 - see_cart
 - filter_items
+- checkout
 entities:
 - action
 - product

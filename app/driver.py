@@ -1,3 +1,4 @@
+from colorclass import is_enabled
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -55,7 +56,17 @@ class Driver():
 
             self.driver.find_element(By.CSS_SELECTOR, ".dropdown-item:nth-child({}) .ui-radiobutton-label".format(filter)).click()
             
-            
+    def checkout(self):
+        checkout_btn = self.driver.find_element(By.CSS_SELECTOR, ".-cta")
+
+        if not checkout_btn.is_enabled():
+            print("Checkout button is not enabled")
+            return
+
+        checkout_btn.click()   
+
+
+
     def close(self):
         self.driver.close()
 

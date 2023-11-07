@@ -77,6 +77,9 @@ async def message_handler(driver: Driver, message: str):
                     driver.filter_items(filters[filter])
             else:
                 driver.filter_items("")
+        
+        elif intent == "checkout":
+            driver.checkout()
 
         elif intent == "quit":
             global not_quit

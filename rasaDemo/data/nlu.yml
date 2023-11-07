@@ -138,3 +138,9 @@ nlu:
     - Ver produtos com [Preço crescente](filter)
     - Ver produtos com [Preço decrescente](filter)
     - Ordenar
+
+- intent: checkout
+  examples: |
+    - Finalizar compra
+    - Comprar os produtos
+    - Fazer checkout
