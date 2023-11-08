@@ -1,4 +1,3 @@
-from colorclass import is_enabled
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -42,7 +41,8 @@ class Driver():
                     for _ in range(qty-1):
                         add_one_btn.click()
             except:
-                pass
+                return False
+        return True
 
     def search_product(self, product):
         try:
@@ -53,60 +53,80 @@ class Driver():
         self.driver.find_element(By.ID, "search").send_keys(product)
         time.sleep(1)
         self.driver.find_element(By.ID, "search").send_keys(Keys.ENTER)
+        return True
 
     def open_cart(self):
         try:
             self.driver.find_element(By.CSS_SELECTOR, "pdo-nav-cart > .pdo-button-cart").click()
         except:
-            pass
+            return False
+        return True
             
     def close_cart(self):
         try:
             self.driver.find_element(By.CSS_SELECTOR, ".cart-back-icon > .ng-star-inserted").click()
         except:
-            pass
+            return False
+        return True
 
     def open_zip_code(self):
         try:
             self.driver.find_element(By.CSS_SELECTOR, ".\_3db0T2TkzhslzgcJWQemKW .\_1c3YrH459HH65NxQxwOE90:nth-child(3) .pdo-svg").click()
         except:
-            pass
+            return False
+        return True
 
-    def insert_number(self, number):
+    def insert_number(self, numbers):
         if self.driver.find_element(By.XPATH, "//p[contains(.,'Insira o código-postal e comece a comprar!')]"):
-            self.insert_zip_code(number)
+            self.insert_zip_code(numbers)
         else:
-            pass
+            return False
+        return True
 
     def clear_text(self):
         if self.driver.find_element(By.XPATH, "//p[contains(.,'Insira o código-postal e comece a comprar!')]"):
             self.clear_zip_code()
         else:
-            pass
+            return False
+        return True
 
-    def insert_zip_code(self, zip_code):
+    def insert_zip_code(self, numbers):
         try:
-            self.driver.find_element(By.ID, "postalCode").send_keys(zip_code)
+            for number in numbers:
+                self.driver.find_element(By.ID, "postalCode").send_keys(number)
         except:
-            pass
+            return False
+        return True
 
     def clear_zip_code(self):
         try:
             self.driver.find_element(By.ID, "postalCode").clear()
         except:
-            pass
+            return False
+        return True
 
     def confirm_zip_code(self):
         try:
             self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
         except:
-            pass
+            return False
+        return True
 
     def close_zip_code(self):
         try:
-            self.driver.find_element(By.CSS_SELECTOR, ".pdo-modal-backdrop").click()
+            self.driver.find_element(By.CSS_SELECTOR, ".pdo-dismiss").click()
         except:
-            pass
+            try:
+                if self.driver.find_element(By.XPATH, "//p[contains(.,'Ao mudar de morada o seu carrinho pode sofrer alterações!')]"):
+                    print("Carrinho não limpo")
+                    self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
+                    time.sleep(1)
+                    self.driver.find_element(By.CSS_SELECTOR, ".pdo-dismiss").click()
+                else:
+                    return False
+            except:
+                return False
+        return True
 
     def affirm(self):
         if self.driver.find_element(By.XPATH, "//p[contains(.,'Insira o código-postal e comece a comprar!')]"):
@@ -114,32 +134,34 @@ class Driver():
         elif self.driver.find_element(By.XPATH, "//p[contains(.,'Ao mudar de morada o seu carrinho pode sofrer alterações!')]"):
             self.confirm_zip_code()
         else:
-            pass
+            return False
+        return True
+
     def see_cart(self):
-        check_cart_btn = self.driver.find_element(By.CSS_SELECTOR, "pdo-nav-cart > .pdo-button-cart")
-        check_cart_btn.click()
+        try:
+            self.driver.find_element(By.CSS_SELECTOR, "pdo-nav-cart > .pdo-button-cart").click()
+        except:
+            return False
+        return True
 
-
-    def filter_items(self, filter):
+    def filter_items(self, filter): # não me parece estar 100% bem feita
         if filter == "":
             self.driver.find_element(By.CSS_SELECTOR, ".filter-label > .pdo-block").click()
         else: 
             try:
                 self.driver.find_element(By.CSS_SELECTOR, ".dropdown-item:nth-child(2) .ui-radiobutton-label")
-            except NoSuchElementException:
-                print("No Such Element Exception")
+            except:
                 self.driver.find_element(By.CSS_SELECTOR, ".filter-label > .pdo-block").click()
 
             self.driver.find_element(By.CSS_SELECTOR, ".dropdown-item:nth-child({}) .ui-radiobutton-label".format(filter)).click()
+        return True
             
     def checkout(self):
-        checkout_btn = self.driver.find_element(By.CSS_SELECTOR, ".-cta")
-
-        if not checkout_btn.is_enabled():
-            print("Checkout button is not enabled")
-            return
-
-        checkout_btn.click()   
+        try:
+            self.driver.find_element(By.CSS_SELECTOR, ".-cta").click()
+        except:
+            return False
+        return True  
 
     def change_store(self, store: int):
         if store == "":
@@ -157,10 +179,14 @@ class Driver():
                 self.driver.get("https://www.mercadao.pt/store/bem-estar")
             elif store == 6:
                 self.driver.get("https://www.mercadao.pt/store/medicamentos")
+            else:
+                return False
+        return True
 
-
-    def close(self):
-        self.driver.close()
+    def quit(self):
+        if self.close_cart() or self.close_zip_code():
+            return False
+        return True
 
     def reject_cookies(self):
         try:

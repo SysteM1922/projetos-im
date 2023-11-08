@@ -17,10 +17,13 @@ intents:
 - checkout
 - change_store
 - clear_text
+- change_zip_code
 
 entities:
 - action
 - number
+- store
+
 slots:
   action:
     type: text
@@ -34,6 +37,12 @@ slots:
     mappings:
     - type: from_entity
       entity: number
+  store:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: store
 
 responses:
   utter_greet:

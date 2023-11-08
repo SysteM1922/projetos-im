@@ -4,6 +4,7 @@ import ssl
 import asyncio
 import xml.etree.ElementTree as ET
 import json
+import nltk
 
 HOST = "127.0.0.1:8005"
 
@@ -12,13 +13,12 @@ stop_words = set(["procurar", "pesquisar", "produto", "por", "um",
 numeros = {"um": 1, "uma": 1, "dois": 2, "duas": 2, "três": 3, "tres": 3,
            "quatro": 4, "cinco": 5, "seis": 6, "sete": 7, "oito": 8, "nove": 9}
 
-filters = {"Relevância": 1, "promoções": 2, "Promoção": 2, "nomes": 3, "Nome": 3, "Preço baixo": 4, "Preço crescente": 4,
-           "Preço mais baixo": 4, "Preço decrescente": 5, "Preço alto": 5, "Preço mais alto": 5 }
+filters = {"relevância": 1, "promoções": 2, "promoção": 2, "nomes": 3, "nome": 3, "preço baixo": 4, "preço crescente": 4,
+           "preço mais baixo": 4, "preço decrescente": 5, "preço alto": 5, "preço mais alto": 5 }
 
-stores = {"Pingo Doce": 1, "Madeira": 2, "Pingo Doce Madeira": 2, "Sol Mar": 3,"solmar": 3,"Pingo Doce Solmar": 3, "Pingo Doce Sol Mar": 3, "Pingo Doce Açores": 3, "Mercadão Solidário": 4, "Saúde": 5, "Medicamentos": 6 }
+stores = {"pingo Doce": 1, "madeira": 2, "pingo doce madeira": 2, "sol mar": 3,"solmar": 3,"pingo doce solmar": 3, "pingo doce sol mar": 3, "pingo doce açores": 3, "açores": 3, "mercadão solidário": 4, "saúde": 5, "medicamentos": 6 }
 
 not_quit = True
-
 
 def process_message(message: str):
     if message == "OK":
@@ -27,7 +27,6 @@ def process_message(message: str):
         json_command = ET.fromstring(message).find(".//command").text
         command = json.loads(json_command)["nlu"]
         return json.loads(command)
-
 
 async def message_handler(driver: Driver, message: str):
     message = process_message(message)
@@ -47,8 +46,9 @@ async def message_handler(driver: Driver, message: str):
 
         elif intent == "insert_number":
             if len(message["entities"]) > 0:
-                number = message["entities"][0]["value"]
-                driver.insert_number(number)
+                numbers = [message["entities"][i]["value"].lower() for i in range(len(message["entities"]))]
+                numbers = [numeros[x] if x in numeros else x for x in numbers]
+                driver.insert_number(numbers)
 
         elif intent == "clear_text":
             driver.clear_text()
@@ -63,7 +63,7 @@ async def message_handler(driver: Driver, message: str):
 
         elif intent == "add_to_cart":
             if len(message["entities"]) > 0:
-                qty_init = message["entities"][0]["value"]
+                qty_init = message["entities"][0]["value"].lower()
                 if qty_init in numeros:
                     qty = numeros[qty_init]
                 else:
@@ -91,7 +91,7 @@ async def message_handler(driver: Driver, message: str):
         elif intent == "filter_items":
             if len(message["entities"]) > 0:
                 filter = message["entities"][0]["value"]
-                if filter.lower() in [x.lower() for x in filters.keys()]:
+                if filter.lower() in filters:
                     driver.filter_items(filters[filter])
             else:
                 driver.filter_items("")
@@ -102,15 +102,18 @@ async def message_handler(driver: Driver, message: str):
         elif intent == "change_store":
             if len(message["entities"]) > 0:
                 store = message["entities"][0]["value"]
-                if store.lower() in [x.lower() for x in stores.keys()]:
+                if store.lower() in stores:
                     driver.change_store(stores[store])
             else:
                 driver.change_store("")
 
+        elif intent == "change_zip_code":
+            driver.open_zip_code()
+
         elif intent == "filter_items":
             if len(message["entities"]) > 0:
                 filter = message["entities"][0]["value"]
-                if filter.lower() in [x.lower() for x in filters.keys()]:
+                if filter.lower() in filters:
                     driver.filter_items(filters[filter])
             else:
                 driver.filter_items("")
@@ -127,8 +130,9 @@ async def message_handler(driver: Driver, message: str):
                 driver.change_store("")
 
         elif intent == "quit":
-            global not_quit
-            not_quit = False
+            if driver.quit():
+                global not_quit
+                not_quit = False
 
     else:
         print("Command not found")
@@ -156,6 +160,7 @@ async def main():
                 print(e)
 
     driver.close()
+    exit(0)
 
 if __name__ == '__main__':
     asyncio.get_event_loop().run_until_complete(main())

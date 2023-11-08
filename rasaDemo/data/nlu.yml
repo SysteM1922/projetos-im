@@ -84,7 +84,7 @@ nlu:
 
 - regex: number
   examples: |
-    - \d{1,3}
+    - \d{1,7}
 
 - lookup: number
   examples: |
@@ -123,6 +123,8 @@ nlu:
     - [três](number)
     - [dois](number)
     - [uma](number)
+    - [60](number)
+    - [104](number)
 
 - intent: open_cart
   examples: |
@@ -190,3 +192,23 @@ nlu:
     - Mudar para a [Saúde](store)
     - Mudar para [Medicamentos](store)
     - Mudar para o [Pingo Doce Açores](store)
+
+- intent: change_zip_code
+  examples: |
+    - Mudar código postal
+    - Mudar morada
+    - Alterar código postal
+    - Alterar morada
+    - Editar código postal
+    - Editar morada
+    - Quero mudar o código postal
+    - Quero mudar a morada
+    - Quero alterar o código postal
+    - Quero alterar a morada
+    - Quero editar o código postal
+    - Quero editar a morada
+    - Abrir código postal
+    - Abrir morada
+    - Código postal
+    - Morada
+

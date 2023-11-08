@@ -1,3 +1,4 @@
 rasa
 selenium
 websockets
+nltk
