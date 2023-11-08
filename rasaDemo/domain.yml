@@ -10,11 +10,15 @@ intents:
 - search_product
 - quit
 - insert_number
-- see_cart
+- open_cart
+- close_cart
+- clear_cart
+- clear_text
+
 entities:
 - action
-- product
 - number
+
 slots:
   action:
     type: text
@@ -28,7 +32,6 @@ slots:
     mappings:
     - type: from_entity
       entity: number
-
 
 responses:
   utter_greet:
@@ -50,6 +53,7 @@ responses:
   - text: Qual é a diferença entre um padre e um Mercedes? O padre reza e o Mercedes Benz
   utter_add_to_cart:
   - text: O produto foi adicionado ao carrinho.
+
 actions:
 - action_greet_user
 - utter_goodbye

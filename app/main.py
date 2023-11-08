@@ -33,12 +33,24 @@ async def message_handler(driver: Driver, message: str):
         if intent == "return":
             driver.return_to_previous_page()
 
-        elif intent == "scroll":
-            if message["entities"][0]["value"] == "cima":
-                driver.scroll_up()
+        elif intent == "affirm":
+            driver.affirm()
 
-            elif message["entities"][0]["value"] == "baixo":
-                driver.scroll_down()
+        elif intent == "insert_number":
+            if len(message["entities"]) > 0:
+                number = message["entities"][0]["value"]
+                driver.insert_number(number)
+
+        elif intent == "clear_text":
+            driver.clear_text()
+
+        elif intent == "scroll":
+            if len(message["entities"]) > 0:
+                if message["entities"][0]["value"] == "cima":
+                    driver.scroll_up()
+
+                elif message["entities"][0]["value"] == "baixo":
+                    driver.scroll_down()
 
         elif intent == "add_to_cart":
             if len(message["entities"]) > 0:
@@ -48,6 +60,8 @@ async def message_handler(driver: Driver, message: str):
                 else:
                     qty = int(qty_init)
                 driver.add_to_cart(qty)
+            else:
+                driver.add_to_cart()
 
         elif intent == "search_product":
             words = message["text"].lower().split()
@@ -59,12 +73,15 @@ async def message_handler(driver: Driver, message: str):
 
             driver.search_product(message["text"])
 
-        elif intent == "see_cart":
-            driver.see_cart()
+        elif intent == "open_cart":
+            driver.open_cart()
+
+        elif intent == "close_cart":
+            driver.close_cart()
 
         elif intent == "quit":
             global not_quit
-            not_quit = False                
+            not_quit = False              
 
     else:
         print("Command not found")
@@ -80,19 +97,15 @@ async def main():
     ssl_context.check_hostname = False
     ssl_context.verify_mode = ssl.CERT_NONE
 
-    try:
-        async with websockets.connect(mmi_cli_out_add, ssl=ssl_context) as websocket:
-            print("Connected to WebSocket")
+    async with websockets.connect(mmi_cli_out_add, ssl=ssl_context) as websocket:
+        print("Connected to WebSocket")
 
-            while not_quit:
-                try:
-                    message = await websocket.recv()
-                    await message_handler(driver, message)
-                except:
-                    pass
-
-    except Exception as e:
-        print(e)
+        while not_quit:
+            try:
+                message = await websocket.recv()
+                await message_handler(driver, message)
+            except Exception as e:
+                print(e)
 
     driver.close()
 

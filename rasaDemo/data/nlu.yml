@@ -29,7 +29,8 @@ nlu:
     - Correto
     - Okay
     - Ok
-    - sim
+    - Confirmar
+    - Afirmativo
 
 - intent: deny
   examples: |
@@ -39,6 +40,8 @@ nlu:
     - Acho que não
     - Não gosto assim
     - Nem por isso
+    - Negar
+    - Negativo
 
 - intent: return
   examples: |
@@ -72,6 +75,8 @@ nlu:
     - Meter [2](number) no carrinho
     - Colocar [um](number) no carrinho
     - Adicionar [três](number) ao carrinho
+    - Adicionar
+    - Comprar
 
 - synonym: carrinho
   examples: |
@@ -119,10 +124,35 @@ nlu:
     - [dois](number)
     - [uma](number)
 
-- intent: see_cart
+- intent: open_cart
   examples: |
     - Ver o carrinho
     - Ver o carrinho de compras
     - Ver o que está no carrinho
     - Abrir o carrinho
     - Quero ver o que está no carrinho
+    - Carrinho
+
+- intent:  close_cart
+  examples: |
+    - Fechar o carrinho
+    - Fechar o carrinho de compras
+    - Fechar carrinho
+    - Sair do carrinho
+    - Sair do carrinho de compras
+
+- intent: clear_cart
+  examples: |
+    - Limpar o carrinho
+    - Limpar o carrinho de compras
+    - Limpar carrinho
+    - Apagar o carrinho
+    - Apagar o carrinho de compras
+    - Apagar carrinho
+
+- intent: clear_text
+  examples: |
+    - Limpar
+    - Apagar
+    - Limpar texto
+    - Apagar texto

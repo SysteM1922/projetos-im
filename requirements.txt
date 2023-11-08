@@ -1,2 +1,3 @@
 rasa
 selenium
+websockets
