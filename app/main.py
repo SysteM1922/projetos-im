@@ -7,10 +7,18 @@ import json
 
 HOST = "127.0.0.1:8005"
 
-stop_words = set(["procurar", "pesquisar", "produto", "por", "um", "uma" "comprar", "procura", "pesquisa", "compra", "para"])
-numeros = {"um":1, "uma":1, "dois":2, "duas":2, "três":3, "tres":3, "quatro":4, "cinco":5, "seis":6, "sete":7, "oito":8, "nove":9}
+stop_words = set(["procurar", "pesquisar", "produto", "por", "um",
+                 "uma" "comprar", "procura", "pesquisa", "compra", "para"])
+numeros = {"um": 1, "uma": 1, "dois": 2, "duas": 2, "três": 3, "tres": 3,
+           "quatro": 4, "cinco": 5, "seis": 6, "sete": 7, "oito": 8, "nove": 9}
+
+filters = {"Relevância": 1, "promoções": 2, "Promoção": 2, "nomes": 3, "Nome": 3, "Preço baixo": 4, "Preço crescente": 4,
+           "Preço mais baixo": 4, "Preço decrescente": 5, "Preço alto": 5, "Preço mais alto": 5 }
+
+stores = {"Pingo Doce": 1, "Madeira": 2, "Pingo Doce Madeira": 2, "Sol Mar": 3,"solmar": 3,"Pingo Doce Solmar": 3, "Pingo Doce Sol Mar": 3, "Pingo Doce Açores": 3, "Mercadão Solidário": 4, "Saúde": 5, "Medicamentos": 6 }
 
 not_quit = True
+
 
 def process_message(message: str):
     if message == "OK":
@@ -19,6 +27,7 @@ def process_message(message: str):
         json_command = ET.fromstring(message).find(".//command").text
         command = json.loads(json_command)["nlu"]
         return json.loads(command)
+
 
 async def message_handler(driver: Driver, message: str):
     message = process_message(message)
@@ -79,12 +88,51 @@ async def message_handler(driver: Driver, message: str):
         elif intent == "close_cart":
             driver.close_cart()
 
+        elif intent == "filter_items":
+            if len(message["entities"]) > 0:
+                filter = message["entities"][0]["value"]
+                if filter.lower() in [x.lower() for x in filters.keys()]:
+                    driver.filter_items(filters[filter])
+            else:
+                driver.filter_items("")
+        
+        elif intent == "checkout":
+            driver.checkout()
+
+        elif intent == "change_store":
+            if len(message["entities"]) > 0:
+                store = message["entities"][0]["value"]
+                if store.lower() in [x.lower() for x in stores.keys()]:
+                    driver.change_store(stores[store])
+            else:
+                driver.change_store("")
+
+        elif intent == "filter_items":
+            if len(message["entities"]) > 0:
+                filter = message["entities"][0]["value"]
+                if filter.lower() in [x.lower() for x in filters.keys()]:
+                    driver.filter_items(filters[filter])
+            else:
+                driver.filter_items("")
+        
+        elif intent == "checkout":
+            driver.checkout()
+
+        elif intent == "change_store":
+            if len(message["entities"]) > 0:
+                store = message["entities"][0]["value"]
+                if store.lower() in [x.lower() for x in stores.keys()]:
+                    driver.change_store(stores[store])
+            else:
+                driver.change_store("")
+
         elif intent == "quit":
             global not_quit
-            not_quit = False              
+            not_quit = False
 
     else:
         print("Command not found")
+
 
 async def main():
 

@@ -156,3 +156,37 @@ nlu:
     - Apagar
     - Limpar texto
     - Apagar texto
+
+- intent: filter_items
+  examples: |
+    - Filtrar por [Relevância](filter)
+    - Ordenar por [Preço mais baixo](filter)
+    - Ordena por [Preço mais alto](filter)
+    - Filtra por [Nome](filter)
+    - Filtra por [Promoção](filter)
+    - Ver os produtos em [Promoção](filter)
+    - Ver produtos com [Preço crescente](filter)
+    - Ver produtos com [Preço decrescente](filter)
+    - Ordenar
+
+- intent: checkout
+  examples: |
+    - Finalizar compra
+    - Comprar os produtos
+    - Fazer checkout
+
+- intent: change_store
+  examples: |
+    - Mudar de loja
+    - Quero mudar de loja
+    - Quero mudar de loja para [Sol Mar](store)
+    - Quero mudar de loja para [Pingo Doce Sol Mar](store)
+    - Ir para o [Pingo Doce](store)
+    - Ir para a [Madeira](store)
+    - Ir para o [Pingo Doce Solmar](store)
+    - Ir para o [solmar](store)
+    - Mudar para o [Pingo Doce Madeira](store)
+    - Mudar para o [Mercadão Solidário](store)
+    - Mudar para a [Saúde](store)
+    - Mudar para [Medicamentos](store)
+    - Mudar para o [Pingo Doce Açores](store)

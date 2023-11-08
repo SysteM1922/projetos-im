@@ -1,8 +1,9 @@
+from colorclass import is_enabled
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 import time
 
@@ -114,6 +115,52 @@ class Driver():
             self.confirm_zip_code()
         else:
             pass
+    def see_cart(self):
+        check_cart_btn = self.driver.find_element(By.CSS_SELECTOR, "pdo-nav-cart > .pdo-button-cart")
+        check_cart_btn.click()
+
+
+    def filter_items(self, filter):
+        if filter == "":
+            self.driver.find_element(By.CSS_SELECTOR, ".filter-label > .pdo-block").click()
+        else: 
+            try:
+                self.driver.find_element(By.CSS_SELECTOR, ".dropdown-item:nth-child(2) .ui-radiobutton-label")
+            except NoSuchElementException:
+                print("No Such Element Exception")
+                self.driver.find_element(By.CSS_SELECTOR, ".filter-label > .pdo-block").click()
+
+            self.driver.find_element(By.CSS_SELECTOR, ".dropdown-item:nth-child({}) .ui-radiobutton-label".format(filter)).click()
+            
+    def checkout(self):
+        checkout_btn = self.driver.find_element(By.CSS_SELECTOR, ".-cta")
+
+        if not checkout_btn.is_enabled():
+            print("Checkout button is not enabled")
+            return
+
+        checkout_btn.click()   
+
+    def change_store(self, store: int):
+        if store == "":
+            self.driver.get("https://www.mercadao.pt")
+        else:
+            if store == 1:
+                self.driver.get("https://www.mercadao.pt/store/pingo-doce")
+            elif store == 2:
+                self.driver.get("https://www.mercadao.pt/store/pingo-doce-madeira")
+            elif store == 3:
+                self.driver.get("https://www.mercadao.pt/store/solmar-acores")
+            elif store == 4:
+                self.driver.get("https://www.mercadao.pt/store/mercadao-solidario")
+            elif store == 5:
+                self.driver.get("https://www.mercadao.pt/store/bem-estar")
+            elif store == 6:
+                self.driver.get("https://www.mercadao.pt/store/medicamentos")
+
+
+    def close(self):
+        self.driver.close()
 
     def reject_cookies(self):
         try:

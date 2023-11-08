@@ -5,7 +5,8 @@ Set-Location -Path ..\FusionEngine
 Start-Process -FilePath .\start.bat
 
 Set-Location -Path ..
-.\venv\Scripts\activate
+# .\venv\Scripts\activate
+conda activate rasa-env
 Set-Location -Path .\rasaDemo
 Start-Process -FilePath rasa -ArgumentList 'run', '--enable-api', '-m', '.\models\', '--cors', '*'
 
