@@ -2,4 +2,4 @@ rasa
 selenium
 websockets
 nltk
-requests
+httpx

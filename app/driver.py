@@ -5,16 +5,15 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 import time
-from tts import TTS
-import os
 
-OUTPUT = os.environ.get("OUTPUT")
+def do_nothing(message):
+    pass
 
 class Driver():
 
-    def __init__(self):
+    def __init__(self, speak_func=do_nothing):
         self.driver = webdriver.Chrome()
-        self.sendToVoice = TTS(FusionAdd=f'http://{OUTPUT}:8000/IM/USER1/APPSPEECH').sendToVoice
+        self.sendToVoice = speak_func
 
         self.driver.get("https://www.mercadao.pt/store/pingo-doce")
         self.driver.maximize_window()
@@ -33,6 +32,9 @@ class Driver():
         self.driver.execute_script("window.scrollBy(0, -400);")
 
     def add_to_cart(self, qty=1):
+        if qty > 30:
+            self.sendToVoice("Não é possível adicionar mais de 30 unidades de um produto ao carrinho.")
+            return False
         try:
             add_one_btn = self.driver.find_element(By.CSS_SELECTOR, ".-add > .pdo-inline-block > .ng-star-inserted")
             for _ in range(qty):

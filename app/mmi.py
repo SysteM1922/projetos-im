@@ -1,6 +1,7 @@
 import websockets
-import requests
 from xml.dom.minidom import parseString
+import ssl
+import httpx
 
 class LiteEvent():
 
@@ -87,7 +88,6 @@ class LifeCycleEvent():
         mmi.setAttributeNS(self.namespaceMMI, "mmi:version", "1.0")
         mmi.setAttribute("xmlns:mmi", self.namespaceMMI)
         self._doc.documentElement.appendChild(mmi)
-        print(str(self))
         return mmi
 
     #FILL PARAMS IN LifeCycleEvent
@@ -150,13 +150,17 @@ class MMIClientSocket():
         return self.onMessage.expose()
     
     async def sendToIM(self, lce: LifeCycleEvent):
-        print(lce)
         if self.socket is not None:
             await self.socket.send(str(lce))
             print("MESSAGE SENT TO " + self.address)
 
     async def openSocket(self):
-        self.socket = await websockets.connect(self.address, ssl=False) # ssl = False para ignorar certificado (menos seguro)
+
+        ssl_context = ssl.SSLContext(protocol=ssl.PROTOCOL_TLS_CLIENT)
+        ssl_context.check_hostname = False
+        ssl_context.verify_mode = ssl.CERT_NONE
+
+        self.socket = await websockets.connect(self.address, ssl=ssl_context) # ssl = ssl_context para ignorar certificado (menos seguro)
         async for message in self.socket:
             self.onMessage.trigger(message)
         self.onOpen.trigger(None)
@@ -187,15 +191,15 @@ class MMIClient():
         return self.onResult.expose()
     
     def sendToIM(self, lce: LifeCycleEvent):
-        print(lce)
-        response = requests.post(self.FusionAdd, data=str(lce), verify=False) # verify = False para ignorar certificado (menos seguro)
+        # print(str(lce))
+        response = httpx.post(self.FusionAdd, data=str(lce), verify=False) # verify = False para ignorar certificado (menos seguro)
         if response.status_code == 200:
             #print('send response: ' + response.text)
             self.onResponse.trigger(response.text)
             print("POST SENT TO " + self.FusionAdd)
 
     def startPoolIM(self):
-        response = requests.get(self.IMAdd, verify=False) # verify = False para ignorar certificado (menos seguro)
+        response = httpx.get(self.IMAdd, verify=False) # verify = False para ignorar certificado (menos seguro)
         if response.status_code == 200 and response.text != "":
             self.onArrive.trigger(response.text)
             self.startPoolIM()
