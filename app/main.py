@@ -1,12 +1,12 @@
 from driver import Driver
 import websockets
-import ssl
 import asyncio
 import xml.etree.ElementTree as ET
 import json
 import nltk
+import os
 
-HOST = "127.0.0.1:8005"
+HOST = os.environ.get("HOST")
 
 stop_words = set(["procurar", "pesquisar", "produto", "por", "um",
                  "uma" "comprar", "procura", "pesquisa", "compra", "para", "quero", "querer"])
@@ -91,6 +91,9 @@ async def message_handler(driver: Driver, message: str):
 
         elif intent == "clear_cart":
             driver.clear_cart()
+
+        elif intent == "remove_from_cart":
+            driver.remove_from_cart()
         
         elif intent == "checkout":
             driver.checkout()
@@ -129,12 +132,7 @@ async def main():
 
     mmi_cli_out_add = f"wss://{HOST}/IM/USER1/APP"
 
-    # SSL config
-    ssl_context = ssl.SSLContext(protocol=ssl.PROTOCOL_TLS_CLIENT)
-    ssl_context.check_hostname = False
-    ssl_context.verify_mode = ssl.CERT_NONE
-
-    async with websockets.connect(mmi_cli_out_add, ssl=ssl_context) as websocket:
+    async with websockets.connect(mmi_cli_out_add, ssl=False) as websocket: # ssl = False para ignorar certificado (menos seguro)
         print("Connected to WebSocket")
 
         while not_quit:

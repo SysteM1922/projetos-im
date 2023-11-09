@@ -222,4 +222,23 @@ nlu:
     - Código postal
     - Morada
 
+- intent: remove_from_cart
+  examples: |
+    - Remover [melão](product) do carrinho
+    - Remover [açucar amarelo](product)
+    - Tirar [pão](product) do carrinho
+    - Tirar [chocolate](product)
+    - Apagar [peixe](product) do carrinho
+    - Apagar [carne de porco](product)
+    - Eliminar [legumes](product) do carrinho
+    - Eliminar [oregãos](product)
+    - Remover produto [pizza](product) do carrinho
+    - Remover produto [salada](product)
+    - Tirar produto [gomas](product) do carrinho
+    - Tirar produto [farinha](product)
+    - Apagar produto [frango](product) do carrinho
+    - Apagar produto [donuts](product)
+    - Eliminar produto [gelatina](product) do carrinho
+    - Eliminar produto [faca](product)
+
 

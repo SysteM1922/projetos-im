@@ -2,15 +2,20 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 import time
+from tts import TTS
+import os
+
+OUTPUT = os.environ.get("OUTPUT")
 
 class Driver():
 
     def __init__(self):
         self.driver = webdriver.Chrome()
-        
+        self.sendToVoice = TTS(FusionAdd=f'http://{OUTPUT}:8000/IM/USER1/APPSPEECH').sendToVoice
+
         self.driver.get("https://www.mercadao.pt/store/pingo-doce")
         self.driver.maximize_window()
 
@@ -68,6 +73,19 @@ class Driver():
         except:
             return False
         return True
+    
+    def clear_cart(self):
+        if self.open_cart():
+            time.sleep(1)
+        while True:
+            try:
+                self.driver.find_element(By.CSS_SELECTOR, ".pdo-icon-delete").click()
+            except:
+                break
+        return self.close_cart()
+    
+    def remove_from_cart(self):
+        items = self.driver.find_elements(By.CSS_SELECTOR, ".pdo-icon-delete")
 
     def open_zip_code(self):
         try:
@@ -147,16 +165,6 @@ class Driver():
         except:
             return False
         return True
-    
-    def clear_cart(self):
-        if self.open_cart():
-            time.sleep(1)
-        while True:
-            try:
-                self.driver.find_element(By.CSS_SELECTOR, ".pdo-icon-delete").click()
-            except:
-                break
-        return self.close_cart()
 
     def filter_items(self, filter: int = None):
         if filter:

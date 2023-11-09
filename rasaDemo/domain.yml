@@ -16,12 +16,17 @@ intents:
 - change_store
 - clear_text
 - change_zip_code
+- remove_from_cart
+- open_product
+- open_category
+- filter_products
 
 entities:
 - action
 - number
 - store
 - order
+- product
 
 slots:
   action:
