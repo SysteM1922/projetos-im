@@ -113,9 +113,9 @@ async def message_handler(driver: Driver, message: str):
 
         elif intent == "order_items":
             if len(message["entities"]) > 0:
-                filter = message["entities"][0]["value"].lower()
-                if filter in filters:
-                    driver.order_items(filters[filter])
+                order_opt = message["entities"][0]["value"].lower()
+                if order_opt in filters:
+                    driver.order_items(filters[order_opt])
             else:
                 driver.order_items()
 

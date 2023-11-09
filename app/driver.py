@@ -184,12 +184,12 @@ class Driver():
             return False
         return True
 
-    def order_items(self, filter: int = None):
-        if filter:
+    def order_items(self, order_opt: int = None):
+        if order_opt:
             if self.driver.find_elements(By.CSS_SELECTOR, ".filter-label > .pdo-block"):
                 if not self.driver.find_elements(By.CSS_SELECTOR, ".dropdown-item:nth-child(1) .ui-radiobutton-label"):
                     self.driver.find_element(By.CSS_SELECTOR, ".filter-label > .pdo-block").click()
-                self.driver.find_element(By.CSS_SELECTOR, f".dropdown-item:nth-child({filter}) .ui-radiobutton-label").click()
+                self.driver.find_element(By.CSS_SELECTOR, f".dropdown-item:nth-child({order_opt}) .ui-radiobutton-label").click()
             else:
                 self.sendToVoice("Não é possível ordernar nesta página.")
                 return False
