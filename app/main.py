@@ -87,14 +87,6 @@ async def message_handler(driver: Driver, message: str):
 
         elif intent == "close_cart":
             driver.close_cart()
-
-        elif intent == "filter_items":
-            if len(message["entities"]) > 0:
-                filter = message["entities"][0]["value"]
-                if filter.lower() in filters:
-                    driver.filter_items(filters[filter])
-            else:
-                driver.filter_items("")
         
         elif intent == "checkout":
             driver.checkout()
@@ -117,17 +109,6 @@ async def message_handler(driver: Driver, message: str):
                     driver.filter_items(filters[filter])
             else:
                 driver.filter_items("")
-        
-        elif intent == "checkout":
-            driver.checkout()
-
-        elif intent == "change_store":
-            if len(message["entities"]) > 0:
-                store = message["entities"][0]["value"]
-                if store.lower() in [x.lower() for x in stores.keys()]:
-                    driver.change_store(stores[store])
-            else:
-                driver.change_store("")
 
         elif intent == "quit":
             if driver.quit():
