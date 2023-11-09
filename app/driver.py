@@ -39,6 +39,7 @@ class Driver():
             add_one_btn = self.driver.find_element(By.CSS_SELECTOR, ".-add > .pdo-inline-block > .ng-star-inserted")
             for _ in range(qty):
                 add_one_btn.click()
+            self.sendToVoice(f"Produtos adicionados ao carrinho com sucesso.")
         except:
             try:
                 self.driver.find_element(By.CSS_SELECTOR, ".pdo-add-btn").click()
@@ -47,6 +48,9 @@ class Driver():
                     add_one_btn = self.driver.find_element(By.CSS_SELECTOR, ".-add > .pdo-inline-block > .ng-star-inserted")
                     for _ in range(qty-1):
                         add_one_btn.click()
+                    self.sendToVoice(f"Produtos adicionados ao carrinho com sucesso.")
+                else:
+                    self.sendToVoice(f"Produto adicionado ao carrinho com sucesso.")
             except:
                 return False
         return True
@@ -82,6 +86,7 @@ class Driver():
         while True:
             try:
                 self.driver.find_element(By.CSS_SELECTOR, ".pdo-icon-delete").click()
+                self.sendToVoice("Carrinho limpo com sucesso.")
             except:
                 break
         return self.close_cart()
@@ -92,6 +97,7 @@ class Driver():
     def open_zip_code(self):
         try:
             self.driver.find_element(By.CSS_SELECTOR, ".\_3db0T2TkzhslzgcJWQemKW .\_1c3YrH459HH65NxQxwOE90:nth-child(3) .pdo-svg").click()
+            self.sendToVoice("Insira o seu código postal.")
         except:
             return False
         return True
@@ -131,6 +137,7 @@ class Driver():
     def confirm_zip_code(self):
         try:
             self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
+            self.sendToVoice("Código postal atualizado com sucesso.")
         except:
             return False
         return True
@@ -186,6 +193,7 @@ class Driver():
     def checkout(self):
         try:
             self.driver.find_element(By.CSS_SELECTOR, ".-cta").click()
+            self.sendToVoice("A iniciar checkout.")
         except:
             return False
         return True  
@@ -195,24 +203,32 @@ class Driver():
             print(store)
             if store == 1:
                 self.driver.get("https://www.mercadao.pt/store/pingo-doce")
+                self.sendToVoice("Loja alterada para Pingo Doce.")
             elif store == 2:
                 self.driver.get("https://www.mercadao.pt/store/pingo-doce-madeira")
+                self.sendToVoice("Loja alterada para Pingo Doce Madeira.")
             elif store == 3:
                 self.driver.get("https://www.mercadao.pt/store/solmar-acores")
+                self.sendToVoice("Loja alterada para Solmar Açores.")
             elif store == 4:
                 self.driver.get("https://www.mercadao.pt/store/mercadao-solidario")
+                self.sendToVoice("Loja alterada para Mercadão Solidário.")
             elif store == 5:
                 self.driver.get("https://www.mercadao.pt/store/bem-estar")
+                self.sendToVoice("Loja alterada para Saúde.")
             elif store == 6:
                 self.driver.get("https://www.mercadao.pt/store/medicamentos")
+                self.sendToVoice("Loja alterada para Medicamentos.")
             else:
                 return False
         else:
             self.driver.get("https://www.mercadao.pt")
+            self.sendToVoice("Por favor escolha uma loja.")
         return True
 
     def quit(self):
         if self.close_cart() or self.close_zip_code():
+            self.sendToVoice("A sair do Mercadão.")
             return False
         return True
 
