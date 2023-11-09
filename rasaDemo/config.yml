@@ -29,6 +29,7 @@ pipeline:
 - name: RegexEntityExtractor
   case_sensitive: False
   use_lookup_tables: True
+  regex_features: False
 
 # Configuration for Rasa Core.
 # https://rasa.com/docs/rasa/core/policies/

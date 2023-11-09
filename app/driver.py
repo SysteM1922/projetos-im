@@ -20,6 +20,8 @@ class Driver():
 
         self.reject_cookies()
 
+        self.sendToVoice("Bem-vindo ao Mercadão")
+        time.sleep(2)
         self.open_zip_code()
 
     def return_to_previous_page(self):
@@ -52,6 +54,7 @@ class Driver():
                 else:
                     self.sendToVoice(f"Produto adicionado ao carrinho com sucesso.")
             except:
+                self.sendToVoice("Não é possível adicionar o produto que deseja nesta página.")
                 return False
         return True
 
@@ -70,6 +73,7 @@ class Driver():
         try:
             self.driver.find_element(By.CSS_SELECTOR, "pdo-nav-cart > .pdo-button-cart").click()
         except:
+            self.sendToVoice("Não é possível abrir o carrinho aqui.")
             return False
         return True
             
@@ -77,6 +81,7 @@ class Driver():
         try:
             self.driver.find_element(By.CSS_SELECTOR, ".cart-back-icon > .ng-star-inserted").click()
         except:
+            self.sendToVoice("O carrinho já está fechado.")
             return False
         return True
     
@@ -86,9 +91,9 @@ class Driver():
         while True:
             try:
                 self.driver.find_element(By.CSS_SELECTOR, ".pdo-icon-delete").click()
-                self.sendToVoice("Carrinho limpo com sucesso.")
             except:
                 break
+        self.sendToVoice("Carrinho limpo com sucesso.")
         return self.close_cart()
     
     def remove_from_cart(self):
@@ -97,8 +102,9 @@ class Driver():
     def open_zip_code(self):
         try:
             self.driver.find_element(By.CSS_SELECTOR, ".\_3db0T2TkzhslzgcJWQemKW .\_1c3YrH459HH65NxQxwOE90:nth-child(3) .pdo-svg").click()
-            self.sendToVoice("Insira o seu código postal.")
+            self.sendToVoice("Por favor insira o seu código postal.")
         except:
+            self.sendToVoice("Não é possível alterar o código postal nesta página.")
             return False
         return True
 
@@ -106,6 +112,7 @@ class Driver():
         if self.driver.find_elements(By.XPATH, "//p[contains(.,'Insira o código-postal e comece a comprar!')]"):
             self.insert_zip_code(numbers)
         else:
+            self.sendToVoice("Esta página não permite inserir números.")
             return False
         return True
 
@@ -139,6 +146,7 @@ class Driver():
             self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
             self.sendToVoice("Código postal atualizado com sucesso.")
         except:
+            self.sendToVoice("Não existe código postal por confirmar.")
             return False
         return True
 
@@ -172,29 +180,37 @@ class Driver():
         try:
             self.driver.find_element(By.CSS_SELECTOR, "pdo-nav-cart > .pdo-button-cart").click()
         except:
+            self.sendToVoice("Não é possível abrir o carrinho aqui.")
             return False
         return True
 
-    def filter_items(self, filter: int = None):
+    def order_items(self, filter: int = None):
         if filter:
             if self.driver.find_elements(By.CSS_SELECTOR, ".filter-label > .pdo-block"):
                 if not self.driver.find_elements(By.CSS_SELECTOR, ".dropdown-item:nth-child(1) .ui-radiobutton-label"):
                     self.driver.find_element(By.CSS_SELECTOR, ".filter-label > .pdo-block").click()
                 self.driver.find_element(By.CSS_SELECTOR, f".dropdown-item:nth-child({filter}) .ui-radiobutton-label").click()
             else:
+                self.sendToVoice("Não é possível ordernar nesta página.")
                 return False
         else:
             try:
                 self.driver.find_element(By.CSS_SELECTOR, ".filter-label > .pdo-block").click()
             except:
+                self.sendToVoice("Não é possível ordernar nesta página.")
                 return False
         return True
             
     def checkout(self):
-        try:
-            self.driver.find_element(By.CSS_SELECTOR, ".-cta").click()
-            self.sendToVoice("A iniciar checkout.")
-        except:
+        if self.driver.find_elements(By.CSS_SELECTOR, ".-cta"):
+            try:
+                self.driver.find_elements(By.CSS_SELECTOR, ".-cta").click()
+                self.sendToVoice("A proceder para o pagamento.")
+            except:
+                self.sendToVoice("O mínimo de compra para efetuar o checkout é de 60€.")
+                return False
+        else:
+            self.sendToVoice("Não é possível efetuar checkout nesta página.")
             return False
         return True  
 

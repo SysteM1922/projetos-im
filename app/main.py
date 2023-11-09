@@ -49,7 +49,7 @@ async def message_handler(driver: Driver, message: str):
 
         elif intent == "insert_number":
             if len(message["entities"]) > 0:
-                numbers = [message["entities"][i]["value"].lower() for i in range(len(message["entities"]))]
+                numbers = [message["entities"][i]["value"].lower() for i in range(len(message["entities"])) if message["entities"][i]["extractor"] == "DIETClassifier"]
                 numbers = [numeros[x] if x in numeros else x for x in numbers]
                 driver.insert_number(numbers)
 
@@ -111,13 +111,13 @@ async def message_handler(driver: Driver, message: str):
         elif intent == "change_zip_code":
             driver.open_zip_code()
 
-        elif intent == "filter_items":
+        elif intent == "order_items":
             if len(message["entities"]) > 0:
                 filter = message["entities"][0]["value"].lower()
                 if filter in filters:
-                    driver.filter_items(filters[filter])
+                    driver.order_items(filters[filter])
             else:
-                driver.filter_items()
+                driver.order_items()
 
         elif intent == "quit":
             if driver.quit():
