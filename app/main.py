@@ -3,15 +3,19 @@ import websockets
 import asyncio
 import xml.etree.ElementTree as ET
 import json
-import nltk
+import difflib
 import ssl
 from tts import TTS
+import re
+from unidecode import unidecode
 
 HOST = "127.0.0.1:8005"
 OUTPUT = "127.0.0.1:8000"
 
-stop_words = set(["procurar", "pesquisar", "produto", "por", "um",
-                 "uma" "comprar", "procura", "pesquisa", "compra", "para", "quero", "querer"])
+stop_words = ["procurar", "pesquisar", "produto", "por", "um", "uma" "comprar",
+              "procura", "pesquisa", "compra", "para", "quero", "querer"]
+
+remove_words = ["remover", "retirar", "tirar", "apagar", "eliminar", "produto", "do", "carrinho", "de", "compras"]
 
 numeros = {"um": 1, "uma": 1, "dois": 2, "duas": 2, "três": 3, "tres": 3,
            "quatro": 4, "cinco": 5, "seis": 6, "sete": 7, "oito": 8, "nove": 9}
@@ -19,7 +23,7 @@ numeros = {"um": 1, "uma": 1, "dois": 2, "duas": 2, "três": 3, "tres": 3,
 filters = {"relevância": 1, "promoções": 2, "promoção": 2, "nomes": 3, "nome": 3, "preço baixo": 4, "preço crescente": 4,
            "preço mais baixo": 4, "preço decrescente": 5, "preço alto": 5, "preço mais alto": 5 }
 
-stores = {"pingo Doce": 1, "madeira": 2, "pingo doce madeira": 2, "sol mar": 3,"solmar": 3,"pingo doce solmar": 3, "pingo doce sol mar": 3, "pingo doce açores": 3, "açores": 3, "mercadão solidário": 4, "saúde": 5, "medicamentos": 6 }
+stores = {"pingo Doce": 1, "pingo doce madeira": 2, "pingo doce solmar açores": 3, "mercadão solidário": 4, "saúde": 5, "medicamentos": 6 }
 
 not_quit = True
 
@@ -41,7 +45,11 @@ async def message_handler(driver: Driver, message: str):
     elif message["intent"]["name"]:
         intent = message["intent"]["name"]
 
-        if intent == "return":
+        if message["intent"]["confidence"] < 0.5:
+            driver.sendToVoice("Não percebi o que disse, pode repetir?")
+            return
+
+        elif intent == "return":
             driver.return_to_previous_page()
 
         elif intent == "affirm":
@@ -95,7 +103,25 @@ async def message_handler(driver: Driver, message: str):
             driver.clear_cart()
 
         elif intent == "remove_from_cart":
-            driver.remove_from_cart()
+
+            if driver.is_cart_open():
+
+                product = message["text"].lower().split()
+                for word in remove_words:
+                    if difflib.get_close_matches(word, product, n=1, cutoff=0.8):
+                        product.remove(word)
+                product = " ".join(product)
+
+                products_list = driver.get_cart_products()
+                products_list = [[re.sub(r'[^a-zA-Z0-9\s]', '', unidecode(x[0])).strip(), x[1]] for x in products_list]
+                
+                sim = difflib.get_close_matches(unidecode(product), [x[0] for x in products_list], n=1, cutoff=0.1)[0]
+                if sim:
+                    driver.remove_from_cart(products_list[[x[0] for x in products_list].index(sim)][1], sim)
+                else:
+                    driver.sendToVoice("Não percebi o nome do produto, pode repetir?")
+            else:
+                driver.sendToVoice("É necessário abrir o carrinho para efetuar esta operação")
         
         elif intent == "checkout":
             driver.checkout()
@@ -103,8 +129,11 @@ async def message_handler(driver: Driver, message: str):
         elif intent == "change_store":
             if len(message["entities"]) > 0:
                 store = message["entities"][0]["value"].lower()
-                if store in stores:
+                store = difflib.get_close_matches(store, stores.keys(), n=1, cutoff=0.4)[0]
+                if store:
                     driver.change_store(stores[store])
+                else:
+                    driver.sendToVoice("Não percebi o nome da loja, pode repetir?")
             else:
                 driver.change_store()
 
@@ -125,6 +154,7 @@ async def message_handler(driver: Driver, message: str):
                 not_quit = False
 
     else:
+        driver.sendToVoice("Não percebi o que disse, pode repetir?")
         print("Command not found")
 
 

@@ -76,6 +76,11 @@ class Driver():
             self.sendToVoice("Não é possível abrir o carrinho aqui.")
             return False
         return True
+
+    def is_cart_open(self):
+        if self.driver.find_element(By.XPATH, "//a[contains(text(),'Continuar a comprar')]").is_displayed:
+            return True
+        return False
             
     def close_cart(self):
         try:
@@ -96,8 +101,22 @@ class Driver():
         self.sendToVoice("Carrinho limpo com sucesso.")
         return self.close_cart()
     
-    def remove_from_cart(self):
-        items = self.driver.find_elements(By.CSS_SELECTOR, ".pdo-icon-delete")
+    def remove_from_cart(self, button, name):
+        try:
+            button.click()
+            self.sendToVoice(f"{name} removido do carrinho com sucesso.")
+        except:
+            self.sendToVoice(f"Não é possível remover {name} do carrinho.")
+            return False
+        return True
+
+    def get_cart_products(self):
+        items = []
+        for item in self.driver.find_elements(By.TAG_NAME, "pdo-cart-summary-item"):
+            if item.find_element(By.CSS_SELECTOR, ".summary-item-name").text not in ["", "Saco de Plástico Reciclado 85%"]:
+                items.append([item.find_element(By.CSS_SELECTOR, ".summary-item-name").text.lower(), item.find_element(By.CSS_SELECTOR, ".item-remove-btn")])
+        
+        return items
 
     def open_zip_code(self):
         try:
@@ -216,7 +235,6 @@ class Driver():
 
     def change_store(self, store: int = None):
         if store:
-            print(store)
             if store == 1:
                 self.driver.get("https://www.mercadao.pt/store/pingo-doce")
                 self.sendToVoice("Loja alterada para Pingo Doce.")

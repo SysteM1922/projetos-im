@@ -1,5 +1,5 @@
 rasa
 selenium
 websockets
-nltk
 httpx
+unidecode
