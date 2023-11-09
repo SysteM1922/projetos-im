@@ -77,17 +77,20 @@ class Driver():
         return True
 
     def insert_number(self, numbers):
-        if self.driver.find_element(By.XPATH, "//p[contains(.,'Insira o código-postal e comece a comprar!')]"):
+        if self.driver.find_elements(By.XPATH, "//p[contains(.,'Insira o código-postal e comece a comprar!')]"):
             self.insert_zip_code(numbers)
         else:
             return False
         return True
 
     def clear_text(self):
-        if self.driver.find_element(By.XPATH, "//p[contains(.,'Insira o código-postal e comece a comprar!')]"):
+        if self.driver.find_elements(By.XPATH, "//p[contains(.,'Insira o código-postal e comece a comprar!')]"):
             self.clear_zip_code()
         else:
-            return False
+            try:
+                self.driver.find_element(By.ID, "search").clear()
+            except:
+                return False
         return True
 
     def insert_zip_code(self, numbers):
@@ -118,7 +121,6 @@ class Driver():
         except:
             try:
                 if self.driver.find_element(By.XPATH, "//p[contains(.,'Ao mudar de morada o seu carrinho pode sofrer alterações!')]"):
-                    print("Carrinho não limpo")
                     self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
                     time.sleep(1)
                     self.driver.find_element(By.CSS_SELECTOR, ".pdo-dismiss").click()
@@ -129,31 +131,46 @@ class Driver():
         return True
 
     def affirm(self):
-        if self.driver.find_element(By.XPATH, "//p[contains(.,'Insira o código-postal e comece a comprar!')]"):
+        if self.driver.find_elements(By.XPATH, "//p[contains(.,'Insira o código-postal e comece a comprar!')]"):
             self.confirm_zip_code()
-        elif self.driver.find_element(By.XPATH, "//p[contains(.,'Ao mudar de morada o seu carrinho pode sofrer alterações!')]"):
+        elif self.driver.find_elements(By.XPATH, "//p[contains(.,'Ao mudar de morada o seu carrinho pode sofrer alterações!')]"):
+            self.confirm_zip_code()
+        elif self.driver.find_elements(By.XPATH, "//p[contains(.,'A marca actual não existe para entrega nesta localização!')]"):
             self.confirm_zip_code()
         else:
             return False
         return True
 
-    def see_cart(self):
+    def open_cart(self):
         try:
             self.driver.find_element(By.CSS_SELECTOR, "pdo-nav-cart > .pdo-button-cart").click()
         except:
             return False
         return True
-
-    def filter_items(self, filter): # não me parece estar 100% bem feita
-        if filter == "":
-            self.driver.find_element(By.CSS_SELECTOR, ".filter-label > .pdo-block").click()
-        else: 
+    
+    def clear_cart(self):
+        if self.open_cart():
+            time.sleep(1)
+        while True:
             try:
-                self.driver.find_element(By.CSS_SELECTOR, ".dropdown-item:nth-child(2) .ui-radiobutton-label")
+                self.driver.find_element(By.CSS_SELECTOR, ".pdo-icon-delete").click()
             except:
-                self.driver.find_element(By.CSS_SELECTOR, ".filter-label > .pdo-block").click()
+                break
+        return self.close_cart()
 
-            self.driver.find_element(By.CSS_SELECTOR, ".dropdown-item:nth-child({}) .ui-radiobutton-label".format(filter)).click()
+    def filter_items(self, filter: int = None):
+        if filter:
+            if self.driver.find_elements(By.CSS_SELECTOR, ".filter-label > .pdo-block"):
+                if not self.driver.find_elements(By.CSS_SELECTOR, ".dropdown-item:nth-child(1) .ui-radiobutton-label"):
+                    self.driver.find_element(By.CSS_SELECTOR, ".filter-label > .pdo-block").click()
+                self.driver.find_element(By.CSS_SELECTOR, f".dropdown-item:nth-child({filter}) .ui-radiobutton-label").click()
+            else:
+                return False
+        else:
+            try:
+                self.driver.find_element(By.CSS_SELECTOR, ".filter-label > .pdo-block").click()
+            except:
+                return False
         return True
             
     def checkout(self):
@@ -163,10 +180,9 @@ class Driver():
             return False
         return True  
 
-    def change_store(self, store: int):
-        if store == "":
-            self.driver.get("https://www.mercadao.pt")
-        else:
+    def change_store(self, store: int = None):
+        if store:
+            print(store)
             if store == 1:
                 self.driver.get("https://www.mercadao.pt/store/pingo-doce")
             elif store == 2:
@@ -181,6 +197,8 @@ class Driver():
                 self.driver.get("https://www.mercadao.pt/store/medicamentos")
             else:
                 return False
+        else:
+            self.driver.get("https://www.mercadao.pt")
         return True
 
     def quit(self):

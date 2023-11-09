@@ -9,7 +9,8 @@ import nltk
 HOST = "127.0.0.1:8005"
 
 stop_words = set(["procurar", "pesquisar", "produto", "por", "um",
-                 "uma" "comprar", "procura", "pesquisa", "compra", "para"])
+                 "uma" "comprar", "procura", "pesquisa", "compra", "para", "quero", "querer"])
+
 numeros = {"um": 1, "uma": 1, "dois": 2, "duas": 2, "três": 3, "tres": 3,
            "quatro": 4, "cinco": 5, "seis": 6, "sete": 7, "oito": 8, "nove": 9}
 
@@ -87,28 +88,31 @@ async def message_handler(driver: Driver, message: str):
 
         elif intent == "close_cart":
             driver.close_cart()
+
+        elif intent == "clear_cart":
+            driver.clear_cart()
         
         elif intent == "checkout":
             driver.checkout()
 
         elif intent == "change_store":
             if len(message["entities"]) > 0:
-                store = message["entities"][0]["value"]
-                if store.lower() in stores:
+                store = message["entities"][0]["value"].lower()
+                if store in stores:
                     driver.change_store(stores[store])
             else:
-                driver.change_store("")
+                driver.change_store()
 
         elif intent == "change_zip_code":
             driver.open_zip_code()
 
         elif intent == "filter_items":
             if len(message["entities"]) > 0:
-                filter = message["entities"][0]["value"]
-                if filter.lower() in filters:
+                filter = message["entities"][0]["value"].lower()
+                if filter in filters:
                     driver.filter_items(filters[filter])
             else:
-                driver.filter_items("")
+                driver.filter_items()
 
         elif intent == "quit":
             if driver.quit():
@@ -138,7 +142,7 @@ async def main():
                 message = await websocket.recv()
                 await message_handler(driver, message)
             except Exception as e:
-                print(e)
+                print("Exception:",e)
 
     driver.close()
     exit(0)

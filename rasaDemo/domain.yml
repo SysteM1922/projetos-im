@@ -1,7 +1,5 @@
 version: '3.1'
 intents:
-- greet
-- goodbye
 - affirm
 - deny
 - return
@@ -13,7 +11,7 @@ intents:
 - open_cart
 - close_cart
 - clear_cart
-- filter_items
+- order_items
 - checkout
 - change_store
 - clear_text
@@ -23,6 +21,7 @@ entities:
 - action
 - number
 - store
+- order
 
 slots:
   action:

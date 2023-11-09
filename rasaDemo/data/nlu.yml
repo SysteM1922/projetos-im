@@ -1,26 +1,6 @@
 version: "3.1"
 nlu:
 
-- intent: greet
-  examples: |
-    - Oi Assistente
-    - Bom dia, Assistente
-    - Boa tarde, Assistente
-    - Boa noite, Assistente
-    - Olá Assistente
-    - Olá assistente
-    - olá
-    - olá assistente
-    - olá assistnete
-    
-- intent: goodbye
-  examples: |
-    - Xau, Assistente
-    - Adeus, Assistente
-    - Até logo, Assistente
-    - Boa noite, Assistente
-    - Até amanhã, Assistente
-
 - intent: affirm
   examples: |
     - Sim
@@ -107,6 +87,8 @@ nlu:
     - Vamos comprar pão
     - Estou à procura de chocolate
     - Quero comprar peixe
+    - Pesquisar por carne de porco
+    - Encontrar legumes
 
 - intent: quit
   examples: |
@@ -159,39 +141,67 @@ nlu:
     - Limpar texto
     - Apagar texto
 
-- intent: filter_items
+- intent: order_items
   examples: |
-    - Filtrar por [Relevância](filter)
-    - Ordenar por [Preço mais baixo](filter)
-    - Ordena por [Preço mais alto](filter)
-    - Filtra por [Nome](filter)
-    - Filtra por [Promoção](filter)
-    - Ver os produtos em [Promoção](filter)
-    - Ver produtos com [Preço crescente](filter)
-    - Ver produtos com [Preço decrescente](filter)
+    - Ordenar por [Preço mais baixo](order)
+    - Ver os produtos em [Promoção](order)
+    - Ver produtos com [Preço crescente](order)
+    - Ver na ordem [Preço mais alto](order)
+    - Odernar por [Nome](order)
     - Ordenar
+
+- lookup: order
+  examples: |
+    - Relevância
+    - Nome
+    - Nomes
+    - Promoção
+    - Promoções
+    - Preço mais baixo
+    - Preço mais alto
+    - Preço crescente
+    - Preço decrescente
+    - Preço ascendente
+    - Preço descendente
 
 - intent: checkout
   examples: |
     - Finalizar compra
     - Comprar os produtos
     - Fazer checkout
+    - Confirmar compra
+    - Pagar
+    - Pagar os produtos
+    - Pagar os produtos no carrinho
+    - Terminar compra
+    - Terminar a compra
 
 - intent: change_store
   examples: |
     - Mudar de loja
     - Quero mudar de loja
     - Quero mudar de loja para [Sol Mar](store)
-    - Quero mudar de loja para [Pingo Doce Sol Mar](store)
     - Ir para o [Pingo Doce](store)
-    - Ir para a [Madeira](store)
-    - Ir para o [Pingo Doce Solmar](store)
-    - Ir para o [solmar](store)
     - Mudar para o [Pingo Doce Madeira](store)
-    - Mudar para o [Mercadão Solidário](store)
-    - Mudar para a [Saúde](store)
     - Mudar para [Medicamentos](store)
-    - Mudar para o [Pingo Doce Açores](store)
+
+- lookup: store
+  examples: |
+    - Pingo Doce
+    - Pingo Doce Madeira
+    - Madeira
+    - Pingo Doce Açores
+    - Pingo Doce Sol Mar
+    - Pingo Doce Solmar
+    - Açores
+    - Solmar
+    - Sol Mar
+    - Mercadão Solidário
+    - Solidário
+    - Mercadão Saúde
+    - Saúde
+    - Mercadão Medicamentos
+    - Medicamentos
 
 - intent: change_zip_code
   examples: |
@@ -211,4 +221,5 @@ nlu:
     - Abrir morada
     - Código postal
     - Morada
+
 
