@@ -33,8 +33,7 @@ class Driver():
 
     def add_to_cart(self, qty=1):
         if qty > 30:
-            self.sendToVoice("Não é possível adicionar mais de 30 unidades de um produto ao carrinho.")
-            return False
+            return "bola"
         try:
             add_one_btn = self.driver.find_element(By.CSS_SELECTOR, ".-add > .pdo-inline-block > .ng-star-inserted")
             for _ in range(qty):

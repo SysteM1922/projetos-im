@@ -6,6 +6,7 @@ import json
 import nltk
 import ssl
 from tts import TTS
+import requests
 
 HOST = "127.0.0.1:8005"
 OUTPUT = "127.0.0.1:8000"
@@ -28,12 +29,16 @@ def process_message(message: str):
         return "OK"
     else:
         json_command = ET.fromstring(message).find(".//command").text
-        command = json.loads(json_command)["nlu"]
-        return json.loads(command)
+        try:
+            command = json.loads(json_command)["nlu"]
+            return json.loads(command)
+        except:
+            return "OK"
 
 async def message_handler(driver: Driver, message: str):
     message = process_message(message)
-    print(f"Message: {message['text']}")
+    if "text" in message:
+        print(f"Message: {message['text']}")
 
     if message == "OK":
         pass
@@ -71,9 +76,9 @@ async def message_handler(driver: Driver, message: str):
                     qty = numeros[qty_init]
                 else:
                     qty = int(qty_init)
-                driver.add_to_cart(qty)
+                return driver.add_to_cart(qty)
             else:
-                driver.add_to_cart()
+                return driver.add_to_cart()
 
         elif intent == "search_product":
             words = message["text"].lower().split()
@@ -145,11 +150,12 @@ async def main():
         print("Connected to WebSocket")
 
         while not_quit:
-            try:
-                message = await websocket.recv()
-                await message_handler(driver, message)
-            except Exception as e:
-                print("Exception:",e)
+            message = await websocket.recv()
+            response = await message_handler(driver, message)
+            if response:
+                message = '<mmi:mmi xmlns:mmi="http://www.w3.org/2008/04/mmi-arch" mmi:version="1.0"><mmi:ExtensionNotification mmi:source="SPEECHIN" mmi:target="IM" mmi:requestId="text-1" mmi:context="ctx-1"><mmi:data><emma:emma xmlns:emma="http://www.w3.org/2003/04/emma" emma:version="1.0"><emma:interpretation emma:id="text-" emma:medium="text" emma:mode="command" emma:start="0" emma:confidence="1"><command>{"recognized":["SPEECH","SPEECHIN","APP"],"response":"'+ response +'"}</command></emma:interpretation></emma:emma></mmi:data></mmi:ExtensionNotification></mmi:mmi>'
+                print("Sending response:", message)
+                requests.post("https://127.0.0.1:8001/IM/USER1/SPEECHIN", data=message, verify=False)
 
     driver.close()
     exit(0)
