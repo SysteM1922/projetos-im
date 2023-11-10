@@ -248,26 +248,36 @@ class Driver():
         return True  
 
     def change_store(self, store: int = None):
+        url = None
+        msg = None
         if store:
             if store == 1:
-                self.driver.get("https://www.mercadao.pt/store/pingo-doce")
-                self.sendToVoice("Loja alterada para Pingo Doce.")
+                url = "https://www.mercadao.pt/store/pingo-doce"
+                msg = "Loja alterada para Pingo Doce."
             elif store == 2:
-                self.driver.get("https://www.mercadao.pt/store/pingo-doce-madeira")
-                self.sendToVoice("Loja alterada para Pingo Doce Madeira.")
+                url = "https://www.mercadao.pt/store/pingo-doce-madeira"
+                msg = "Loja alterada para Pingo Doce Madeira."
             elif store == 3:
-                self.driver.get("https://www.mercadao.pt/store/solmar-acores")
-                self.sendToVoice("Loja alterada para Solmar Açores.")
+                url = "https://www.mercadao.pt/store/solmar-acores"
+                msg = "Loja alterada para Solmar Açores."
             elif store == 4:
-                self.driver.get("https://www.mercadao.pt/store/mercadao-solidario")
-                self.sendToVoice("Loja alterada para Mercadão Solidário.")
+                url = "https://www.mercadao.pt/store/mercadao-solidario"
+                msg = "Loja alterada para Mercadão Solidário."
             elif store == 5:
-                self.driver.get("https://www.mercadao.pt/store/bem-estar")
-                self.sendToVoice("Loja alterada para Saúde.")
+                url = "https://www.mercadao.pt/store/bem-estar"
+                msg = "Loja alterada para Saúde."
             elif store == 6:
-                self.driver.get("https://www.mercadao.pt/store/medicamentos")
-                self.sendToVoice("Loja alterada para Medicamentos.")
+                url = "https://www.mercadao.pt/store/medicamentos"
+                msg = "Loja alterada para Medicamentos."
             else:
+                return False
+
+            self.driver.get(url)
+            time.sleep(1)
+            if self.driver.current_url == url:
+                self.sendToVoice(msg)
+            else:
+                self.sendToVoice("Esta loja não está disponível para a sua localização.")
                 return False
         else:
             self.driver.get("https://www.mercadao.pt")

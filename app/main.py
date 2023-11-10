@@ -52,7 +52,6 @@ async def message_handler(driver: Driver, message: str):
 
         if message["intent"]["confidence"] < 0.5:
             driver.sendToVoice("Não percebi o que disse, pode repetir?")
-            return
 
         elif intent == "return":
             driver.return_to_previous_page()
