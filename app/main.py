@@ -115,7 +115,7 @@ async def message_handler(driver: Driver, message: str):
                 products_list = driver.get_cart_products()
                 products_list = [[re.sub(r'[^a-zA-Z0-9\s]', '', unidecode(x[0])).strip(), x[1]] for x in products_list]
                 
-                sim = difflib.get_close_matches(unidecode(product), [x[0] for x in products_list], n=1, cutoff=0.1)[0]
+                sim = difflib.get_close_matches(unidecode(product), [x[0] for x in products_list], n=1, cutoff=0.4)[0]
                 if sim:
                     driver.remove_from_cart(products_list[[x[0] for x in products_list].index(sim)][1], sim)
                 else:
@@ -129,7 +129,7 @@ async def message_handler(driver: Driver, message: str):
         elif intent == "change_store":
             if len(message["entities"]) > 0:
                 store = message["entities"][0]["value"].lower()
-                store = difflib.get_close_matches(store, stores.keys(), n=1, cutoff=0.4)[0]
+                store = difflib.get_close_matches(store, stores.keys(), n=1, cutoff=0.3)[0]
                 if store:
                     driver.change_store(stores[store])
                 else:
