@@ -34,6 +34,9 @@ class Driver():
         self.driver.execute_script("window.scrollBy(0, -400);")
 
     def add_to_cart(self, qty=1):
+        if "/product/" not in self.driver.current_url:
+            self.sendToVoice("Não é possível adicionar o produto que deseja nesta página.")
+            return False
         if qty > 30:
             self.sendToVoice("Não é possível adicionar mais de 30 unidades de um produto ao carrinho.")
             return False
@@ -86,7 +89,6 @@ class Driver():
         try:
             self.driver.find_element(By.CSS_SELECTOR, ".cart-back-icon > .ng-star-inserted").click()
         except:
-            self.sendToVoice("O carrinho já está fechado.")
             return False
         return True
     
@@ -107,6 +109,18 @@ class Driver():
             self.sendToVoice(f"{name} removido do carrinho com sucesso.")
         except:
             self.sendToVoice(f"Não é possível remover {name} do carrinho.")
+            return False
+        return True
+    
+    def change_category(self, name):
+        print(name)
+        try:
+            if name == "Voltar":
+                self.driver.find_element(By.CSS_SELECTOR, ".sidebar-back > .pdo-middle").click()
+                return True
+            self.driver.find_element(By.XPATH, "//span[contains(.,'"+name+"')]").click()
+        except:
+            self.sendToVoice(f'Não é possível mudar para a categoria {name}.')
             return False
         return True
 

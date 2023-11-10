@@ -18,7 +18,7 @@ intents:
 - change_zip_code
 - remove_from_cart
 - open_product
-- open_category
+- change_category
 - filter_products
 
 entities:
@@ -26,6 +26,7 @@ entities:
 - number
 - store
 - order
+- category
 
 slots:
   action:

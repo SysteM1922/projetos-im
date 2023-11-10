@@ -26,7 +26,6 @@ nlu:
 - intent: return
   examples: |
     - Voltar atrás
-    - Voltar
     - Andar para trás
     - Página anterior
     - Anterior
@@ -82,13 +81,13 @@ nlu:
 
 - intent: search_product
   examples: |
-    - Quero um melão
-    - Procurar por açucar amarelo
-    - Vamos comprar pão
-    - Estou à procura de chocolate
-    - Quero comprar peixe
-    - Pesquisar por carne de porco
-    - Encontrar legumes
+    - Quero um [melão]
+    - Procurar por açucar [amarelo]
+    - Vamos comprar [pão]
+    - Estou à procura de [chocolate]
+    - Quero comprar [peixe]
+    - Pesquisar por carne de [porco]
+    - Encontrar [legumes]
 
 - intent: quit
   examples: |
@@ -241,4 +240,25 @@ nlu:
     - Eliminar produto gelatina do carrinho
     - Eliminar produto faca
 
-
+- intent: change_category
+  examples: |
+    - Mudar para secção de [Campanhas](category)
+    - Ir para a secção de [As Nossas Marcas](category)
+    - Categoria de [Mercearia](category)
+    - Secção de [Frutas e Legumes](category)
+    - Ir para a categoria de [Talho](category)
+    - Mudar para a categoria de [Peixaria](category)
+    - Quero ver a categoria de [Charcutaria](category)
+    - Quero ver a secção de [Padaria e Pastelaria](category)
+    - Quero ir para a categoria de [Take Away](category)
+    - Quero ir para a secção de [Congelados](category)
+    - Mudar para a zona de [Leite, Ovos e Natas](category)
+    - Ir para a zona de [Frigorífico](category)
+    - Zona de [Alternativas Vegetais](category)
+    - Quero ir para a zona de [Bebidas](category)
+    - Mostrar a zoja de [Infatil](category)
+    - Mostrar a secção de [Higiene e Beleza](category)
+    - Mostrar a categoria de [Casa](category)
+    - Ir a [Animais](category)
+    - Ir à secção de [Tecnologia](category)
+    - [Voltar](category) secção 
