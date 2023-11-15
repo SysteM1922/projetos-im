@@ -1,3 +1,4 @@
+import random
 from driver import Driver
 import websockets
 import asyncio
@@ -25,8 +26,15 @@ filters = {"relevância": 1, "promoções": 2, "promoção": 2, "nomes": 3, "nom
 
 stores = {"pingo Doce": 1, "pingo doce madeira": 2, "pingo doce solmar açores": 3, "mercadão solidário": 4, "saúde": 5, "medicamentos": 6 }
 
+help_options = ["carrinho", "produtos", "loja", 
+
+not_found = ["Desculpe, não percebi o que disse, pode repetir?", "Não percebi, pode repetir?", "Não percebi, pode repetir por favor?"
+             "Desculpe não percebi o que disse, tente dizer mais devagar", "Não percebi, pode repetir mais devagar por favor?",
+             "Não consegui entender, pode repetir?", "Desculpe não entendi, pode repetir?", "Não entendi, pode repetir por favor?",
+             "Não consegui perceber, experimente dizer mais devagar", "Não percebi, pode repetir mais devagar por favor?", "Pode repetir por favor?"]
+
 categories_list = []
-with open("categorias.txt", "r", encoding="utf-8") as f:
+with open("app\categorias.txt", "r", encoding="utf-8") as f:
     for line in f:
         categories_list.append(line.strip())
 
@@ -41,6 +49,12 @@ def process_message(message: str):
         return json.loads(command)
 
 async def message_handler(driver: Driver, message: str):
+
+    def command_not_found():
+        not_found_msg = random.choice(not_found)
+        driver.sendToVoice(not_found_msg)
+        print("Command not found")
+
     message = process_message(message)
     print(f"Message: {message['text']}")
 
@@ -51,7 +65,7 @@ async def message_handler(driver: Driver, message: str):
         intent = message["intent"]["name"]
 
         if message["intent"]["confidence"] < 0.5:
-            driver.sendToVoice("Não percebi o que disse, pode repetir?")
+            command_not_found()
 
         elif intent == "return":
             driver.return_to_previous_page()
@@ -125,7 +139,7 @@ async def message_handler(driver: Driver, message: str):
                 else:
                     driver.sendToVoice("Não percebi o nome do produto, pode repetir?")
             else:
-                driver.sendToVoice("É necessário abrir o carrinho para efetuar esta operação")
+                driver.sendToVoice("É necessário abrir o carrinho para efectuar esta operação")
         
         elif intent == "checkout":
             driver.checkout()
@@ -169,14 +183,30 @@ async def message_handler(driver: Driver, message: str):
             else:
                 driver.order_items()
 
+        elif intent == "open_product":
+            pass
+
+        elif intent == "help":
+            if len(message["entities"]) > 0:
+                help_opt = message["entities"][0]["value"].lower()
+                if help_opt == "comandos":
+                    driver.sendToVoice("Os comandos disponíveis são: procurar, adicionar ao carrinho, remover do carrinho, abrir carrinho, fechar carrinho, limpar carrinho, finalizar compra, mudar loja, mudar categoria, mudar código postal, ordenar produtos, voltar, confirmar, cancelar, limpar texto, inserir número, rolar para cima, rolar para baixo, ajuda, sair")
+                elif help_opt == "categorias":
+                    driver.sendToVoice("As categorias disponíveis são: " + ", ".join(categories_list))
+                elif help_opt == "lojas":
+                    driver.sendToVoice("As lojas disponíveis são: " + ", ".join(stores.keys()))
+                elif help_opt == "filtros":
+                    driver.sendToVoice("Os filtros disponíveis são: relevância, promoções, nomes, preço baixo, preço decrescente, preço alto")
+                else:
+                    driver.sendToVoice("Não percebi o que disse, pode repetir?")
+
         elif intent == "quit":
             if driver.quit():
                 global not_quit
                 not_quit = False
 
     else:
-        driver.sendToVoice("Não percebi o que disse, pode repetir?")
-        print("Command not found")
+        command_not_found()
 
 
 async def main():

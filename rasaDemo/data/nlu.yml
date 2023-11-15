@@ -261,4 +261,61 @@ nlu:
     - Mostrar a categoria de [Casa](category)
     - Ir a [Animais](category)
     - Ir à secção de [Tecnologia](category)
-    - [Voltar](category) secção 
+    - [Voltar](category) secção
+
+- intent: help
+  examples: |
+    - Ajuda
+    - Preciso de ajuda
+    - Não sei o que fazer
+    - Não sei o que fazer a seguir
+    - O que posso fazer
+    - Que interações existem
+    - Que interações posso fazer
+    - Suporte
+    - Preciso de suporte
+    - Ajuda com o [carrinho](help_option)
+    - Ajuda com o [produto](help_option)
+    - Ajuda com os [produtos](help_option)
+    - Ajuda com o [código postal](help_option)
+    - Ajuda com a [morada](help_option)
+    - Ajuda com a [loja](help_option)
+    - Ajuda com as [operações](help_option)
+    - O que posso fazer com o [carrinho](help_option)
+    - O que posso fazer com o [produto](help_option)
+    - O que posso fazer com os [produtos](help_option)
+    - Que interações existem com o [código postal](help_option)
+    - Que interações existem com a [morada](help_option)
+    - Como posso mudar de [loja](help_option)
+    - Como posso mudar o [código postal](help_option)
+    - Como posso mudar a [morada](help_option)
+    - Que [operações](help_option) posso fazer
+    - Que [operações](help_option) existem
+    - Como interagir com o [carrinho](help_option)
+    - Como interagir com o [produto](help_option)
+    - Quero saber como interagir com a [morada](help_option)
+    - Quero saber como mudar de [loja](help_option)
+    - Quero saber como mudar o [código postal](help_option)
+    - Quero saber como mudar a [morada](help_option)
+    - Quero saber que [operações](help_option) posso fazer
+    - Quero saber que [operações](help_option) existem
+    - Quero saber como interagir com o [carrinho](help_option)
+    - Quero saber como interagir com o [produto](help_option)
+    - Quero ajuda com o [carrinho](help_option)
+    - Quero ajuda com o [produto](help_option)
+    - Quero ajuda com os [produtos](help_option)
+    - Quero ajuda com o [código postal](help_option)
+    - Quero ajuda com a [morada](help_option)
+    - Quero ajuda com a [loja](help_option)
+    - Quero ajuda com as [operações](help_option)
+    - Quero ajuda com as [operações](help_option) disponíveis
+
+- lookup: help_option
+  examples: |
+    - carrinho
+    - produto
+    - produtos
+    - código postal
+    - morada
+    - loja
+    - operações

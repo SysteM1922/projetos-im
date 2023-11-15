@@ -21,7 +21,7 @@ class Driver():
         self.reject_cookies()
 
         self.sendToVoice("Bem-vindo ao Mercadão")
-        time.sleep(2)
+        time.sleep(1)
         self.open_zip_code()
 
     def return_to_previous_page(self):
@@ -93,15 +93,24 @@ class Driver():
         return True
     
     def clear_cart(self):
-        if self.open_cart():
-            time.sleep(1)
+        
+        if "-open" not in self.driver.find_element(By.TAG_NAME, "aside").get_attribute('class'):
+            self.sendToVoice("O carrinho não está aberto")
+            return False
+        c = False
         while True:
             try:
                 self.driver.find_element(By.CSS_SELECTOR, ".pdo-icon-delete").click()
+                c = True
             except:
                 break
-        self.sendToVoice("Carrinho limpo com sucesso.")
-        return self.close_cart()
+        if c:
+            self.sendToVoice("Carrinho limpo com sucesso.")
+            return True
+        else:
+            self.sendToVoice("O carrinho já está vazio.")
+            return False
+        
     
     def remove_from_cart(self, button, name):
         try:
@@ -210,6 +219,9 @@ class Driver():
         return True
 
     def open_cart(self):
+        if "-open" in self.driver.find_element(By.TAG_NAME, "aside").get_attribute('class'):
+            self.sendToVoice("O carrinho já está aberto.")
+            return False
         try:
             self.driver.find_element(By.CSS_SELECTOR, "pdo-nav-cart > .pdo-button-cart").click()
         except:
@@ -240,10 +252,10 @@ class Driver():
                 self.driver.find_elements(By.CSS_SELECTOR, ".-cta").click()
                 self.sendToVoice("A proceder para o pagamento.")
             except:
-                self.sendToVoice("O mínimo de compra para efetuar o checkout é de 60€.")
+                self.sendToVoice("O mínimo de compra para efectuar o checkout é de 60€.")
                 return False
         else:
-            self.sendToVoice("Não é possível efetuar checkout nesta página.")
+            self.sendToVoice("Não é possível efectuar checkout nesta página.")
             return False
         return True  
 
@@ -299,6 +311,9 @@ class Driver():
             self.driver.find_element(By.XPATH, "//div[@id=\'onetrust-pc-sdk\']/div/div[3]/div/button").click()   
         except TimeoutException:
             pass
+
+    def help(self):
+        pass
 
     def close(self):
         self.driver.close()

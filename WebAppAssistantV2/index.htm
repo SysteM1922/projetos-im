@@ -311,7 +311,6 @@
 
                     resetfunc = setTimeout(function () {
                         transcriptDiv.innerHTML = firstSent;
-                        recognition.start();
                     }, 1000);
 
                     speechActive = false;
@@ -335,6 +334,14 @@
             recognition.start();
             console.log("start");
         })
+
+        document.addEventListener('keydown', function (event) {
+            // Se a tecla pressionada for a barra de espaço (código 32)
+            if (event.keyCode === 32) {
+                recognition.start();
+                console.log("start");
+            }
+        });
 
 
         var vadActive = false;
