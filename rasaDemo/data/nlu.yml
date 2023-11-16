@@ -38,24 +38,35 @@ nlu:
 
 - intent: scroll
   examples: |
-    - [Subir](action) a página
-    - Andar para [cima](action)
-    - Para [cima](action)
-    - Scroll para [cima](action)
-    - [Cima](action)
-    - [Subir](action)
-    - [Descer](action) a página
-    - Andar para [baixo](action)
-    - Para [baixo](action)
-    - Scroll para [baixo](action)
-    - [Baixo](action)
-    - [Descer](action)
-    - Ver para [cima](action)
-    - Ver para [baixo](action)
-    - Puxar a página para [cima](action)	
-    - Puxar a página para [baixo](action)
-    - Ir para [cima](action)
-    - Ir para [baixo](action)
+    - [Subir]{"entity":"direction", "value": 1} a página
+    - Andar para [cima]{"entity":"direction", "value": 1}
+    - Para [cima]{"entity":"direction", "value": 1}
+    - Scroll para [cima]{"entity":"direction", "value": 1}
+    - [Cima]{"entity":"direction", "value": 1}
+    - [Subir]{"entity":"direction", "value": 1}
+    - [Descer]{"entity":"direction", "value": 0} a página
+    - Andar para [baixo]{"entity":"direction", "value": 0} 
+    - Para [baixo]{"entity":"direction", "value": 0} 
+    - Scroll para [baixo]{"entity":"direction", "value": 0} 
+    - [Baixo]{"entity":"direction", "value": 0} 
+    - [Descer]{"entity":"direction", "value": 0} 
+    - Ver para [cima]{"entity":"direction", "value": "1"}
+    - Ver para [baixo]{"entity":"direction", "value": 0} 
+    - Puxar a página para [cima]{"entity":"direction", "value": "1"}
+    - Puxar a página para [baixo]{"entity":"direction", "value": 0} 
+    - Ir para [cima]{"entity":"direction", "value": "1"}
+    - Ir para [baixo]{"entity":"direction", "value": 0} 
+
+- intent: insert_number
+  examples: |
+    - [3](number)
+    - [2](number)
+    - [um](number)
+    - [três](number)
+    - [dois](number)
+    - [uma](number)
+    - [60](number)
+    - [104](number)
 
 - intent: add_to_cart
   examples: |
@@ -83,27 +94,71 @@ nlu:
     - Quero [31](number) por favor
     - Levar [40](number)
 
-- synonym: carrinho
-  examples: |
-    - carrinho de compras
-
 - regex: number
   examples: |
     - \d{1,7}
 
-- lookup: number
+- synonym: "1"
   examples: |
+    - primeiro
+    - primeira
     - um
     - uma
+
+- synonym: "2"
+  examples: |
+    - segunda
+    - segundo
     - dois
     - duas
+
+- synonym: "3"
+  examples: |
+    - terceira
+    - terceiro
     - três
+
+- synonym: "4"
+  examples: |
+    - quarta
+    - quarto
     - quatro
+
+- synonym: "5"
+  examples: |
+    - quinta
+    - quinto
     - cinco
+
+- synonym: "6"
+  examples: |
+    - sexta
+    - sexto
     - seis
+
+- synonym: "7"
+  examples: |
+    - sétima
+    - sétimo
     - sete
+
+- synonym: "8"
+  examples: |
+    - oitava
+    - oitavo
     - oito
+
+- synonym: "9"
+  examples: |
+    - nona
+    - nono
     - nove
+
+- synonym: "10"
+  examples: |
+    - décima
+    - décimo
+    - dez
 
 - intent: search_product
   examples: |
@@ -122,17 +177,6 @@ nlu:
     - Fechar
     - Terminar
     - Desligar
-
-- intent: insert_number
-  examples: |
-    - [3](number)
-    - [2](number)
-    - [um](number)
-    - [três](number)
-    - [dois](number)
-    - [uma](number)
-    - [60](number)
-    - [104](number)
 
 - intent: open_cart
   examples: |
@@ -244,7 +288,7 @@ nlu:
   examples: |
     - Mudar de loja
     - Quero mudar de loja
-    - Quero mudar de loja para [Sol Mar](store)
+    - Quero mudar de loja para [Pindo Doce Solmar](store)
     - Ir para o [Pingo Doce](store)
     - Mudar para o [Pingo Doce Madeira](store)
     - Mudar para [Medicamentos](store)
@@ -252,23 +296,30 @@ nlu:
     - Gostava de mudar de loja por favor
     - Mudar a minha loja para [Sol Mar](store)
 
-- lookup: store
+- synonym: "Pindo Doce Madeira"
   examples: |
-    - Pingo Doce
-    - Pingo Doce Madeira
     - Madeira
-    - Pingo Doce Açores
-    - Pingo Doce Sol Mar
-    - Pingo Doce Solmar
+
+- synonym: "Pingo Doce Solmar"
+  examples: |
     - Açores
     - Solmar
     - Sol Mar
+    - Pingo Doce Sol Mar
+    - Pingo Doce Solmar
+
+- synonym: "Solidário"
+  examples: |
     - Mercadão Solidário
-    - Solidário
+
+- synonym: "Saúde"
+  examples: |
     - Mercadão Saúde
-    - Saúde
+
+- synonym: "Medicamentos"
+  examples: |
     - Mercadão Medicamentos
-    - Medicamentos
+
 
 - intent: change_zip_code
   examples: |
@@ -418,56 +469,49 @@ nlu:
 
 - intent: filter_products
   examples: |
-    - Filtrar por [Marca](filter_type)
-    - Filtrar por [Categoria](filter_type)
-    - Quero filtrar por [Marca](filter_type)
-    - Quero filtrar por [Categoria](filter_type)
-    - Filtrar por [Marca](filter_type) por favor
-    - Filtrar por [Categoria](filter_type) por favor
-    - Filtrar os produtos por [Marca](filter_type)
-    - Filtrar os produtos por [Categoria](filter_type)
-    - Filtrar a pesquisa por [Marca](filter_type)
-    - Filtrar a pesquisa por [Categoria](filter_type)
-    - Quero filtrar os produtos por [Marca](filter_type)
-    - Quero filtrar os produtos por [Categoria](filter_type)
-    - Filtrar por [Categoria](filter_type)
-    - Quero filtrar por [Marca](filter_type)
-    - Quero filtrar por [Categoria](filter_type)
-    - Filtrar por [Marca](filter_type) por favor
-    - Filtrar por [Categoria](filter_type) por favor
-    - Filtrar os produtos por [Marca](filter_type)
-    - Filtrar os produtos por [Categoria](filter_type)
-    - Filtrar a pesquisa por [Marca](filter_type)
-    - Filtrar a pesquisa por [Categoria](filter_type)
-    - Quero filtrar os produtos por [Marca](filter_type)
-    - Quero filtrar os produtos por [Categoria](filter_type)
-
-- lookup: filter_type
-  examples: |
-    - Marca
-    - Marcas
-    - Categoria
-    - Categorias
+    - Filtrar por [Marca]{"entity":"filter_type", "role": "marca"}
+    - Filtrar por [Categoria]{"entity":"filter_type", "role": "categoria"}
+    - Quero filtrar por [Marcas]{"entity":"filter_type", "role": "marca"}
+    - Quero filtrar por [Categorias]{"entity":"filter_type", "role": "categoria"}
+    - Filtrar por [Marca]{"entity":"filter_type", "role": "marca"} por favor
+    - Filtrar por [Categoria]{"entity":"filter_type", "role": "categoria"} por favor
+    - Filtrar os produtos por [Marcas]{"entity":"filter_type", "role": "marca"}
+    - Filtrar os produtos por [Categorias]{"entity":"filter_type", "role": "categoria"}
+    - Filtrar a pesquisa por [Marca]{"entity":"filter_type", "role": "marca"}
+    - Filtrar a pesquisa por [Categoria]{"entity":"filter_type", "role": "categoria"}
+    - Quero filtrar os produtos por [Marcas]{"entity":"filter_type", "role": "marca"}
+    - Quero filtrar os produtos por [Categorias]{"entity":"filter_type", "role": "categoria"}
+    - Filtrar por [Categoria]{"entity":"filter_type", "role": "categoria"}
+    - Quero filtrar por [Marca]{"entity":"filter_type", "role": "marca"}
+    - Quero filtrar por [Categorias]{"entity":"filter_type", "role": "categoria"}
+    - Filtrar por [Marcas]{"entity":"filter_type", "role": "marca"} por favor
+    - Filtrar por [Categoria]{"entity":"filter_type", "role": "categoria"} por favor
+    - Filtrar os produtos por [Marca]{"entity":"filter_type", "role": "marca"}
+    - Filtrar os produtos por [Categorias]{"entity":"filter_type", "role": "categoria"}
+    - Filtrar a pesquisa por [Marcas]{"entity":"filter_type", "role": "marca"}
+    - Filtrar a pesquisa por [Categoria]{"entity":"filter_type", "role": "categoria"}
+    - Quero filtrar os produtos por [Marca]{"entity":"filter_type", "role": "marca"}
+    - Quero filtrar os produtos por [Categorias]{"entity":"filter_type", "role": "categoria"}
 
 - intent: choose_position
   examples: |
-    - Escolher a [primeira]{"entity":"position", "value": 1} opção
-    - Escolher a [segunda]{"entity":"position", "value": 2} opção por favor
-    - Quero a [terceira]{"entity":"position", "value": 3} opção
-    - Quero a [quarta]{"entity":"position", "value": 4} opção por favor
-    - Filtrar pela [quinta]{"entity":"position", "value": 5} opção
-    - Filtrar pela [sexta]{"entity":"position", "value": 6} opção por favor
-    - A [sétima]{"entity":"position", "value": 7} opção
-    - A [oitava]{"entity":"position", "value": 8} opção por favor
-    - Abrir a [nona]{"entity":"position", "value": 9} opção
-    - Abrir a [décima]{"entity":"position", "value": 10} opção por favor
-    - Escolher a [primeira]{"entity":"position", "value": 1} opção
-    - Escolher a [segunda]{"entity":"position", "value": 2} opção por favor
-    - Quero a [terceira]{"entity":"position", "value": 3} opção
-    - Quero a [quarta]{"entity":"position", "value": 4} opção por favor
-    - Filtrar pela [quinta]{"entity":"position", "value": 5} opção
-    - Filtrar pela [sexta]{"entity":"position", "value": 6} opção por favor
-    - A [sétima]{"entity":"position", "value": 7} opção
-    - A [oitava]{"entity":"position", "value": 8} opção por favor
-    - Abrir a [nona]{"entity":"position", "value": 9} opção
-    - Abrir a [décima]{"entity":"position", "value": 10} opção por favor
+    - Escolher a [primeira](number) opção
+    - Escolher a [segunda](number) opção por favor
+    - Quero a [terceira](number) opção
+    - Quero a [quarta](number) opção por favor
+    - Filtrar pela [quinta](number) opção
+    - Filtrar pela [sexta](number) opção por favor
+    - A [sétima](number) opção
+    - A [oitava](number) opção por favor
+    - Abrir a [nona](number) opção
+    - Abrir a [décima](number) opção por favor
+    - Escolher a [primeira](number) opção
+    - Escolher a [segunda](number) opção por favor
+    - Quero a [terceira](number) opção
+    - Quero a [quarta](number) opção por favor
+    - Filtrar pela [quinta](number) opção
+    - Filtrar pela [sexta](number) opção por favor
+    - A [sétima](number) opção
+    - A [oitava](number) opção por favor
+    - Abrir a [nona](number) opção
+    - Abrir a [décima](number) opção por favor

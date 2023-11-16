@@ -18,13 +18,10 @@ stop_words = ["procurar", "pesquisar", "produto", "por", "um", "uma" "comprar",
 
 remove_words = ["remover", "retirar", "tirar", "apagar", "eliminar", "produto", "do", "carrinho", "de", "compras"]
 
-numeros = {"um": 1, "uma": 1, "dois": 2, "duas": 2, "três": 3, "tres": 3,
-           "quatro": 4, "cinco": 5, "seis": 6, "sete": 7, "oito": 8, "nove": 9}
-
 sorts = {"relevância": 1, "promoções": 2, "promoção": 2, "nomes": 3, "nome": 3, "preço baixo": 4, "preço crescente": 4,
            "preço mais baixo": 4, "preço decrescente": 5, "preço alto": 5, "preço mais alto": 5 }
 
-stores = {"pingo Doce": 1, "pingo doce madeira": 2, "pingo doce solmar açores": 3, "mercadão solidário": 4, "saúde": 5, "medicamentos": 6 }
+stores = {"Pingo Doce": 1, "Pingo Doce Madeira": 2, "Pingo Doce Solmar": 3, "Mercadão Solidário": 4, "Saúde": 5, "Medicamentos": 6 }
 
 help_options = ["carrinho", "produto", "código postal", "morada", "loja", "operações", "todas"]
 
@@ -37,8 +34,6 @@ categories_list = []
 with open("app\categorias.txt", "r", encoding="utf-8") as f:
     for line in f:
         categories_list.append(line.strip())
-
-not_quit = True
 
 def process_message(message: str):
     if message == "OK":
@@ -64,7 +59,7 @@ async def message_handler(driver: Driver, message: str):
     elif message["intent"]["name"]:
         intent = message["intent"]["name"]
 
-        if message["intent"]["confidence"] < 0.5:
+        if message["intent"]["confidence"] < 0.65:
             command_not_found()
 
         elif intent == "return":
@@ -75,8 +70,7 @@ async def message_handler(driver: Driver, message: str):
 
         elif intent == "insert_number":
             if len(message["entities"]) > 0:
-                numbers = [message["entities"][i]["value"].lower() for i in range(len(message["entities"])) if message["entities"][i]["extractor"] == "DIETClassifier"]
-                numbers = [numeros[x] if x in numeros else x for x in numbers]
+                numbers = [message["entities"][i]["value"] for i in range(len(message["entities"])) if message["entities"][i]["extractor"] == "DIETClassifier"]
                 driver.insert_number(numbers)
 
         elif intent == "clear_text":
@@ -84,20 +78,20 @@ async def message_handler(driver: Driver, message: str):
 
         elif intent == "scroll":
             if len(message["entities"]) > 0:
-                if message["entities"][0]["value"] == "cima":
+                if message["entities"][0]["value"] == "1":
                     driver.scroll_up()
 
-                elif message["entities"][0]["value"] == "baixo":
+                elif message["entities"][0]["value"] == "0":
                     driver.scroll_down()
 
         elif intent == "add_to_cart":
             if len(message["entities"]) > 0:
-                qty_init = message["entities"][0]["value"].lower()
-                if qty_init in numeros:
-                    qty = numeros[qty_init]
-                else:
-                    qty = int(qty_init)
-                driver.add_to_cart(qty)
+                qty_init = None
+                for entity in message["entities"]:
+                    if entity["extractor"] == "DIETClassifier":
+                        qty_init = entity["value"]
+                        break
+                driver.add_to_cart(int(qty_init))
             else:
                 driver.add_to_cart()
 
@@ -210,6 +204,7 @@ async def message_handler(driver: Driver, message: str):
     else:
         command_not_found()
 
+not_quit = True
 
 async def main():
 

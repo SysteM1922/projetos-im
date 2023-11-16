@@ -24,7 +24,7 @@ intents:
 - help
 
 entities:
-- action
+- direction
 - number
 - store
 - sort
@@ -34,14 +34,14 @@ entities:
 - position
 
 slots:
-  action:
+  direction:
     type: text
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: action
   number:
-    type: text
+    type: float
     influence_conversation: true
     mappings:
     - type: from_entity
@@ -52,6 +52,36 @@ slots:
     mappings:
     - type: from_entity
       entity: store
+  sort:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: sort
+  category:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: category
+  help_option:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: help_option
+  filter_type:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: filter_type
+  position:
+    type: float
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: position
 
 responses:
   utter_greet:

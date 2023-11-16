@@ -252,9 +252,9 @@ class Driver():
         return True
             
     def checkout(self):
-        if self.driver.find_elements(By.CSS_SELECTOR, ".-cta"):
+        if "-open" in self.driver.find_element(By.TAG_NAME, "aside").get_attribute('class'):
             try:
-                self.driver.find_elements(By.CSS_SELECTOR, ".-cta").click()
+                self.driver.find_element(By.CSS_SELECTOR, ".-cta").click()
                 self.sendToVoice("A proceder para o pagamento.")
             except:
                 self.sendToVoice("O mínimo de compra para efectuar o checkout é de 60€.")
