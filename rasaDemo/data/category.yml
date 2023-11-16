@@ -2,7 +2,7 @@ version: "3.1"
 nlu:
 - lookup: category
   examples: |
-    - Ver Todos
+    - Ver todos
     - Voltar
     - Campanhas
     - As Nossas Marcas
@@ -186,3 +186,12 @@ nlu:
     - Atum
     - Base Vegetal
     - Nutrição Entérica e Celíacos
+    - Natal
+    - Entradas
+    - Ceia
+    - Chocolates
+    - Doçaria
+    - Iguarias Pingo Doce
+    - Bebidas
+    - Presentes
+    - Decoração e Casa

@@ -11,7 +11,7 @@ intents:
 - open_cart
 - close_cart
 - clear_cart
-- order_items
+- sort_items
 - checkout
 - change_store
 - clear_text
@@ -26,7 +26,7 @@ entities:
 - action
 - number
 - store
-- order
+- sort
 - category
 - help_option
 

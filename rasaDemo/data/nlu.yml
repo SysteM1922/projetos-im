@@ -22,6 +22,7 @@ nlu:
     - Nem por isso
     - Negar
     - Negativo
+    - Cancelar
 
 - intent: return
   examples: |
@@ -29,6 +30,11 @@ nlu:
     - Andar para trás
     - Página anterior
     - Anterior
+    - Navegar para trás
+    - Navegar para a página anterior
+    - Voltar para a página anterior
+    - Ir para a página anterior
+    - Voltar para trás
 
 - intent: scroll
   examples: |
@@ -44,18 +50,38 @@ nlu:
     - Scroll para [baixo](action)
     - [Baixo](action)
     - [Descer](action)
+    - Ver para [cima](action)
+    - Ver para [baixo](action)
+    - Puxar a página para [cima](action)	
+    - Puxar a página para [baixo](action)
+    - Ir para [cima](action)
+    - Ir para [baixo](action)
 
 - intent: add_to_cart
   examples: |
     - Adicionar ao carrinho
     - Meter no carrinho
     - Colocar no carrinho
-    - Adicionar [3](number) ao carrinho
+    - Adicionar [3](number) ao carrinho por favor
     - Meter [2](number) no carrinho
     - Colocar [um](number) no carrinho
     - Adicionar [três](number) ao carrinho
     - Adicionar
     - Comprar
+    - Quero adicionar [3](number) ao carrinho de compras
+    - Quero meter [2](number) no carrinho de compras
+    - Quero colocar [um](number) no carrinho de compras
+    - Acrescentar [três](number) produtos ao carrinho de compras
+    - Acrescentar produto
+    - Adicionar produto ao carrinho
+    - Quero levar [3](number) produtos 
+    - Quero levar [2](number) por favor
+    - Levar [2](number) produtos
+    - Levar [um](number)
+    - Vamos levar [três](number) destes
+    - Vamos levar [30](number) por favor
+    - Quero [31](number) por favor
+    - Levar [40](number)
 
 - synonym: carrinho
   examples: |
@@ -82,12 +108,13 @@ nlu:
 - intent: search_product
   examples: |
     - Quero um [melão]
-    - Procurar por açucar [amarelo]
+    - Procurar por [açucar amarelo]
     - Vamos comprar [pão]
     - Estou à procura de [chocolate]
     - Quero comprar [peixe]
-    - Pesquisar por carne de [porco]
+    - Pesquisar por [carne de porco]
     - Encontrar [legumes]
+    - Quero procurar [oregãos]
 
 - intent: quit
   examples: |
@@ -115,6 +142,19 @@ nlu:
     - Abrir o carrinho
     - Quero ver o que está no carrinho
     - Carrinho
+    - Mostra-me o meu carrinho de compras
+    - Quero ver o meu carrinho de compras
+    - Aceder ao carrinho
+    - Aceder ao carrinho de compras
+    - Mostra-me os meus produtos
+    - Mostra-me os meus produtos no carrinho
+    - Mostra-me os meus produtos no carrinho de compras
+    - Mostra-me os meus produtos no carrinho de compras por favor
+    - Mostra-me os meus produtos no carrinho por favor
+    - Mostra-me os meus produtos por favor
+    - A continha por favor
+    - A conta faz favor
+    - A conta se faz favor
 
 - intent:  close_cart
   examples: |
@@ -123,15 +163,25 @@ nlu:
     - Fechar carrinho
     - Sair do carrinho
     - Sair do carrinho de compras
+    - Quero sair do carrinho
+    - Quero fechar o carrinho de compras
+    - Fechar o carrinho de compras por favor
+    - Fechar o carrinho por favor
 
 - intent: clear_cart
   examples: |
     - Limpar o carrinho
     - Limpar o carrinho de compras
-    - Limpar carrinho
+    - Limpar carrinho por favor
     - Apagar o carrinho
     - Apagar o carrinho de compras
-    - Apagar carrinho
+    - Apagar o carrinho por favor
+    - Quero limpar o carrinho por favor
+    - Quero limpar o carrinho de compras
+    - Tirar tudo do carrinho
+    - Tirar todos os produtos do carrinho
+    - Tirar tudo do carrinho de compras
+    - Remover tudo do carrinho
 
 - intent: clear_text
   examples: |
@@ -139,17 +189,25 @@ nlu:
     - Apagar
     - Limpar texto
     - Apagar texto
+    - Recomeçar o texto
+    - Recomeçar
 
-- intent: order_items
+- intent: sort_items
   examples: |
-    - Ordenar por [Preço mais baixo](order)
-    - Ver os produtos em [Promoção](order)
-    - Ver produtos com [Preço crescente](order)
-    - Ver na ordem [Preço mais alto](order)
-    - Odernar por [Nome](order)
+    - Ordenar por [Preço mais baixo](sort)
+    - Ver os produtos na ordem de [Promoção](sort)
+    - Ver produtos com [Preço crescente](sort)
+    - Ver na ordem [Preço mais alto](sort)
+    - Odernar por [Nome](sort)
     - Ordenar
+    - Quero ordenar por [Preço mais baixo](sort)
+    - Quero ver os produtos na ordem de [Promoção](sort)
+    - Ordena por [Preço crescente](sort) por favor
+    - Ordena por [Preço mais alto](sort) por favor
+    - Mostra-me os produtos na ordem de [Promoção](sort) por favor
+    - Mostra-me os produtos na ordem de [Preço mais baixo](sort)
 
-- lookup: order
+- lookup: sort
   examples: |
     - Relevância
     - Nome
@@ -174,6 +232,13 @@ nlu:
     - Pagar os produtos no carrinho
     - Terminar compra
     - Terminar a compra
+    - Desejo finalizar a compra por favor
+    - Desejo finalizar a compra
+    - Quero pagar tudo
+    - Quero pagar os produtos
+    - A conta por favor
+    - Quero pagar a conta
+    - Quero pagar a conta por favor
 
 - intent: change_store
   examples: |
@@ -183,6 +248,9 @@ nlu:
     - Ir para o [Pingo Doce](store)
     - Mudar para o [Pingo Doce Madeira](store)
     - Mudar para [Medicamentos](store)
+    - Gostava de mudar para [Mercadão Solidário](store)
+    - Gostava de mudar de loja por favor
+    - Mudar a minha loja para [Sol Mar](store)
 
 - lookup: store
   examples: |
@@ -204,20 +272,30 @@ nlu:
 
 - intent: change_zip_code
   examples: |
-    - Mudar código postal
-    - Mudar morada
+    - Mudar o código postal
+    - Mudar a morada
+    - Mudar o meu código postal
+    - Mudar a minha morada
     - Alterar código postal
     - Alterar morada
+    - Alterar a minha morada
+    - Alterar o meu código postal
     - Editar código postal
     - Editar morada
+    - Eidtar a minha morada
+    - Editar o meu código postal
     - Quero mudar o código postal
     - Quero mudar a morada
+    - Quero alterar o meu código postal
+    - Quero alterar a minha morada
     - Quero alterar o código postal
     - Quero alterar a morada
     - Quero editar o código postal
     - Quero editar a morada
-    - Abrir código postal
-    - Abrir morada
+    - Quero editar o meu código postal
+    - Quero editar a minha morada
+    - Abrir o código postal
+    - Abrir a morada
     - Código postal
     - Morada
 
@@ -242,16 +320,24 @@ nlu:
 
 - intent: change_category
   examples: |
-    - Mudar para secção de [Campanhas](category)
+    - Mudar para secção de [Campanhas](category) por favor
+    - Mudar para a categoria de [Campanhas](category)
+    - Ir para a categoria de [As Nossas Marcas](category) por favor
     - Ir para a secção de [As Nossas Marcas](category)
     - Categoria de [Mercearia](category)
     - Secção de [Frutas e Legumes](category)
-    - Ir para a categoria de [Talho](category)
-    - Mudar para a categoria de [Peixaria](category)
-    - Quero ver a categoria de [Charcutaria](category)
-    - Quero ver a secção de [Padaria e Pastelaria](category)
-    - Quero ir para a categoria de [Take Away](category)
-    - Quero ir para a secção de [Congelados](category)
+    - Ir para a categoria de [Talho](category) por favor
+    - Ir para a secção de [Peixaria](category)
+    - Mudar para a categoria de [Peixaria](category) por favor
+    - Mudar para a secção de [Charcutaria](category)
+    - Quero ver a categoria de [Charcutaria](category) por favor
+    - Quero ver a categoria de [Padaria e Pastelaria](category)
+    - Quero ver a secção de [Padaria e Pastelaria](category) por favor
+    - Quero ver a secção de [Take Away](category)
+    - Quero ir para a categoria de [Take Away](category) por favor
+    - Quero ir para a categoria de [Congelados](category)
+    - Quero ir para a secção de [Congelados](category) por favor
+    - Quero ir para a secção de [Leite, Ovos e Natas](category)
     - Mudar para a zona de [Leite, Ovos e Natas](category)
     - Ir para a zona de [Frigorífico](category)
     - Zona de [Alternativas Vegetais](category)
@@ -262,6 +348,11 @@ nlu:
     - Ir a [Animais](category)
     - Ir à secção de [Tecnologia](category)
     - [Voltar](category) secção
+    - [Voltar](category) categoria
+    - [Voltar](category) secção atrás por favor
+    - [Voltar](category) categoria atrás por favor
+    - [Voltar](category) secção por favor
+    - [Voltar](category) categoria por favor
 
 - intent: help
   examples: |
@@ -309,6 +400,10 @@ nlu:
     - Quero ajuda com a [loja](help_option)
     - Quero ajuda com as [operações](help_option)
     - Quero ajuda com as [operações](help_option) disponíveis
+    - Quero ajuda em [todas](help_option) as interações
+    - Quero ajuda em [todas](help_option) as interações disponíveis
+    - Quero saber [todas](help_option) as interações
+    - Quero [todas](help_option) as ajudas
 
 - lookup: help_option
   examples: |
@@ -319,3 +414,4 @@ nlu:
     - morada
     - loja
     - operações
+    - todas

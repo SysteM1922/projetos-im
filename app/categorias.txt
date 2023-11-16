@@ -1,4 +1,4 @@
-Ver Todos
+Ver todos
 Voltar
 Campanhas
 As Nossas Marcas
@@ -182,3 +182,12 @@ Gorduras
 Atum
 Base Vegetal
 Nutrição Entérica e Celíacos
+Natal
+Entradas
+Ceia
+Chocolates
+Doçaria
+Iguarias Pingo Doce
+Bebidas
+Presentes
+Decoração e Casa

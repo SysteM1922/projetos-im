@@ -21,12 +21,12 @@ remove_words = ["remover", "retirar", "tirar", "apagar", "eliminar", "produto", 
 numeros = {"um": 1, "uma": 1, "dois": 2, "duas": 2, "três": 3, "tres": 3,
            "quatro": 4, "cinco": 5, "seis": 6, "sete": 7, "oito": 8, "nove": 9}
 
-filters = {"relevância": 1, "promoções": 2, "promoção": 2, "nomes": 3, "nome": 3, "preço baixo": 4, "preço crescente": 4,
+sorts = {"relevância": 1, "promoções": 2, "promoção": 2, "nomes": 3, "nome": 3, "preço baixo": 4, "preço crescente": 4,
            "preço mais baixo": 4, "preço decrescente": 5, "preço alto": 5, "preço mais alto": 5 }
 
 stores = {"pingo Doce": 1, "pingo doce madeira": 2, "pingo doce solmar açores": 3, "mercadão solidário": 4, "saúde": 5, "medicamentos": 6 }
 
-help_options = ["carrinho", "produtos", "loja", 
+help_options = ["carrinho", "produto", "código postal", "morada", "loja", "operações", "todas"]
 
 not_found = ["Desculpe, não percebi o que disse, pode repetir?", "Não percebi, pode repetir?", "Não percebi, pode repetir por favor?"
              "Desculpe não percebi o que disse, tente dizer mais devagar", "Não percebi, pode repetir mais devagar por favor?",
@@ -162,26 +162,28 @@ async def message_handler(driver: Driver, message: str):
                     if entity["extractor"] == "RegexEntityExtractor":
                         category = entity["value"].lower()
                         break
-                category = message["entities"][0]["value"].lower()
-                if category:
-                    cat = difflib.get_close_matches(category, categories_list, n=1, cutoff=0.6)[0]
-                    if cat:
-                        driver.change_category(cat)
-                    else:
+                if not category:
+                    try:
+                        category = message["entities"][0]["value"].lower()
+                    except:
                         driver.sendToVoice("Não percebi a categoria, pode repetir?")
+                        return
+                cat = difflib.get_close_matches(category, categories_list, n=1, cutoff=0.6)[0]
+                if cat:
+                    driver.change_category(cat)
                 else:
                     driver.sendToVoice("Não percebi a categoria, pode repetir?")
 
         elif intent == "change_zip_code":
             driver.open_zip_code()
 
-        elif intent == "order_items":
+        elif intent == "sort_items":
             if len(message["entities"]) > 0:
-                order_opt = message["entities"][0]["value"].lower()
-                if order_opt in filters:
-                    driver.order_items(filters[order_opt])
+                sort_opt = message["entities"][0]["value"].lower()
+                if sort_opt in sorts:
+                    driver.sort_items(sorts[sort_opt])
             else:
-                driver.order_items()
+                driver.sort_items()
 
         elif intent == "open_product":
             pass
@@ -189,16 +191,13 @@ async def message_handler(driver: Driver, message: str):
         elif intent == "help":
             if len(message["entities"]) > 0:
                 help_opt = message["entities"][0]["value"].lower()
-                if help_opt == "comandos":
-                    driver.sendToVoice("Os comandos disponíveis são: procurar, adicionar ao carrinho, remover do carrinho, abrir carrinho, fechar carrinho, limpar carrinho, finalizar compra, mudar loja, mudar categoria, mudar código postal, ordenar produtos, voltar, confirmar, cancelar, limpar texto, inserir número, rolar para cima, rolar para baixo, ajuda, sair")
-                elif help_opt == "categorias":
-                    driver.sendToVoice("As categorias disponíveis são: " + ", ".join(categories_list))
-                elif help_opt == "lojas":
-                    driver.sendToVoice("As lojas disponíveis são: " + ", ".join(stores.keys()))
-                elif help_opt == "filtros":
-                    driver.sendToVoice("Os filtros disponíveis são: relevância, promoções, nomes, preço baixo, preço decrescente, preço alto")
+                help_opt = difflib.get_close_matches(help_opt, help_options, n=1, cutoff=0.7)[0]
+                if help_opt:
+                    driver.help(help_opt)
                 else:
-                    driver.sendToVoice("Não percebi o que disse, pode repetir?")
+                    driver.sendToVoice("Em que posso ajudar?")
+            else:
+                driver.help()
 
         elif intent == "quit":
             if driver.quit():
