@@ -415,3 +415,59 @@ nlu:
     - loja
     - operações
     - todas
+
+- intent: filter_products
+  examples: |
+    - Filtrar por [Marca](filter_type)
+    - Filtrar por [Categoria](filter_type)
+    - Quero filtrar por [Marca](filter_type)
+    - Quero filtrar por [Categoria](filter_type)
+    - Filtrar por [Marca](filter_type) por favor
+    - Filtrar por [Categoria](filter_type) por favor
+    - Filtrar os produtos por [Marca](filter_type)
+    - Filtrar os produtos por [Categoria](filter_type)
+    - Filtrar a pesquisa por [Marca](filter_type)
+    - Filtrar a pesquisa por [Categoria](filter_type)
+    - Quero filtrar os produtos por [Marca](filter_type)
+    - Quero filtrar os produtos por [Categoria](filter_type)
+    - Filtrar por [Categoria](filter_type)
+    - Quero filtrar por [Marca](filter_type)
+    - Quero filtrar por [Categoria](filter_type)
+    - Filtrar por [Marca](filter_type) por favor
+    - Filtrar por [Categoria](filter_type) por favor
+    - Filtrar os produtos por [Marca](filter_type)
+    - Filtrar os produtos por [Categoria](filter_type)
+    - Filtrar a pesquisa por [Marca](filter_type)
+    - Filtrar a pesquisa por [Categoria](filter_type)
+    - Quero filtrar os produtos por [Marca](filter_type)
+    - Quero filtrar os produtos por [Categoria](filter_type)
+
+- lookup: filter_type
+  examples: |
+    - Marca
+    - Marcas
+    - Categoria
+    - Categorias
+
+- intent: choose_position
+  examples: |
+    - Escolher a [primeira]{"entity":"position", "value": 1} opção
+    - Escolher a [segunda]{"entity":"position", "value": 2} opção por favor
+    - Quero a [terceira]{"entity":"position", "value": 3} opção
+    - Quero a [quarta]{"entity":"position", "value": 4} opção por favor
+    - Filtrar pela [quinta]{"entity":"position", "value": 5} opção
+    - Filtrar pela [sexta]{"entity":"position", "value": 6} opção por favor
+    - A [sétima]{"entity":"position", "value": 7} opção
+    - A [oitava]{"entity":"position", "value": 8} opção por favor
+    - Abrir a [nona]{"entity":"position", "value": 9} opção
+    - Abrir a [décima]{"entity":"position", "value": 10} opção por favor
+    - Escolher a [primeira]{"entity":"position", "value": 1} opção
+    - Escolher a [segunda]{"entity":"position", "value": 2} opção por favor
+    - Quero a [terceira]{"entity":"position", "value": 3} opção
+    - Quero a [quarta]{"entity":"position", "value": 4} opção por favor
+    - Filtrar pela [quinta]{"entity":"position", "value": 5} opção
+    - Filtrar pela [sexta]{"entity":"position", "value": 6} opção por favor
+    - A [sétima]{"entity":"position", "value": 7} opção
+    - A [oitava]{"entity":"position", "value": 8} opção por favor
+    - Abrir a [nona]{"entity":"position", "value": 9} opção
+    - Abrir a [décima]{"entity":"position", "value": 10} opção por favor

@@ -188,6 +188,9 @@ async def message_handler(driver: Driver, message: str):
         elif intent == "open_product":
             pass
 
+        elif intent == "filter_products":
+            driver.get_filters()
+
         elif intent == "help":
             if len(message["entities"]) > 0:
                 help_opt = message["entities"][0]["value"].lower()

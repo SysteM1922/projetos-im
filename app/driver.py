@@ -140,6 +140,11 @@ class Driver():
                 items.append([item.find_element(By.CSS_SELECTOR, ".summary-item-name").text.lower(), item.find_element(By.CSS_SELECTOR, ".item-remove-btn")])
         
         return items
+    
+    def get_filters(self):
+        filters = []
+        for filter in self.driver.find_elements(By.TAG_NAME, "pdo-dropdown-content"):
+            print(filter.text)
 
     def open_zip_code(self):
         try:
@@ -316,50 +321,52 @@ class Driver():
         
         if option:
             if option == "carrinho" or option == "todas":
-                self.sendToVoice("Ajuda com o carrinho.")
-                self.sendToVoice("Pode adicionar a quantidade de produtos que desejar ao carrinho, desde que não ultrapasse as 30 unidades.")
-                self.sendToVoice("Pode remover produtos do carrinho, ou limpar o carrinho todo.")
-                self.sendToVoice("Abrir e fechar o carrinho, e efectuar o checkout dentro dele.")
+                self.sendToVoice("Ajuda com o carrinho."+
+                                "Pode adicionar a quantidade de produtos que desejar ao carrinho, desde que não ultrapasse as 30 unidades."+
+                                "Pode remover produtos do carrinho, ou limpar o carrinho todo."+
+                                "Abrir e fechar o carrinho, e efectuar o checkout dentro dele.")
                 time.sleep(1)
             if option == "produto" or option == "todas":
-                self.sendToVoice("Ajuda com os produtos.")
-                self.sendToVoice("Pode pesquisar por produtos, e ordenar os produtos por relevância, promoções, nome, preço mais alto ou preço mais baixo.")
-                self.sendToVoice("Pode filtrar os resultados por marca e categoria")
-                self.sendToVoice("Pode adicionar a quantidade de produtos que pretende ao carrinho e abrir o carrinho para ver os produtos que lá estão.")
-                self.sendToVoice("Pode remover produtos do carrinho, ou limpar o carrinho todo.")
-                self.sendToVoice("Pode pesquisar pelo nome do produto ou pela categoria do produto.")
-                self.sendToVoice("As categorias dos produtos encontram-se na lateral esquerda da página.")
+                self.sendToVoice("Ajuda com os produtos."+
+                                "Pode pesquisar por produtos, e ordenar os produtos por relevância, promoções, nome, preço mais alto ou preço mais baixo."+
+                                "Pode filtrar os resultados por marca e categoria"+
+                                "Pode adicionar a quantidade de produtos que pretende ao carrinho e abrir o carrinho para ver os produtos que lá estão."+
+                                "Pode remover produtos do carrinho, ou limpar o carrinho todo."+
+                                "Pode pesquisar pelo nome do produto ou pela categoria do produto."+
+                                "As categorias dos produtos encontram-se na lateral esquerda da página.")
                 time.sleep(1)
             if option == "código postal" or option == "morada" or option == "todas":
-                self.sendToVoice("Ajuda com o código postal/morada.")
-                self.sendToVoice("Pode adicionar ou alterar o código postal sempre que quiser.")
-                self.sendToVoice("Basta pedir para alterar o código postal e dizer o novo código postal.")
-                self.sendToVoice("Atenção: a alteração do código postal pode implicar a mudança de loja e a limpeza do carrinho.")
+                self.sendToVoice("Ajuda com o código postal/morada."+
+                                "Pode adicionar ou alterar o código postal sempre que quiser."+
+                                "Basta pedir para alterar o código postal e dizer o novo código postal."+
+                                "Atenção: a alteração do código postal pode implicar a mudança de loja e a limpeza do carrinho.")
                 time.sleep(1)
             if option == "loja" or option == "todas":
-                self.sendToVoice("Ajuda com a loja.")
-                self.sendToVoice("Pode mudar de loja sempre que quiser.")
-                self.sendToVoice("Basta pedir para mudar de loja e dizer o nome da loja.")
-                self.sendToVoice("Atenção: algumas lojas não estão disponíveis para a sua localização.")
+                self.sendToVoice("Ajuda com a loja."+
+                                "Pode mudar de loja sempre que quiser."+
+                                "Basta pedir para mudar de loja e dizer o nome da loja."+
+                                "Atenção: algumas lojas não estão disponíveis para a sua localização.")
                 time.sleep(1)
             if option == "operações" or option == "todas":
-                self.sendToVoice("Ajuda com as operações.")
-                self.sendToVoice("Pode voltar para a página anterior pedindo para voltar.")
-                self.sendToVoice("Pode confirmar operaçoes pedindo para confirmar.")
-                self.sendToVoice("Pode recusar operaçoes pedindo para cancelar.")
-                self.sendToVoice("Pode andar para cima e para baixo na página pedindo para subir ou descer.")
-                self.sendToVoice("Pode fechar o Mercadão pedindo para sair.")
-                self.sendToVoice("Pode pedir pesquisar por voz pedindo para pesquisar.")
-                self.sendToVoice("Pode ordenar e filtrar os resultados da pesquisa pedindo para ordenar ou filtrar.")
-                self.sendToVoice("Pode navegar pelas categorias e secções pedindo para mudar de categoria ou secção.")
-                self.sendToVoice("Pode fazer checkout pedindo para fazer checkout dentro do carrinho.")
-                self.sendToVoice("Pode pedir mais ajudas sobre o carrinho, os produtos, o código postal ou morada e sobre as lojas.")
-                self.sendToVoice("Pode pedir ajuda com as operações pedindo para ajuda.")
+                self.sendToVoice("Ajuda com as operações."+
+                                "Pode voltar para a página anterior pedindo para voltar."+
+                                "Pode confirmar operaçoes pedindo para confirmar."+
+                                "Pode recusar operaçoes pedindo para cancelar."+
+                                "Pode andar para cima e para baixo na página pedindo para subir ou descer."+
+                                "Pode fechar o Mercadão pedindo para sair."+
+                                "Pode pedir pesquisar por voz pedindo para pesquisar."+
+                                "Pode ordenar os resultados da pesquisa pedindo para ordenar."+
+                                "Pode filtrar os resultados da pesquisa pedindo para filtrar pela posição da marca ou categoria."+
+                                "Pode navegar pelas categorias e secções pedindo para mudar de categoria ou secção."+
+                                "Pode fazer checkout pedindo para fazer checkout dentro do carrinho."+
+                                "Pode pedir mais ajudas sobre o carrinho, os produtos, o código postal ou morada e sobre as lojas."+
+                                "Pode pedir ajuda com as operações pedindo para ajuda.")
                 time.sleep(1)
 
         else:
-            self.sendToVoice("Bem-vindo ao Mercadão. Obrigado por solicitar ajuda.")
-            self.sendToVoice("Posso ajudar com questões de interação por voz no site, nomeadamente sobre as lojas, os produtos, o carrinho, o código postal ou morada e com outras operações. Em que posso ajudar?")
+            self.sendToVoice("Bem-vindo ao Mercadão. Obrigado por solicitar ajuda."+
+                             "Posso ajudar com questões de interação por voz no site, nomeadamente sobre as lojas, os produtos, o carrinho, o código postal ou morada e com outras operações."+
+                             "Em que posso ajudar?")
         return True
 
     def close(self):

@@ -8,6 +8,7 @@ intents:
 - search_product
 - quit
 - insert_number
+- choose_position
 - open_cart
 - close_cart
 - clear_cart
@@ -29,6 +30,8 @@ entities:
 - sort
 - category
 - help_option
+- filter_type
+- position
 
 slots:
   action:
