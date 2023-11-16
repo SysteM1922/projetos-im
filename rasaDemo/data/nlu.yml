@@ -251,19 +251,29 @@ nlu:
     - Mostra-me os produtos na ordem de [Promoção](sort) por favor
     - Mostra-me os produtos na ordem de [Preço mais baixo](sort)
 
-- lookup: sort
+- synonym: Nome
   examples: |
-    - Relevância
-    - Nome
     - Nomes
-    - Promoção
+
+- synonym: Promoção
+  examples: |
     - Promoções
-    - Preço mais baixo
-    - Preço mais alto
-    - Preço crescente
-    - Preço decrescente
+
+- synonym: Preço mais baixo
+  examples: |
+    - Preços mais baixos
+    - Preço mais barato
+    - Preços mais baratos
     - Preço ascendente
+    - Preço crescente
+
+- synonym: Preço mais alto
+  examples: |
+    - Preços mais altos
+    - Preço mais caro
+    - Preços mais caros
     - Preço descendente
+    - Preço decrescente
 
 - intent: checkout
   examples: |
@@ -319,7 +329,6 @@ nlu:
 - synonym: "Medicamentos"
   examples: |
     - Mercadão Medicamentos
-
 
 - intent: change_zip_code
   examples: |

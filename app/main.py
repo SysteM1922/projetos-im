@@ -18,8 +18,7 @@ stop_words = ["procurar", "pesquisar", "produto", "por", "um", "uma" "comprar",
 
 remove_words = ["remover", "retirar", "tirar", "apagar", "eliminar", "produto", "do", "carrinho", "de", "compras"]
 
-sorts = {"relevância": 1, "promoções": 2, "promoção": 2, "nomes": 3, "nome": 3, "preço baixo": 4, "preço crescente": 4,
-           "preço mais baixo": 4, "preço decrescente": 5, "preço alto": 5, "preço mais alto": 5 }
+sorts = {"Relevância": 1, "Promoção": 2, "Nome": 3, "Preço mais baixo": 4, "preço mais alto": 5 }
 
 stores = {"Pingo Doce": 1, "Pingo Doce Madeira": 2, "Pingo Doce Solmar": 3, "Mercadão Solidário": 4, "Saúde": 5, "Medicamentos": 6 }
 
@@ -140,10 +139,10 @@ async def message_handler(driver: Driver, message: str):
 
         elif intent == "change_store":
             if len(message["entities"]) > 0:
-                store = message["entities"][0]["value"].lower()
-                store = difflib.get_close_matches(store, stores.keys(), n=1, cutoff=0.3)[0]
+                store = message["entities"][0]["value"]
+                store = stores.get(store, None)
                 if store:
-                    driver.change_store(stores[store])
+                    driver.change_store(store)
                 else:
                     driver.sendToVoice("Não percebi o nome da loja, pode repetir?")
             else:
@@ -173,7 +172,7 @@ async def message_handler(driver: Driver, message: str):
 
         elif intent == "sort_items":
             if len(message["entities"]) > 0:
-                sort_opt = message["entities"][0]["value"].lower()
+                sort_opt = message["entities"][0]["value"]
                 if sort_opt in sorts:
                     driver.sort_items(sorts[sort_opt])
             else:
