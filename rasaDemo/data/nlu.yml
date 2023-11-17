@@ -82,21 +82,21 @@ nlu:
     - Comprar produto
     - Quero adicionar [3](number) ao carrinho de compras
     - Quero meter [2](number) no carrinho de compras
-    - Quero colocar [um](number) no carrinho de compras
-    - Acrescentar [três](number) produtos ao carrinho de compras
+    - Quero colocar [quatro](number) no carrinho de compras
+    - Acrescentar [cinco](number) produtos ao carrinho de compras
     - Acrescentar produto
     - Adicionar produto ao carrinho
     - Quero levar [3](number) produtos 
     - Quero levar [2](number) por favor
     - Levar [2](number) produtos
-    - Levar [um](number)
-    - Vamos levar [três](number) destes
+    - Levar [seis](number)
+    - Vamos levar [sete](number) destes
     - Vamos levar [30](number) por favor
     - Quero [31](number) por favor
     - Levar [40](number)
-    - Quero comprar [cinco](number)
-    - Quero comprar [seis](number) unidades
-    - Quero comprar [sete](number) produtos
+    - Quero comprar [oito](number)
+    - Quero comprar [nove](number) unidades
+    - Quero comprar [dez](number) produtos
 
 - regex: number
   examples: |
@@ -183,21 +183,6 @@ nlu:
     - dez
     - 10ª
     - 10º
-
-- lookup: number
-  examples: |
-    - um
-    - uma
-    - dois
-    - duas
-    - três
-    - quatro
-    - cinco
-    - seis
-    - sete
-    - oito
-    - nove
-    - dez
 
 - intent: search_product
   examples: |
@@ -590,3 +575,12 @@ nlu:
     - Ver mais sobre [farinha](product)
     - Ver detalhes sobre o produto [frango](product)
     - Ver detalhes sobre o produto [donuts](product)
+    - Quero ver mais sobre o produto [gelatina](product)
+    - Quero saber mais sobre o produto [faca](product)
+    - Quero mais detalhes sobre o produto [melão](product)
+    - Quero ver o produto [açucar amarelo](product)
+    - Quero ver detalhes de [pão](product)
+    - Quero abrir o produto [chocolate](product)
+    - Quero abrir o produto [peixe](product)
+    - Quero saber mais detalhes sobre o produto [carne de porco](product)
+    - Quero saber mais sobre o produto [legumes](product)

@@ -1,6 +1,39 @@
-insert_number(clear text) --> affirm --> search_product 
---> scroll--> abrir com o mouse o produto --> add_to_cart --> return --> order items --> open_cart --> checkout(failed) -->
-clear_cart --> close_cart --> pesquisar por vinho --> add_to_cart --> open_cart --> remove_from_cart(vinho especifico) --> checkout 
 
-Story 2 
-deny --> change_store --> change_zip_code --> quit
+Inserir Código Postal (6000-041)
+Confirmar
+(Preciso de ajuda)
+(Quero mais ajuda com o carrinho)
+Pesquisar Produto (Quero procurar por Água)
+Abrir Produto (Quero saber mais detalhes sobre o produto Água com Gás Limão)
+(Adicionar quatro ao carrinho)
+(Voltar para a página anterior)
+(Quero ver a secção mercearia)
+(Quero ver a secção arroz)
+(Ordenar por promoção)
+(Quero filtrar por marcas)
+(Escolher a terceira opção)
+(Quero ver mais detalhes sobre o produto arroz carolino)
+(Adicionar ao carrinho)
+(Quer ver o que está no carrinho)
+(Quero efetuar o pagamento)
+(Quero sair do carrinho)
+(Vamos procurar por vinho)
+(Ver mais detalhes sobre Vinho Branco Cartuxa)
+(Adicionar 10 ao carrinho)
+(A continha faz favor)
+(Vamos fazer o pagamento)
+
+
+
+(Sair do código Postal)
+(Quero mudar de loja)
+(Puxar a página para baixo)
+(Vamos mudar para o Pingo Doce Solmar)
+(Quero mudar a minha morada)
+(9560-010)
+(Confirmar)
+Escolher loja
+(Quero ver o carrinho)
+(Quero remover do carrinho Ambientador Vela)
+(Quero limpar o carrinho)
+(Terminar)

@@ -60,7 +60,7 @@ async def message_handler(driver: Driver, message: str):
     elif message["intent"]["name"]:
         intent = message["intent"]["name"]
 
-        if message["intent"]["confidence"] < 0.7:
+        if message["intent"]["confidence"] < 0.6:
             command_not_found()
 
         elif intent == "return":
