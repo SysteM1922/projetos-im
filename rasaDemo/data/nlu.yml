@@ -573,3 +573,20 @@ nlu:
     - A [oitava](number) opção por favor
     - Abrir a [nona](number) opção
     - Abrir a [décima](number) opção por favor
+
+- intent: open_product
+  examples: |
+    - Abrir [melão](product)
+    - Abrir [açucar amarelo](product)
+    - Ver detalhes de [pão](product)
+    - Ver detalhes de [chocolate](product)
+    - Abrir o produto [peixe](product)
+    - Abrir o produto [carne de porco](product)
+    - Abrir [legumes](product)
+    - Abrir [oregãos](product)
+    - Ver [pizza](product)
+    - Ver [salada](product)
+    - Ver mais sobre [gomas](product)
+    - Ver mais sobre [farinha](product)
+    - Ver detalhes sobre o produto [frango](product)
+    - Ver detalhes sobre o produto [donuts](product)

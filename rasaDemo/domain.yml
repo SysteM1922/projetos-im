@@ -21,6 +21,7 @@ intents:
 - change_category
 - filter_products
 - help
+- open_product
 
 entities:
 - direction

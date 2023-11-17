@@ -1,4 +1,5 @@
 import random
+import time
 from driver import Driver
 import websockets
 import asyncio
@@ -15,7 +16,7 @@ OUTPUT = "127.0.0.1:8000"
 
 stop_words = ["procurar", "pesquisar", "produto", "por", "um", "uma" "comprar",
               "procura", "pesquisa", "compra", "para", "quero", "querer", "pelas",
-              "pelos", "os", "as", "o", "a", "pelo", "pela"]
+              "pelos", "os", "as", "o", "a", "pelo", "pela", "detalhes", "abrir", "ver", "sobre"]
 
 remove_words = ["remover", "retirar", "tirar", "apagar", "eliminar", "produto", "do", "carrinho", "de", "compras"]
 
@@ -59,7 +60,7 @@ async def message_handler(driver: Driver, message: str):
     elif message["intent"]["name"]:
         intent = message["intent"]["name"]
 
-        if message["intent"]["confidence"] < 0.8:
+        if message["intent"]["confidence"] < 0.7:
             command_not_found()
 
         elif intent == "return":
@@ -91,7 +92,6 @@ async def message_handler(driver: Driver, message: str):
                     if entity["extractor"] == "DIETClassifier":
                         qty_init = entity["value"]
                         break
-                print(qty_init)
                 driver.add_to_cart(int(qty_init))
             else:
                 driver.add_to_cart()
@@ -135,6 +135,26 @@ async def message_handler(driver: Driver, message: str):
                     driver.sendToVoice("Não percebi o nome do produto, pode repetir?")
             else:
                 driver.sendToVoice("É necessário abrir o carrinho para efectuar esta operação")
+
+        elif intent == "open_product":
+            products = {re.sub(r'[^a-zA-Z0-9\s]', '', unidecode(x.text.lower())).strip(): x for x in driver.get_products()}
+            words = message["text"].lower().split()
+            
+            input_word = None
+            for idx in range(len(words)-1, -1, -1):
+                if words[idx] in stop_words:
+                    input_word = words[idx+1:]
+                    break
+            if input_word:
+                input_word = " ".join(input_word)
+                sim = difflib.get_close_matches(unidecode(input_word), list(products.keys()), n=1, cutoff=0.3)[0]
+                if sim:
+                    driver.open_product(sim, products[sim])
+                else:
+                    driver.sendToVoice("Não percebi o nome do produto, pode repetir?")
+            else:
+                driver.sendToVoice("Não percebi o nome do produto, pode repetir?")
+
         
         elif intent == "checkout":
             driver.checkout()

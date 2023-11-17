@@ -122,7 +122,6 @@ class Driver():
         return True
     
     def change_category(self, name):
-        print("Categoria: ", name)
         try:
             if name == "Voltar":
                 self.driver.find_element(By.CSS_SELECTOR, ".sidebar-back > .pdo-middle").click()
@@ -328,6 +327,41 @@ class Driver():
             self.driver.get("https://www.mercadao.pt")
             self.sendToVoice("Por favor escolha uma loja.")
         return True
+    
+    def get_products(self):
+        # Execute um script JavaScript para obter os elementos visíveis
+        script = """
+            var elements = document.querySelectorAll('{}');
+            var visibleElements = [];
+            for (var i = 0; i < elements.length; i++) {{
+                var element = elements[i];
+                var rect = element.getBoundingClientRect();
+                var isVisible = (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+                if (isVisible) {{
+                    visibleElements.push(element);
+                }}
+            }}
+            console.log(visibleElements);   
+            return visibleElements;
+        """.format("pdo-product-item")
+
+        elements = self.driver.execute_script(script)
+        return [element.find_element(By.TAG_NAME, "h3") for element in elements]
+    
+    def open_product(self, product, button):
+        try:
+            button.click()
+            self.sendToVoice(f"A abrir {product}.")
+        except:
+            self.sendToVoice(f"Não é possível abrir {product}.")
+            return False
+        return True
+
 
     def quit(self):
         if self.close_cart() or self.close_zip_code():
