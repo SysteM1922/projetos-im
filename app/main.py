@@ -147,7 +147,7 @@ async def message_handler(driver: Driver, message: str):
                     break
             if input_word:
                 input_word = " ".join(input_word)
-                sim = difflib.get_close_matches(unidecode(input_word), list(products.keys()), n=1, cutoff=0.3)[0]
+                sim = difflib.get_close_matches(unidecode(input_word), list(products.keys()), n=1, cutoff=0.2)[0]
                 if sim:
                     driver.open_product(sim, products[sim])
                 else:
