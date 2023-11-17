@@ -140,11 +140,6 @@ class Driver():
                 items.append([item.find_element(By.CSS_SELECTOR, ".summary-item-name").text.lower(), item.find_element(By.CSS_SELECTOR, ".item-remove-btn")])
         
         return items
-    
-    def get_filters(self):
-        filters = []
-        for filter in self.driver.find_elements(By.TAG_NAME, "pdo-dropdown-content"):
-            print(filter.text)
 
     def open_zip_code(self):
         try:
@@ -188,12 +183,10 @@ class Driver():
             return False
         return True
 
-    def confirm_zip_code(self):
+    def confirm(self):
         try:
             self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
-            self.sendToVoice("Código postal atualizado com sucesso.")
         except:
-            self.sendToVoice("Não existe código postal por confirmar.")
             return False
         return True
 
@@ -214,14 +207,17 @@ class Driver():
 
     def affirm(self):
         if self.driver.find_elements(By.XPATH, "//p[contains(.,'Insira o código-postal e comece a comprar!')]"):
-            self.confirm_zip_code()
+            if self.confirm():
+                self.sendToVoice("Código postal atualizado com sucesso.")
+                return True
+            else:
+                self.sendToVoice("Não existe código postal por confirmar.")
+                return False
         elif self.driver.find_elements(By.XPATH, "//p[contains(.,'Ao mudar de morada o seu carrinho pode sofrer alterações!')]"):
-            self.confirm_zip_code()
+            return self.confirm()
         elif self.driver.find_elements(By.XPATH, "//p[contains(.,'A marca actual não existe para entrega nesta localização!')]"):
-            self.confirm_zip_code()
-        else:
-            return False
-        return True
+            return self.confirm()
+        return False
 
     def open_cart(self):
         if "-open" in self.driver.find_element(By.TAG_NAME, "aside").get_attribute('class'):
@@ -250,6 +246,38 @@ class Driver():
                 self.sendToVoice("Não é possível ordernar nesta página.")
                 return False
         return True
+
+    def choose_position(self, position: int = None):
+        if position:
+            try:
+                self.driver.find_element(By.CSS_SELECTOR, f".dropdown-item:nth-child({position}) .ui-chkbox-icon").click()
+            except:
+                self.sendToVoice("Essa opção não existe.")
+                return False
+        else:
+            self.sendToVoice("Desculpe, não entendi a opção.")
+            return False
+        return True
+    
+    def filter_products(self, filter_opt: int = None, position: int = None):
+        if filter_opt:
+            if filter_opt == "marca":
+                try:
+                    self.driver.find_element(By.CSS_SELECTOR, ".pdo-block > .pdo-dropdown-filter .pdo-block").click()
+                    if position:
+                        time.sleep(1)
+                        self.choose_position(position)
+                except:
+                    self.sendToVoice("Não é possível filtrar nesta página.")
+                    return False
+            elif filter_opt == "categoria":
+                try:
+                    self.driver.find_element(By.CSS_SELECTOR, ".filter-column:nth-child(3) .pdo-block").click()
+                except:
+                    self.sendToVoice("Não é possível filtrar nesta página.")
+                    return False
+        else:
+            self.sendToVoice("Por favor escolha um filtro entre Marca e Categoria")
             
     def checkout(self):
         if "-open" in self.driver.find_element(By.TAG_NAME, "aside").get_attribute('class'):
@@ -276,7 +304,7 @@ class Driver():
                 msg = "Loja alterada para Pingo Doce Madeira."
             elif store == 3:
                 url = "https://www.mercadao.pt/store/solmar-acores"
-                msg = "Loja alterada para Solmar Açores."
+                msg = "Loja alterada para Pingo Doce Solmar Açores."
             elif store == 4:
                 url = "https://www.mercadao.pt/store/mercadao-solidario"
                 msg = "Loja alterada para Mercadão Solidário."
@@ -290,7 +318,7 @@ class Driver():
                 return False
 
             self.driver.get(url)
-            time.sleep(1)
+            time.sleep(2)
             if self.driver.current_url == url:
                 self.sendToVoice(msg)
             else:
@@ -303,8 +331,8 @@ class Driver():
 
     def quit(self):
         if self.close_cart() or self.close_zip_code():
-            self.sendToVoice("A sair do Mercadão.")
             return False
+        self.sendToVoice("A sair do Mercadão.")
         return True
 
     def reject_cookies(self):

@@ -14,7 +14,8 @@ HOST = "127.0.0.1:8005"
 OUTPUT = "127.0.0.1:8000"
 
 stop_words = ["procurar", "pesquisar", "produto", "por", "um", "uma" "comprar",
-              "procura", "pesquisa", "compra", "para", "quero", "querer"]
+              "procura", "pesquisa", "compra", "para", "quero", "querer", "pelas",
+              "pelos", "os", "as", "o", "a", "pelo", "pela"]
 
 remove_words = ["remover", "retirar", "tirar", "apagar", "eliminar", "produto", "do", "carrinho", "de", "compras"]
 
@@ -58,7 +59,7 @@ async def message_handler(driver: Driver, message: str):
     elif message["intent"]["name"]:
         intent = message["intent"]["name"]
 
-        if message["intent"]["confidence"] < 0.65:
+        if message["intent"]["confidence"] < 0.8:
             command_not_found()
 
         elif intent == "return":
@@ -85,11 +86,12 @@ async def message_handler(driver: Driver, message: str):
 
         elif intent == "add_to_cart":
             if len(message["entities"]) > 0:
-                qty_init = None
+                qty_init = 0
                 for entity in message["entities"]:
                     if entity["extractor"] == "DIETClassifier":
                         qty_init = entity["value"]
                         break
+                print(qty_init)
                 driver.add_to_cart(int(qty_init))
             else:
                 driver.add_to_cart()
@@ -138,8 +140,9 @@ async def message_handler(driver: Driver, message: str):
             driver.checkout()
 
         elif intent == "change_store":
-            if len(message["entities"]) > 0:
-                store = message["entities"][0]["value"]
+            lst = [entity for entity in message["entities"] if entity["entity"] == "store"]
+            if len(lst) > 0:
+                store = lst[0]["value"]
                 store = stores.get(store, None)
                 if store:
                     driver.change_store(store)
@@ -178,11 +181,25 @@ async def message_handler(driver: Driver, message: str):
             else:
                 driver.sort_items()
 
-        elif intent == "open_product":
-            pass
-
         elif intent == "filter_products":
-            driver.get_filters()
+            position = None
+            filter_opt = None
+            if len(message["entities"]) > 0:
+                for entity in message["entities"]:
+                    if entity["entity"]=="number" and entity["extractor"] == "DIETClassifier":
+                        position = entity["value"]
+                    elif entity["entity"]=="filter_type":
+                        filter_opt = entity["role"]
+            driver.filter_products(filter_opt, position)
+
+        elif intent == "choose_position":
+            if len(message["entities"]) > 0:
+                for entity in message["entities"]:
+                    if entity["entity"]=="number" and entity["extractor"] == "DIETClassifier":
+                        driver.choose_position(entity["value"])
+                        break
+            else:
+                driver.choose_position()
 
         elif intent == "help":
             if len(message["entities"]) > 0:

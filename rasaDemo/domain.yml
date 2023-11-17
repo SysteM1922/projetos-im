@@ -18,7 +18,6 @@ intents:
 - clear_text
 - change_zip_code
 - remove_from_cart
-- open_product
 - change_category
 - filter_products
 - help

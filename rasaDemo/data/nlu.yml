@@ -22,7 +22,6 @@ nlu:
     - Nem por isso
     - Negar
     - Negativo
-    - Cancelar
 
 - intent: return
   examples: |
@@ -78,7 +77,9 @@ nlu:
     - Colocar [um](number) no carrinho
     - Adicionar [três](number) ao carrinho
     - Adicionar
+    - Adicionar produto
     - Comprar
+    - Comprar produto
     - Quero adicionar [3](number) ao carrinho de compras
     - Quero meter [2](number) no carrinho de compras
     - Quero colocar [um](number) no carrinho de compras
@@ -93,6 +94,9 @@ nlu:
     - Vamos levar [30](number) por favor
     - Quero [31](number) por favor
     - Levar [40](number)
+    - Quero comprar [cinco](number)
+    - Quero comprar [seis](number) unidades
+    - Quero comprar [sete](number) produtos
 
 - regex: number
   examples: |
@@ -104,6 +108,8 @@ nlu:
     - primeira
     - um
     - uma
+    - 1ª
+    - 1º
 
 - synonym: "2"
   examples: |
@@ -111,65 +117,98 @@ nlu:
     - segundo
     - dois
     - duas
+    - 2ª
+    - 2º
 
 - synonym: "3"
   examples: |
     - terceira
     - terceiro
     - três
+    - 3ª
+    - 3º
 
 - synonym: "4"
   examples: |
     - quarta
     - quarto
     - quatro
+    - 4ª
+    - 4º
 
 - synonym: "5"
   examples: |
     - quinta
     - quinto
     - cinco
+    - 5ª
+    - 5º
 
 - synonym: "6"
   examples: |
     - sexta
     - sexto
     - seis
+    - 6ª
+    - 6º
 
 - synonym: "7"
   examples: |
     - sétima
     - sétimo
     - sete
+    - 7ª
+    - 7º
 
 - synonym: "8"
   examples: |
     - oitava
     - oitavo
     - oito
+    - 8ª
+    - 8º
 
 - synonym: "9"
   examples: |
     - nona
     - nono
     - nove
+    - 9ª
+    - 9º
 
 - synonym: "10"
   examples: |
     - décima
     - décimo
     - dez
+    - 10ª
+    - 10º
+
+- lookup: number
+  examples: |
+    - um
+    - uma
+    - dois
+    - duas
+    - três
+    - quatro
+    - cinco
+    - seis
+    - sete
+    - oito
+    - nove
+    - dez
 
 - intent: search_product
   examples: |
-    - Quero um [melão]
-    - Procurar por [açucar amarelo]
-    - Vamos comprar [pão]
-    - Estou à procura de [chocolate]
-    - Quero comprar [peixe]
-    - Pesquisar por [carne de porco]
-    - Encontrar [legumes]
-    - Quero procurar [oregãos]
+    - Quero um [melão](product)
+    - Procurar por [açucar amarelo](product)
+    - Vamos comprar [pão](product)
+    - Estou à procura de [chocolate](product)
+    - Quero comprar [peixe](product)
+    - Pesquisar por [carne de porco](product)
+    - Encontrar [legumes](product)
+    - Quero procurar [oregãos](product)
 
 - intent: quit
   examples: |
@@ -177,6 +216,7 @@ nlu:
     - Fechar
     - Terminar
     - Desligar
+    - Cancelar
 
 - intent: open_cart
   examples: |
@@ -235,6 +275,7 @@ nlu:
     - Apagar texto
     - Recomeçar o texto
     - Recomeçar
+    - Limpar a pesquisa
 
 - intent: sort_items
   examples: |
@@ -293,6 +334,13 @@ nlu:
     - A conta por favor
     - Quero pagar a conta
     - Quero pagar a conta por favor
+    - Quero proceder ao pagamento
+    - Quero proceder ao pagamento por favor
+    - Quero finalizar a compra
+    - Quero fazer o pagamento
+    - Quero fazer o pagamento por favor
+    - Quero pagar
+    - Quero pagar por favor
 
 - intent: change_store
   examples: |
@@ -317,6 +365,7 @@ nlu:
     - Sol Mar
     - Pingo Doce Sol Mar
     - Pingo Doce Solmar
+    - Pingo Doce Açores
 
 - synonym: "Solidário"
   examples: |
