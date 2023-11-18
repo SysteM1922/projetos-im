@@ -9,22 +9,22 @@ Projetos da Unidade Curricular de Interação Multimodal 2023/2024
 ## How to setup
 - Extrair da pasta DemoMMI.zip as pastas FusionEngine e mmiframeworkV2<p>ATENÇÂO: NÃO SUBSTITUIR AS PASTAS rasaDemo e WebAppAssistantV2</p>
 - Criar um venv
-<br>
+
 ```bat
 py -3.10 -m venv venv
 ```
-<br>
 - Ativar o venv
+
 ```bat
 .\venv\Scripts\activate
 ```
-<br>
 - Instalar os requirements
+
 ```bat
 pip install -r .\requirements.txt
 ```
-<br>
 - Treinar o Rasa
+
 ```bat
 cd rasaDemo
 rasa train
