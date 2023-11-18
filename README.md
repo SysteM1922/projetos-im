@@ -9,7 +9,6 @@ Projetos da Unidade Curricular de Interação Multimodal 2023/2024
 ## How to setup
 
 - Extrair da pasta DemoMMI.zip as pastas FusionEngine e mmiframeworkV2
-<br>
 ATENÇÂO: NÃO SUBSTITUIR AS PASTAS rasaDemo e WebAppAssistantV2
 - Criar um venv
 ```bat
