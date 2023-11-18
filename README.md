@@ -7,8 +7,7 @@ Projetos da Unidade Curricular de Interação Multimodal 2023/2024
 - Conexão à Internet
 
 ## How to setup
-
-- Extrair da pasta DemoMMI.zip as pastas FusionEngine e mmiframeworkV2
+Extrair da pasta DemoMMI.zip as pastas FusionEngine e mmiframeworkV2
 <p>
 ATENÇÂO: NÃO SUBSTITUIR AS PASTAS rasaDemo e WebAppAssistantV2
 <p/>
