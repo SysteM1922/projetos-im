@@ -13,14 +13,17 @@ Projetos da Unidade Curricular de Interação Multimodal 2023/2024
 ```bat
 py -3.10 -m venv venv
 ```
+<br>
 - Ativar o venv
 ```bat
 .\venv\Scripts\activate
 ```
+<br>
 - Instalar os requirements
 ```bat
 pip install -r .\requirements.txt
 ```
+<br>
 - Treinar o Rasa
 ```bat
 cd rasaDemo
