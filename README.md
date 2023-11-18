@@ -12,6 +12,7 @@ Extrair da pasta DemoMMI.zip as pastas FusionEngine e mmiframeworkV2
 ATENÇÂO: NÃO SUBSTITUIR AS PASTAS rasaDemo e WebAppAssistantV2
 <p/>
 - Criar um venv
+<br/>
 ```bat
 py -3.10 -m venv venv
 ```
