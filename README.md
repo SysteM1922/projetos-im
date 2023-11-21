@@ -1,5 +1,8 @@
 # projeto-im
-Projetos da Unidade Curricular de Interação Multimodal 2023/2024
+<h1>Projeto 1 da Unidade Curricular de Interação Multimodal 2023/2024</h1>
+<h2>103600 Guilherme Costa Antunes</h2>
+<h2>103668 Gonçalo Rodrigues Silva</h2>
+<h3>Nota: 18</h3>
 
 ## Requirements
 - Chrome
