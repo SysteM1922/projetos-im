@@ -1,3 +1,4 @@
 selenium
 websockets
 unidecode
+httpx

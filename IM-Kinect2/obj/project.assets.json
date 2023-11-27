@@ -1,0 +1,119 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0-windows7.0": {
+      "Microsoft.Kinect/2.0.1410.19000": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Microsoft.Kinect.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Kinect.dll": {
+            "related": ".xml"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Microsoft.Kinect/2.0.1410.19000": {
+      "sha512": "DrmYR/q4Ne49LFluomcxwuiCDq6Gw2xgQqLXYUGCRVkzF/fEaNFy+OfdH6lSWTX32VFbuDueDph9E865bvq4oQ==",
+      "type": "package",
+      "path": "microsoft.kinect/2.0.1410.19000",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Microsoft.Kinect.dll",
+        "lib/net45/Microsoft.Kinect.xml",
+        "microsoft.kinect.2.0.1410.19000.nupkg.sha512",
+        "microsoft.kinect.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0-windows7.0": [
+      "Microsoft.Kinect >= 2.0.1410.19000"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Gui\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\Gui\\OneDrive\\Universidade\\4o Ano - UA\\1o Semestre\\Interação Multimodal\\Projetos\\projetos-im\\IM-Kinect2\\IM-Kinect2.csproj",
+      "projectName": "IM-Kinect2",
+      "projectPath": "C:\\Users\\Gui\\OneDrive\\Universidade\\4o Ano - UA\\1o Semestre\\Interação Multimodal\\Projetos\\projetos-im\\IM-Kinect2\\IM-Kinect2.csproj",
+      "packagesPath": "C:\\Users\\Gui\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Gui\\OneDrive\\Universidade\\4o Ano - UA\\1o Semestre\\Interação Multimodal\\Projetos\\projetos-im\\IM-Kinect2\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Gui\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0-windows"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0-windows7.0": {
+        "targetAlias": "net6.0-windows",
+        "dependencies": {
+          "Microsoft.Kinect": {
+            "target": "Package",
+            "version": "[2.0.1410.19000, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          },
+          "Microsoft.WindowsDesktop.App.WPF": {
+            "privateAssets": "none"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.404\\RuntimeIdentifierGraph.json"
+      }
+    }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "O pacote 'Microsoft.Kinect 2.0.1410.19000' foi restaurado usando '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' em vez da estrutura de destino do projeto 'net6.0-windows7.0'. Esse pacote pode não ser totalmente compatível com o seu projeto.",
+      "libraryId": "Microsoft.Kinect",
+      "targetGraphs": [
+        "net6.0-windows7.0"
+      ]
+    }
+  ]
+}
