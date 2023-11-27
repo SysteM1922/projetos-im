@@ -160,8 +160,5 @@ cython_debug/
 #.idea/
 
 # Project Files
-CAroot.crt
-FusionEngine/
-mmiframeworkV2/
 rasaDemo/.rasa/cache
 rasaDemo/models
