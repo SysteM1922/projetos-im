@@ -1,5 +1,9 @@
 # projeto-im
-Projetos da Unidade Curricular de Interação Multimodal 2023/2024
+<h1>Projeto 1 da Unidade Curricular de Interação Multimodal 2023/2024</h1>
+<h2>103668 Gonçalo Rodrigues Silva<br>
+103600 Guilherme Costa Antunes
+</h2>
+<h3>Nota: 18</h3>
 
 ## Requirements
 - Chrome
@@ -7,23 +11,24 @@ Projetos da Unidade Curricular de Interação Multimodal 2023/2024
 - Conexão à Internet
 
 ## How to setup
-
-- Extrair da pasta DemoMMI.zip as pastas FusionEngine e mmiframeworkV2
-<br>
-ATENÇÂO: NÃO SUBSTITUIR AS PASTAS rasaDemo e WebAppAssistantV2
+- Extrair da pasta DemoMMI.zip as pastas FusionEngine e mmiframeworkV2<p>ATENÇÂO: NÃO SUBSTITUIR AS PASTAS rasaDemo e WebAppAssistantV2</p>
 - Criar um venv
+
 ```bat
 py -3.10 -m venv venv
 ```
 - Ativar o venv
+
 ```bat
 .\venv\Scripts\activate
 ```
 - Instalar os requirements
+
 ```bat
 pip install -r .\requirements.txt
 ```
 - Treinar o Rasa
+
 ```bat
 cd rasaDemo
 rasa train
