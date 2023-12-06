@@ -1,0 +1,38 @@
+<!--This XML file contains the gestures of the database.-->
+<Gestures>
+  <Gesture>
+    <ID>0</ID>
+    <NAME>Push</NAME>
+    <SEMANTIC>Push</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>1</ID>
+    <NAME>SwipeDown</NAME>
+    <SEMANTIC>SwipeD</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>2</ID>
+    <NAME>SwipeLeft</NAME>
+    <SEMANTIC>SwipeL</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>3</ID>
+    <NAME>SwipeRight</NAME>
+    <SEMANTIC>SwipeR</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>4</ID>
+    <NAME>SwipeUp</NAME>
+    <SEMANTIC>SwipeU</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>5</ID>
+    <NAME>ThumbDown</NAME>
+    <SEMANTIC>ThumbD</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>6</ID>
+    <NAME>ThumbUp</NAME>
+    <SEMANTIC>ThumbU</SEMANTIC>
+  </Gesture>
+</Gestures>

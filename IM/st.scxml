@@ -233,7 +233,7 @@
 				<!-- EVENT FROM FUSION -->
 				<if cond="${_eventdata.sourceMC eq 'FUSION'}">
 					<assign name="JSONDATA" expr="${DATA(_eventdata.data, '//emma/interpretation/command')}" />
-					<assign name="TARG" expr="${JsonParse(JSONDATA, 'recognized/2')}" />
+					<assign name="TARG" expr="APP" /> <!--  expr="${JsonParse(JSONDATA, 'recognized/2')}" -->
 					<assign name="currAction" expr="command" />
 					<assign name="Action" expr="${_eventdata.data}" />
 					<commons:var name="startRequest" expr="${mmi:newStartRequest(contextId, source, TARG, mmi:newRequestId(contextId), currAction, Action)}" />
@@ -271,6 +271,10 @@
 					<assign name="Action" expr="${_eventdata.data}" />
 					<commons:var name="startRequest" expr="${mmi:newStartRequest(contextId, source, TARG, mmi:newRequestId(contextId), currAction, Action)}" />
 					<send event="mmi:startRequest" target="${TARG}" targettype="MC" namelist="startRequest" />
+				</if>
+				<if cond="${_eventdata.sourceMC eq 'FUSION'}">
+					<commons:var name="startRequest" expr="${mmi:newStartRequest(contextId, source, 'APP', mmi:newRequestId(contextId), currAction, Action)}" />
+					<send event="mmi:startRequest" target="APP" targettype="MC" namelist="startRequest" />
 				</if>
 			</transition>
 		</state>
