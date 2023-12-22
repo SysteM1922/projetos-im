@@ -160,4 +160,5 @@ cython_debug/
 #.idea/
 
 # Project Files
-*.gbd
+GenericGesturesModality-2023-SRC/
+GenericGesturesModality-2023-SRC.zip

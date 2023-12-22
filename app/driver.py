@@ -5,6 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 import time
+from enums import CategoryPage, Direction
+from selenium.webdriver.common.action_chains import ActionChains
 
 def do_nothing(message):
     pass
@@ -24,14 +26,30 @@ class Driver():
         time.sleep(1)
         self.open_zip_code()
 
+        # Gesture variables
+
+        self.current_side_bar_index = 0
+        self.last_category = CategoryPage.MAIN
+        self.last_element = None
+
+        self.current_product_index = 0
+        self.last_product = None
+
+        self.last_url = ""
+
+        self.on_categories = False
+        self.on_products = False
+
     def return_to_previous_page(self):
         self.driver.back()
 
     def scroll_down(self):
-        self.driver.execute_script("window.scrollBy(0, 400);")
+        for _ in range(400):
+            self.driver.execute_script("window.scrollBy(0, 1);")
 
     def scroll_up(self):
-        self.driver.execute_script("window.scrollBy(0, -400);")
+        for _ in range(400):
+            self.driver.execute_script("window.scrollBy(0, -1);")
 
     def add_to_cart(self, qty=1):
         if "/product/" not in self.driver.current_url:
@@ -346,7 +364,6 @@ class Driver():
                     visibleElements.push(element);
                 }}
             }}
-            console.log(visibleElements);   
             return visibleElements;
         """.format("pdo-product-item")
 
@@ -433,3 +450,185 @@ class Driver():
 
     def close(self):
         self.driver.close()
+
+    def get_categories(self):
+        sidebar = self.driver.find_elements(By.CLASS_NAME, "pdo-store-sidebar")
+        if any([element.text for element in sidebar[2].find_elements(By.TAG_NAME, "a")]):
+            return CategoryPage.SECONDARY, sidebar[2]
+        else:
+            return CategoryPage.MAIN, sidebar[1]
+        
+    def unmark_element(self):
+        if self.last_element:
+            try:
+                self.driver.execute_script("arguments[0].style.border='0px solid red'", self.last_element)
+                self.last_element = None
+            except:
+                return False
+        return True
+
+    def change_category_gestures(self, direction: Direction):
+        self.check_url_change()
+        self.on_categories = True
+        try:
+            page, sidebar = self.get_categories()
+            self.unmark_element()
+            if page == self.last_category:
+                if self.current_side_bar_index == 0 and direction == Direction.UP:
+                    if self.current_side_bar_index == -1:
+                        return True
+                    self.current_side_bar_index -= 1
+                    return True
+                elif self.current_side_bar_index == len(sidebar.find_elements(By.TAG_NAME, "a"))-1 and direction == Direction.DOWN:
+                    if self.current_side_bar_index == len(sidebar.find_elements(By.TAG_NAME, "a")):
+                        return True
+                    self.current_side_bar_index += 1
+                    return True
+                else:
+                    if direction == Direction.UP:
+                        self.current_side_bar_index -= 1
+                    elif direction == Direction.DOWN:
+                        self.current_side_bar_index += 1
+                    self.last_element = sidebar[self.current_side_bar_index]
+                    self.driver.execute_script("arguments[0].style.border='3px solid red'", self.last_element)
+            else:
+                self.current_side_bar_index = 0
+                self.last_category = page
+                self.last_element = sidebar[self.current_side_bar_index]
+                self.driver.execute_script("arguments[0].style.border='3px solid red'", self.last_element)
+        except:
+            self.sendToVoice("Não foi possível mudar de categoria.")
+            return False
+        return True
+        
+    def navigate_to_element(self, element):
+        try:
+            actions = ActionChains(self.driver)
+            actions.move_to_element(element)
+            actions.perform()
+        except:
+            return False
+        return True
+    
+    def unmark_product(self):
+        if self.last_product:
+            try:
+                self.driver.execute_script("arguments[0].style.border='0px solid red'", self.last_product)
+                self.last_product = None
+            except:
+                return False
+        return True
+    
+    def check_url_change(self):
+        self.on_categories = False
+        self.on_products = False
+        if self.driver.current_url != self.last_url:
+            self.current_side_bar_index = 0
+            self.current_product_index = 0
+            self.last_url = self.driver.current_url
+            self.unmark_element()
+            self.unmark_product()
+        return False
+    
+    def get_products(self):
+        return self.driver.find_elements(By.TAG_NAME, "pdo-product-item")
+    
+    def change_product_gestures(self, direction: Direction):
+        self.check_url_change()
+        self.on_products = True
+        try:
+            self.remove_mark()
+            products = self.get_products()
+            self.unmark_product()
+            if self.current_product_index == 0 and direction == Direction.LEFT:
+                if self.current_product_index == -1:
+                    return True
+                self.current_product_index -= 1
+                return True
+            elif self.current_product_index == len(products)-1 and direction == Direction.RIGHT:
+                if self.current_product_index == len(products):
+                    return True
+                self.current_product_index += 1
+                return True
+            elif self.current_product_index - 5 < 0 and direction == Direction.UP:
+                self.current_product_index = -1
+                return True
+            elif self.current_product_index + 5 > len(products)-1 and direction == Direction.DOWN:
+                self.current_product_index = len(products)
+                return True
+            else:
+                if direction == Direction.LEFT:
+                    self.current_product_index -= 1
+                elif direction == Direction.RIGHT:
+                    self.current_product_index += 1
+                elif direction == Direction.UP:
+                    self.current_product_index -= 5
+                elif direction == Direction.DOWN:
+                    self.current_product_index += 5
+                self.last_element = products[self.current_product_index]
+                self.navigate_to_element(self.last_element)
+                self.driver.execute_script("arguments[0].style.border='3px solid red'", self.last_element)
+        except:
+            self.sendToVoice("Não foi possível mudar de produto.")
+            return False
+        
+    def help_gestures(self):
+        self.sendToVoice("Bem-vindo ao Mercadão. Obrigado por solicitar ajuda."+
+                        "Pode utilizar o braço esquerdo para navegar pelas categorias e o braço direito para navegar pelos produtos e pela página deslizando para cima e para baixo"+
+                        "Pode navegar pela lista de produtos abrindo ligeiramente os braços para os lados"+
+                        "Pode empurrar para a frente para abrir uma categoria, para abrir um produto e para o adicionar ao carrinho"+
+                        "Pode bater continência para sair do Mercadão"+
+                        "Pode levantar o braço direito novamente se precisar de ajuda com as operações")
+        
+    def press(self):
+        if self.on_categories:
+            try:
+                self.last_element.click()
+                self.sendToVoice("A abrir a categoria.")
+            except:
+                self.sendToVoice("Não foi possível abrir a categoria.")
+                return False
+            return True
+        elif self.on_products:
+            try:
+                self.last_element.find_element(By.CSS_SELECTOR, ".pdo-product-item__name").click()
+                self.sendToVoice("A abrir o produto.")
+            except:
+                self.sendToVoice("Não foi possível abrir o produto.")
+                return False
+            return True
+        else:
+            if "/product/" not in self.driver.current_url:
+                self.sendToVoice("Não é possível adicionar o produto que deseja nesta página.")
+                return False
+            try:
+                self.driver.find_element(By.CSS_SELECTOR, ".-add > .pdo-inline-block > .ng-star-inserted").click()
+            except:
+                try:
+                    self.driver.find_element(By.CSS_SELECTOR, ".pdo-add-btn").click()
+                    time.sleep(1)
+                    self.sendToVoice(f"Produto adicionado ao carrinho com sucesso.")
+                except:
+                    self.sendToVoice("Não foi possível adicionar o produto ao carrinho.")
+                    return False
+                return True
+            return True
+        
+    def scroll_down_gestures(self):
+        if self.on_products:
+            return self.change_product_gestures(Direction.DOWN)
+        else:
+            self.scroll_down()
+            return True
+    
+    def scroll_up_gestures(self):
+        if self.on_products:
+            return self.change_product_gestures(Direction.UP)
+        else:
+            self.scroll_up()
+            return True
+        
+
+            
+        
+    

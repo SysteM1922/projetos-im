@@ -10,6 +10,7 @@ import ssl
 from tts import TTS
 import re
 from unidecode import unidecode
+from enums import Type, Direction
 
 HOST = "127.0.0.1:8005"
 OUTPUT = "127.0.0.1:8000"
@@ -32,33 +33,44 @@ not_found = ["Desculpe, não percebi o que disse, pode repetir?", "Não percebi,
              "Não consegui perceber, experimente dizer mais devagar", "Não percebi, pode repetir mais devagar por favor?", "Pode repetir por favor?"]
 
 categories_list = []
-with open("app\categorias.txt", "r", encoding="utf-8") as f:
+with open("categorias.txt", "r", encoding="utf-8") as f:
     for line in f:
         categories_list.append(line.strip())
 
 def process_message(message: str):
+
     if message == "OK":
-        return "OK"
-    else:
-        json_command = ET.fromstring(message).find(".//command").text
-        command = json.loads(json_command)["nlu"]
-        return json.loads(command)
+        return message, Type.OK
+    
+    json_command = ET.fromstring(message).find(".//command").text
+    command = json.loads(json_command)
+    
+    if "nlu" in command:
+        return json.loads(command["nlu"]), Type.SPEECH
+    elif "recognized" in command:
+        return command["recognized"][1], Type.GESTURE
 
 async def message_handler(driver: Driver, message: str):
+
+    message, typ = process_message(message)
+
+    if typ == Type.SPEECH:
+        speech_control(driver, message)
+    elif typ == Type.GESTURE:
+        gesture_control(driver, message)
+    elif typ == Type.OK:
+        return
+
+def speech_control(driver: Driver, message: dict):
 
     def command_not_found():
         not_found_msg = random.choice(not_found)
         driver.sendToVoice(not_found_msg)
         print("Command not found")
-
-    message = process_message(message)
-    print(f"Message: {message['text']}")
-
-    if message == "OK":
-        pass
-
-    elif message["intent"]["name"]:
+    
+    if message["intent"]["name"]:
         intent = message["intent"]["name"]
+        print("Intent:", intent)
 
         if message["intent"]["confidence"] < 0.6:
             command_not_found()
@@ -239,6 +251,38 @@ async def message_handler(driver: Driver, message: str):
 
     else:
         command_not_found()
+
+def gesture_control(driver: Driver, message: str):
+    print("Gesture:", message)
+    
+    if message == "CONTINENCE":
+        if driver.quit():
+            global not_quit
+            not_quit = False
+
+    elif message == "OPENL":
+        driver.change_product_gestures(Direction.LEFT)
+
+    elif message == "OPENR":
+        driver.change_product_gestures(Direction.RIGHT)
+
+    elif message == "PUSHF":
+        driver.press()
+
+    elif message == "RAISEH":
+        driver.help_gestures()
+
+    elif message == "SCROLLDL":
+        driver.change_category_gestures(Direction.DOWN)
+
+    elif message == "SCROLLDR":
+        driver.scroll_down_gestures()
+
+    elif message == "SCROLLUL":
+        driver.change_category_gestures(Direction.UP)
+
+    elif message == "SCROLLUR":
+        driver.scroll_up_gestures()
 
 not_quit = True
 

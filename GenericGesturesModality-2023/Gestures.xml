@@ -2,37 +2,47 @@
 <Gestures>
   <Gesture>
     <ID>0</ID>
-    <NAME>Push</NAME>
-    <SEMANTIC>Push</SEMANTIC>
+    <NAME>Continence</NAME>
+    <SEMANTIC>Continence</SEMANTIC>
   </Gesture>
   <Gesture>
     <ID>1</ID>
-    <NAME>SwipeDown</NAME>
-    <SEMANTIC>SwipeD</SEMANTIC>
+    <NAME>Open_Left</NAME>
+    <SEMANTIC>OpenL</SEMANTIC>
   </Gesture>
   <Gesture>
     <ID>2</ID>
-    <NAME>SwipeLeft</NAME>
-    <SEMANTIC>SwipeL</SEMANTIC>
+    <NAME>Open_Right</NAME>
+    <SEMANTIC>OpenR</SEMANTIC>
   </Gesture>
   <Gesture>
     <ID>3</ID>
-    <NAME>SwipeRight</NAME>
-    <SEMANTIC>SwipeR</SEMANTIC>
+    <NAME>Push_Front</NAME>
+    <SEMANTIC>PushF</SEMANTIC>
   </Gesture>
   <Gesture>
     <ID>4</ID>
-    <NAME>SwipeUp</NAME>
-    <SEMANTIC>SwipeU</SEMANTIC>
+    <NAME>Raise_Hand</NAME>
+    <SEMANTIC>RaiseH</SEMANTIC>
   </Gesture>
   <Gesture>
     <ID>5</ID>
-    <NAME>ThumbDown</NAME>
-    <SEMANTIC>ThumbD</SEMANTIC>
+    <NAME>Scroll_Down_Left</NAME>
+    <SEMANTIC>ScrollDL</SEMANTIC>
   </Gesture>
   <Gesture>
     <ID>6</ID>
-    <NAME>ThumbUp</NAME>
-    <SEMANTIC>ThumbU</SEMANTIC>
+    <NAME>Scroll_Down_Right</NAME>
+    <SEMANTIC>ScrollDR</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>7</ID>
+    <NAME>Scroll_Up_Left</NAME>
+    <SEMANTIC>ScrollUL</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>8</ID>
+    <NAME>Scroll_Up_Right</NAME>
+    <SEMANTIC>ScrollUR</SEMANTIC>
   </Gesture>
 </Gestures>
