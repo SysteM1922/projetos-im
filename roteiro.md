@@ -36,4 +36,5 @@ Escolher loja
 (Quero ver o carrinho)
 (Quero remover do carrinho Ambientador Vela)
 (Quero limpar o carrinho)
+(Sair do carrinho)
 (Terminar)
