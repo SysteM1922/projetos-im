@@ -1,5 +1,4 @@
 import random
-import time
 from driver import Driver
 import websockets
 import asyncio
@@ -121,14 +120,23 @@ async def message_handler(driver: Driver, message: str):
 
                 product = message["text"].lower().split()
                 for word in remove_words:
-                    if difflib.get_close_matches(word, product, n=1, cutoff=0.8):
-                        product.remove(word)
+                    sim = difflib.get_close_matches(word, product, n=1, cutoff=0.8)
+                    if sim:
+                        product.remove(sim[0])
                 product = " ".join(product)
 
                 products_list = driver.get_cart_products()
-                products_list = [[re.sub(r'[^a-zA-Z0-9\s]', '', unidecode(x[0])).strip(), x[1]] for x in products_list]
 
+                for p in products_list:
+                    for word in remove_words:
+                        sim = difflib.get_close_matches(word, p[0].lower().split(), n=1, cutoff=0.8)
+                        if sim:
+                            p[0].replace(sim[0], "")
+
+                products_list = [[re.sub(r'[^a-zA-Z0-9\s]+', '', unidecode(x[0])).strip(), x[1]] for x in products_list]
+                print("Aqui1")
                 sim = difflib.get_close_matches(unidecode(product), [x[0] for x in products_list], n=1, cutoff=0.3)[0]
+
                 if sim:
                     driver.remove_from_cart(products_list[[x[0] for x in products_list].index(sim)][1], sim)
                 else:
@@ -223,7 +231,10 @@ async def message_handler(driver: Driver, message: str):
 
         elif intent == "help":
             if len(message["entities"]) > 0:
-                help_opt = message["entities"][0]["value"].lower()
+                for entity in message["entities"]:
+                    if entity["entity"]=="help_option" and entity["extractor"] == "DIETClassifier":
+                        help_opt = entity["value"].lower()
+                        break
                 help_opt = difflib.get_close_matches(help_opt, help_options, n=1, cutoff=0.7)[0]
                 if help_opt:
                     driver.help(help_opt)

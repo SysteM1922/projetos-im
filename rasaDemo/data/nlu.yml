@@ -395,22 +395,22 @@ nlu:
 
 - intent: remove_from_cart
   examples: |
-    - Remover melão do carrinho
-    - Remover açucar amarelo
-    - Tirar pão do carrinho
-    - Tirar chocolate
-    - Apagar peixe do carrinho
-    - Apagar carne de porco
-    - Eliminar legumes do carrinho
-    - Eliminar oregãos
-    - Remover produto pizza do carrinho
-    - Remover produto salada
-    - Tirar produto gomas do carrinho
-    - Tirar produto farinha
-    - Apagar produto frango do carrinho
-    - Apagar produto donuts
-    - Eliminar produto gelatina do carrinho
-    - Eliminar produto faca
+    - Remover do carrinho [melão](product)
+    - Remover [açucar amarelo](product)
+    - Tirar do carrinho [pão](product)
+    - Tirar [chocolate](product)
+    - Apagar do carrinho [peixe](product)
+    - Apagar carne de porco](product)
+    - Eliminar do carrinho legumes](product)
+    - Eliminar oregãos](product)
+    - Remover  do carrinho o [produto pizza](product)
+    - Remover produto [salada](product)
+    - Tirar do carrinho produto [gomas](product)
+    - Tirar produto [farinha](product)
+    - Apagar do carrinho o produto [frango](product)
+    - Apagar produto [donuts](product)
+    - Eliminar do carrinho produto [gelatina](product)
+    - Eliminar produto [faca](product)
 
 - intent: change_category
   examples: |
