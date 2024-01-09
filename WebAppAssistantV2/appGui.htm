@@ -120,7 +120,33 @@
           //$("#response").html(content);
           //$("#response").addClass("container");
           //$("#response").addClass("responseText");
-
+		  
+		  let c = JSON.parse(content);
+		  let shape;
+          let color;
+		  if (c.hasOwnProperty("recognized") && c.recognized[1]=="CHANGE_COLOR"){
+			switch(c.recognized[2].toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')){
+              case 'triangulo': shape = triangle; break;
+              case 'quadrado': shape = square; break;
+              case 'circulo': shape = circle; break;
+            }
+			switch(c.recognized[3].toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')){
+              case 'azul': color = "#3333FF"; break;
+              case 'verde': color = "#33FF33"; break;
+              case 'cinzento': color = "#aaa"; break;
+              case 'vermelho': color = "#FF3333"; break;
+              case 'branco': color = "#fff"; break;
+              case 'rosa': color = "#ff66b2"; break;
+              case 'amarelo': color = "#ffff33"; break;
+              case 'preto': color = "#000"; break;
+              case 'laranja': color = "#FF9933"; break;
+            }
+			
+			shape.animate().attr({ fill: color });
+            sendToVoice("Mudei o " + c.nlu.shape + " para a cor " + c.nlu.color);
+		  }
+		  
+		/*
           let c = JSON.parse(content);
           let shape;
           let color;
@@ -142,12 +168,8 @@
               case 'preto': color = "#000"; break;
               case 'laranja': color = "#FF9933"; break;
             }
-
-
-            
-            shape.animate().attr({ fill: color });
-            sendToVoice("Mudei o " + c.nlu.shape + " para a cor " + c.nlu.color);
-          }
+		   }
+		*/
 
           
           /*setTimeout(function(){
@@ -167,8 +189,34 @@
 /////
 
   var mmiCli_1 = null;
-  mmiCli_1 = new MMIClient(null, "https://"+host+":8000/IM/USER1/APPSPEECH");
+  mmiCli_1 = new MMIClient(null, "https://"+host+":8001/IM/USER1/TOUCH");
+	
 
+   circle.on('click', function(){
+      console.log("circulo");
+      sendtouch("circulo");
+  })
+
+  square.on('click', function(){
+      console.log("quadrado");
+      sendtouch("quadrado");
+  })
+
+  triangle.on('click', function(){
+      console.log("triangulo");
+      sendtouch("triangulo");
+  })
+
+function sendtouch(shape){
+		var result = { "recognized" : ["TOUCH", "SHAPE", shape.toUpperCase()], "text": "" };
+		
+		mmiCli_1.sendToIM(new LifeCycleEvent("TOUCH", "IM", "text-1", "ctx-1").
+			doExtensionNotification(new EMMA("touch-", "touch", "command", 1, 0).
+            setValue(JSON.stringify(result))));
+
+}
+
+/*
   circle.on('click', function(){
       console.log("circulo");
       sendToVoice("circulo");
@@ -176,7 +224,7 @@
 
   square.on('click', function(){
       console.log("quadrado");
-      sendToVoice("quadradoç");
+      sendToVoice("quadrado");
   })
 
   triangle.on('click', function(){
@@ -192,7 +240,7 @@
           doStartRequest(new EMMA("text-", "text", "command", 1, 0).
             setValue(JSON.stringify(result))));
   }
-  
+*/  
 
 
 
