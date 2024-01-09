@@ -157,7 +157,7 @@ def speech_control(driver: Driver, message: dict):
                 driver.sendToVoice("É necessário abrir o carrinho para efectuar esta operação")
 
         elif intent == "open_product":
-            products = {re.sub(r'[^a-zA-Z0-9\s]', '', unidecode(x.text.lower())).strip(): x for x in driver.get_products()}
+            products = {re.sub(r'[^a-zA-Z0-9\s]', '', unidecode(x.text.lower())).strip(): x for x in driver.get_visible_products()}
             words = message["text"].lower().split()
             
             input_word = None

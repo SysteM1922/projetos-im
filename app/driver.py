@@ -33,6 +33,7 @@ class Driver():
         self.last_element = None
 
         self.current_product_index = None
+        self.current_product_row = 0
         self.last_product = None
 
         self.last_url = ""
@@ -346,7 +347,7 @@ class Driver():
             self.sendToVoice("Por favor escolha uma loja.")
         return True
     
-    def get_products(self):
+    def get_visible_products(self):
         # Execute um script JavaScript para obter os elementos visíveis
         script = """
             var elements = document.querySelectorAll('{}');
@@ -378,7 +379,6 @@ class Driver():
             self.sendToVoice(f"Não é possível abrir {product}.")
             return False
         return True
-
 
     def quit(self):
         if self.close_cart() or self.close_zip_code():
@@ -501,7 +501,11 @@ class Driver():
         return False
     
     def get_products(self):
-        return self.driver.find_elements(By.TAG_NAME, "pdo-product-item")
+        rows = self.driver.find_elements(By.CLASS_NAME, "pdo-products-slider")
+        products = []
+        for row in rows:
+            products += row.find_elements(By.TAG_NAME, "pdo-product-item")
+        return products
     
     def change_category_gestures(self, direction: Direction):
         self.check_url_change()
@@ -541,28 +545,48 @@ class Driver():
             products = self.get_products()
             if self.current_product_index == None:
                 self.current_product_index = 0
-            elif self.current_product_index == 0 and direction == Direction.LEFT:
+            elif direction == Direction.LEFT and self.current_product_index == 0:
                 self.current_product_index = None
                 self.on_products = False
                 return True
-            elif self.current_product_index == len(products)-1 and direction == Direction.RIGHT:
+            elif direction == Direction.RIGHT and self.current_product_index == len(products[self.current_product_row])-1:
                 pass
-            elif self.current_product_index - 5 < 0 and direction == Direction.UP:
-                self.current_product_index = None
-                self.on_products = False
-                return True
-            elif self.current_product_index + 5 > len(products)-1 and direction == Direction.DOWN:
-                pass
-            else:
+            elif len(products) == 1:
+                if direction == Direction.UP and self.current_product_index - 5 < 0:
+                    self.current_product_index = None
+                    self.on_products = False
+                    return True
+                elif direction == Direction.DOWN and self.current_product_index + 5 > len(products[self.current_product_row])-1:
+                    pass
+                else:
+                    if direction == Direction.LEFT:
+                        self.current_product_index -= 1
+                    elif direction == Direction.RIGHT:
+                        self.current_product_index += 1
+                    elif direction == Direction.UP:
+                        self.current_product_index -= 5
+                    elif direction == Direction.DOWN:
+                        self.current_product_index += 5
+            elif len(products) > 1:
                 if direction == Direction.LEFT:
                     self.current_product_index -= 1
                 elif direction == Direction.RIGHT:
                     self.current_product_index += 1
                 elif direction == Direction.UP:
-                    self.current_product_index -= 5
+                    if self.current_product_row == 0:
+                        self.current_product_index = None
+                        self.on_products = False
+                        return True
+                    else:
+                        self.current_product_row -= 1
+                        self.current_product_index = 0
                 elif direction == Direction.DOWN:
-                    self.current_product_index += 5
-            self.last_product = products[self.current_product_index]
+                    if self.current_product_row == len(products)-1:
+                        pass
+                    else:
+                        self.current_product_row += 1
+                        self.current_product_index = 0
+            self.last_product = products[self.current_product_row][self.current_product_index]
             self.navigate_to_element(self.last_product, direction)
             self.driver.execute_script("arguments[0].style.border='3px solid red'", self.last_product)
         except:
