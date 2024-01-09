@@ -287,13 +287,13 @@ def gesture_control(driver: Driver, message: str):
         driver.change_category_gestures(Direction.DOWN)
 
     elif message == "SCROLLDR":
-        driver.scroll_down_gestures()
+        driver.scroll_up_gestures()
 
     elif message == "SCROLLUL":
         driver.change_category_gestures(Direction.UP)
 
     elif message == "SCROLLUR":
-        driver.scroll_up_gestures()
+        driver.scroll_down_gestures()
 
 not_quit = True
 

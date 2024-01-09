@@ -28,11 +28,11 @@ class Driver():
 
         # Gesture variables
 
-        self.current_side_bar_index = 0
+        self.current_side_bar_index = None
         self.last_category = CategoryPage.MAIN
         self.last_element = None
 
-        self.current_product_index = 0
+        self.current_product_index = None
         self.last_product = None
 
         self.last_url = ""
@@ -44,12 +44,12 @@ class Driver():
         self.driver.back()
 
     def scroll_down(self):
-        for _ in range(400):
-            self.driver.execute_script("window.scrollBy(0, 1);")
+        for _ in range(8):
+            self.driver.execute_script("window.scrollBy(0, 50);")
 
     def scroll_up(self):
-        for _ in range(400):
-            self.driver.execute_script("window.scrollBy(0, -1);")
+        for _ in range(8):
+            self.driver.execute_script("window.scrollBy(0, -50);")
 
     def add_to_cart(self, qty=1):
         if "/product/" not in self.driver.current_url:
@@ -454,9 +454,9 @@ class Driver():
     def get_categories(self):
         sidebar = self.driver.find_elements(By.CLASS_NAME, "pdo-store-sidebar")
         if any([element.text for element in sidebar[2].find_elements(By.TAG_NAME, "a")]):
-            return CategoryPage.SECONDARY, sidebar[2]
+            return CategoryPage.SECONDARY, sidebar[2].find_elements(By.TAG_NAME, "a")
         else:
-            return CategoryPage.MAIN, sidebar[1]
+            return CategoryPage.MAIN, sidebar[1].find_elements(By.TAG_NAME, "a")
         
     def unmark_element(self):
         if self.last_element:
@@ -465,49 +465,6 @@ class Driver():
                 self.last_element = None
             except:
                 return False
-        return True
-
-    def change_category_gestures(self, direction: Direction):
-        self.check_url_change()
-        self.on_categories = True
-        try:
-            page, sidebar = self.get_categories()
-            self.unmark_element()
-            if page == self.last_category:
-                if self.current_side_bar_index == 0 and direction == Direction.UP:
-                    if self.current_side_bar_index == -1:
-                        return True
-                    self.current_side_bar_index -= 1
-                    return True
-                elif self.current_side_bar_index == len(sidebar.find_elements(By.TAG_NAME, "a"))-1 and direction == Direction.DOWN:
-                    if self.current_side_bar_index == len(sidebar.find_elements(By.TAG_NAME, "a")):
-                        return True
-                    self.current_side_bar_index += 1
-                    return True
-                else:
-                    if direction == Direction.UP:
-                        self.current_side_bar_index -= 1
-                    elif direction == Direction.DOWN:
-                        self.current_side_bar_index += 1
-                    self.last_element = sidebar[self.current_side_bar_index]
-                    self.driver.execute_script("arguments[0].style.border='3px solid red'", self.last_element)
-            else:
-                self.current_side_bar_index = 0
-                self.last_category = page
-                self.last_element = sidebar[self.current_side_bar_index]
-                self.driver.execute_script("arguments[0].style.border='3px solid red'", self.last_element)
-        except:
-            self.sendToVoice("Não foi possível mudar de categoria.")
-            return False
-        return True
-        
-    def navigate_to_element(self, element):
-        try:
-            actions = ActionChains(self.driver)
-            actions.move_to_element(element)
-            actions.perform()
-        except:
-            return False
         return True
     
     def unmark_product(self):
@@ -518,44 +475,84 @@ class Driver():
             except:
                 return False
         return True
-    
+        
+    def navigate_to_element(self, element, direction):
+        try:
+            if direction == Direction.LEFT or direction == Direction.RIGHT:
+                actions = ActionChains(self.driver)
+                actions.move_to_element(element).perform()
+            else:
+                window_height = self.driver.get_window_size()['height']
+                element_y = element.location['y']
+                scroll_position = element_y - window_height/4
+                self.driver.execute_script(f"window.scrollTo(0, {scroll_position});")
+        except:
+            return False
+        return True
+
     def check_url_change(self):
         self.on_categories = False
         self.on_products = False
         if self.driver.current_url != self.last_url:
-            self.current_side_bar_index = 0
-            self.current_product_index = 0
+            self.current_side_bar_index = None
+            self.current_product_index = None
             self.last_url = self.driver.current_url
-            self.unmark_element()
-            self.unmark_product()
+            self.last_element = None
         return False
     
     def get_products(self):
         return self.driver.find_elements(By.TAG_NAME, "pdo-product-item")
     
+    def change_category_gestures(self, direction: Direction):
+        self.check_url_change()
+        self.on_categories = True
+        try:
+            self.unmark_element()
+            page, sidebar = self.get_categories()
+            if page == self.last_category:
+                if self.current_side_bar_index == None:
+                    self.current_side_bar_index = 0
+                elif self.current_side_bar_index == 0 and direction == Direction.UP:
+                    self.current_side_bar_index = None
+                    self.on_categories = False
+                    return True
+                elif self.current_side_bar_index == len(sidebar)-1 and direction == Direction.DOWN:
+                    pass
+                else:
+                    if direction == Direction.UP:
+                        self.current_side_bar_index -= 1
+                    elif direction == Direction.DOWN:
+                        self.current_side_bar_index += 1
+            else:
+                self.current_side_bar_index = 0
+                self.last_category = page
+            self.last_element = sidebar[self.current_side_bar_index]
+            self.driver.execute_script("arguments[0].style.border='3px solid red'", self.last_element)
+        except:
+            self.sendToVoice("Não foi possível mudar de categoria.")
+            return False
+        return True
+    
     def change_product_gestures(self, direction: Direction):
         self.check_url_change()
         self.on_products = True
         try:
-            self.remove_mark()
-            products = self.get_products()
             self.unmark_product()
-            if self.current_product_index == 0 and direction == Direction.LEFT:
-                if self.current_product_index == -1:
-                    return True
-                self.current_product_index -= 1
+            products = self.get_products()
+            if self.current_product_index == None:
+                self.current_product_index = 0
+            elif self.current_product_index == 0 and direction == Direction.LEFT:
+                self.current_product_index = None
+                self.on_products = False
                 return True
             elif self.current_product_index == len(products)-1 and direction == Direction.RIGHT:
-                if self.current_product_index == len(products):
-                    return True
-                self.current_product_index += 1
-                return True
+                pass
             elif self.current_product_index - 5 < 0 and direction == Direction.UP:
-                self.current_product_index = -1
+                self.current_product_index = None
+                self.on_products = False
                 return True
             elif self.current_product_index + 5 > len(products)-1 and direction == Direction.DOWN:
-                self.current_product_index = len(products)
-                return True
+                pass
             else:
                 if direction == Direction.LEFT:
                     self.current_product_index -= 1
@@ -565,12 +562,13 @@ class Driver():
                     self.current_product_index -= 5
                 elif direction == Direction.DOWN:
                     self.current_product_index += 5
-                self.last_element = products[self.current_product_index]
-                self.navigate_to_element(self.last_element)
-                self.driver.execute_script("arguments[0].style.border='3px solid red'", self.last_element)
+            self.last_product = products[self.current_product_index]
+            self.navigate_to_element(self.last_product, direction)
+            self.driver.execute_script("arguments[0].style.border='3px solid red'", self.last_product)
         except:
             self.sendToVoice("Não foi possível mudar de produto.")
             return False
+        return True
         
     def help_gestures(self):
         self.sendToVoice("Bem-vindo ao Mercadão. Obrigado por solicitar ajuda."+
@@ -591,7 +589,7 @@ class Driver():
             return True
         elif self.on_products:
             try:
-                self.last_element.find_element(By.CSS_SELECTOR, ".pdo-product-item__name").click()
+                self.last_product.click()
                 self.sendToVoice("A abrir o produto.")
             except:
                 self.sendToVoice("Não foi possível abrir o produto.")
