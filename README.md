@@ -7,11 +7,11 @@
 
 ## Requirements
 - Chrome
+- MS Edge
 - Python 3.10
 - Conexão à Internet
 
 ## How to setup
-- Extrair da pasta DemoMMI.zip as pastas FusionEngine e mmiframeworkV2<p>ATENÇÂO: NÃO SUBSTITUIR AS PASTAS rasaDemo e WebAppAssistantV2</p>
 - Criar um venv
 
 ```bat
@@ -46,7 +46,7 @@ Pode iniciar os módulos de comunicação na powershell com o comando
 ```
 Caso contrário será necessário correr 4 terminais diferentes com os seguintes comandos:
 ```bat
-cd .\mmiframeworkV2\
+cd .\IM\
 .\start.bat
 ```
 ```bat
@@ -70,7 +70,7 @@ O seguinte comando deve ser corrido num novo terminal:
 ```bat
 py .\app\main.py
 ```
-Para conversar com o site encontra-se um icon de microfone na aba chrome que foi aberta automaticamente no link https://127.0.0.1:8082/index.htm, que deve ser pressionado cada vez que se quer enviar uma nova fala. A ativação do microfone também funciona ao pressionar a barra de espaço, quando selecionado o navegador.
+Para conversar com o site encontra-se um icon de microfone na aba edge que foi aberta automaticamente no link https://127.0.0.1:8082/index.htm, que deve ser pressionado cada vez que se quer enviar uma nova fala. A ativação do microfone também funciona ao pressionar a barra de espaço, quando selecionado o navegador.
 ## Possible Bugs
-- Se não houver feedback de voz ao iniciar o programa experimentar enviar um comando de voz pelo microfone, o feedback deverá voltar na próxima oportunidade. Pode reiniciar o último processo python para testar. Caso o bug pressista reiniciar o computador.
-- Caso existam problemas de CORS na aba do Chrome que tem o microfone deve experimentar-se noutro navegador, como o Edge. Caso o problema persista certificar que todos os terminais correram em powershell e não em cmd. É possível que o conda não seja ativável na powershell, recomendando-se a instalação de um virtual environment python normal.
+- Se não houver feedback de voz ao iniciar o programa experimentar enviar um comando de voz pelo microfone ou fazer refresh da página, o feedback deverá voltar na próxima oportunidade. Pode reiniciar o último processo python para testar. Caso o bug pressista reiniciar o computador.
+- Caso existam problemas de CORS na aba do Chrome que tem o microfone deve experimentar-se noutro navegador, como o MS Edge. Caso o problema persista certificar que todos os terminais correram em powershell e não em cmd. É possível que o conda não seja ativável na powershell, recomendando-se a instalação de um virtual environment em python normal.
