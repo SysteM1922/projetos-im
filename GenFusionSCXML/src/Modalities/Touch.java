@@ -11,22 +11,20 @@ import scxmlgen.interfaces.IModality;
  *
  * @author nunof
  */
-public enum Touch implements IModality{
+public enum Touch implements IModality {
 
-    SHAPE_TRIANGULO("[TOUCH][SHAPE][TRIANGULO]",1500),
-    SHAPE_QUADRADO("[TOUCH][SHAPE][QUADRADO]",1500),
-    SHAPE_CIRCULO("[TOUCH][SHAPE][CIRCULO]",1500),
+    SHAPE_TRIANGULO("[TOUCH][SHAPE][TRIANGULO]", 1500),
+    SHAPE_QUADRADO("[TOUCH][SHAPE][QUADRADO]", 1500),
+    SHAPE_CIRCULO("[TOUCH][SHAPE][CIRCULO]", 1500),
 
-  
     ;
-    
+
     private String event;
     private int timeout;
 
-
     Touch(String m, int time) {
-        event=m;
-        timeout=time;
+        event = m;
+        timeout = time;
     }
 
     @Override
@@ -36,13 +34,13 @@ public enum Touch implements IModality{
 
     @Override
     public String getEventName() {
-        //return getModalityName()+"."+event;
+        // return getModalityName()+"."+event;
         return event;
     }
 
     @Override
     public String getEvName() {
-        return getModalityName().toLowerCase()+event.toLowerCase();
+        return getModalityName().toLowerCase() + event.toLowerCase();
     }
-    
+
 }

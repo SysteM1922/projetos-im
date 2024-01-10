@@ -435,7 +435,43 @@
                 console.log(data);
 
                 var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
-                var result = { "recognized": ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": JSON.stringify(data) };
+                var result = { "recognized": ["SPEECH"], "text": messaget, "nlu": JSON.stringify(data) };
+
+                if (data.intent.confidence > 0.6) {
+                    if (data.intent.name == "quit") {
+                        result.recognized.push("QUIT");
+                    }
+                    else if (data.intent.name == "help") {
+                        result.recognized.push("HELP");
+                        for (let i = 0; i < data.entities.length; i++) {
+                            if (data.entities[i].entity == "help_option" && data.entities[i].extractor == "DIETClassifier") {
+                                result.recognized.push(data.entities[i].value.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
+                                break;
+                            }
+                        }
+                    }
+                    else if (data.intent.name == "scroll") {
+                        result.recognized.push("SCROLL");
+                        for (let i = 0; i < data.entities.length; i++) {
+                            if (data.entities[i].entity == "direction" && data.entities[i].extractor == "DIETClassifier") {
+                                if (data.entities[i].value == "1") {
+                                    result.recognized.push("UP");
+                                }
+                                else if (data.entities[i].value == "0") {
+                                    result.recognized.push("DOWN");
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    else if (data.intent.name == "open_product") {
+                        result.recognized.push("OPEN_PRODUCT");
+                    }
+                    else if (data.intent.name == "insert_number") {
+                        result.recognized.push("INSERT_NUMBER");
+                    }
+                }
+
                 mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
                     doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
                         setValue(JSON.stringify(result))));

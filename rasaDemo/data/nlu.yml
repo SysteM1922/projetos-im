@@ -58,6 +58,7 @@ nlu:
 
 - intent: insert_number
   examples: |
+    - [zero](number)
     - [3](number)
     - [2](number)
     - [um](number)

@@ -2,9 +2,7 @@ package Modalities;
 
 import scxmlgen.interfaces.IOutput;
 
-public enum Output implements IOutput{
-    
-
+public enum Output implements IOutput {
 
     CHANGE_COLOR_TRIANGULO_AZUL("[FUSION][CHANGE_COLOR][TRIANGULO][AZUL]"),
     CHANGE_COLOR_TRIANGULO_VERDE("[FUSION][CHANGE_COLOR][TRIANGULO][VERDE]"),
@@ -36,24 +34,19 @@ public enum Output implements IOutput{
     CHANGE_COLOR_CIRCULO_PRETO("[FUSION][CHANGE_COLOR][CIRCULO][PRETO]"),
     CHANGE_COLOR_CIRCULO_LARANJA("[FUSION][CHANGE_COLOR][CIRCULO][LARANJA]"),
 
-
-
-
     ;
-    
-    
-    
+
     private String event;
 
     Output(String m) {
-        event=m;
+        event = m;
     }
-    
-    public String getEvent(){
+
+    public String getEvent() {
         return this.toString();
     }
 
-    public String getEventName(){
+    public String getEventName() {
         return event;
     }
 }

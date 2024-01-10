@@ -1,0 +1,64 @@
+version: '3.1'
+intents:
+- greet
+- goodbye
+- affirm
+- deny
+- light_switch
+- change_color
+entities:
+- place
+- switch
+- shape
+- color
+slots:
+  switch:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: switch
+  place:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: place
+  shape:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: shape
+  color:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: color
+responses:
+  utter_greet:
+  - text: Olá, como posso ajudar? Pode perguntar caso não saiba as funcionalidades disponíveis.
+  utter_done:
+  - text: Okay! Está marcado {event} às {hour}!
+  utter_cancel:
+  - text: Okay! Está cancelado!
+  utter_goodbye:
+  - text: Adeus!
+  - text: Lembre-se, estou sempre à sua disposição!
+  utter_default:
+  - text: Desculpe, não percebi. Pode repetir?
+  utter_joke:
+  - text: Qual é o contrário de paixão? Mãe teto.
+  - text: Por que é que o polícia não usa sabão? Porque prefere deter gente.
+  - text: Por que é que o panado se divorciou? Porque a mulher não servia panada.
+  - text: Qual é a diferença entre o cavalo e o palhaço? Um gosta de palha crua e o outro de palhaçada.
+  - text: Qual é a diferença entre um padre e um Mercedes? O padre reza e o Mercedes Benz
+actions:
+- action_greet_user
+- utter_goodbye
+- action_switch_lights
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
