@@ -43,7 +43,7 @@ public class GenFusionSCXML {
     fg.Complementary(Speech.CHANGE_COLOR_ROSA, Touch.SHAPE_QUADRADO, Output.CHANGE_COLOR_QUADRADO_ROSA);
     fg.Complementary(Speech.CHANGE_COLOR_AMARELO, Touch.SHAPE_QUADRADO, Output.CHANGE_COLOR_QUADRADO_AMARELO);
     fg.Complementary(Speech.CHANGE_COLOR_PRETO, Touch.SHAPE_QUADRADO, Output.CHANGE_COLOR_QUADRADO_PRETO);
-    //fg.Complementary(Speech.CHANGE_COLOR_LARANJA, Touch.SHAPE_QUADRADO, Output.CHANGE_COLOR_QUADRADO_LARANJA);
+    fg.Complementary(Speech.CHANGE_COLOR_LARANJA, Touch.SHAPE_QUADRADO, Output.CHANGE_COLOR_QUADRADO_LARANJA);
 
     fg.Complementary(Speech.CHANGE_COLOR_AZUL, Touch.SHAPE_CIRCULO, Output.CHANGE_COLOR_CIRCULO_AZUL);
     fg.Complementary(Speech.CHANGE_COLOR_VERDE, Touch.SHAPE_CIRCULO, Output.CHANGE_COLOR_CIRCULO_VERDE);
@@ -53,7 +53,7 @@ public class GenFusionSCXML {
     fg.Complementary(Speech.CHANGE_COLOR_ROSA, Touch.SHAPE_CIRCULO, Output.CHANGE_COLOR_CIRCULO_ROSA);
     fg.Complementary(Speech.CHANGE_COLOR_AMARELO, Touch.SHAPE_CIRCULO, Output.CHANGE_COLOR_CIRCULO_AMARELO);
     fg.Complementary(Speech.CHANGE_COLOR_PRETO, Touch.SHAPE_CIRCULO, Output.CHANGE_COLOR_CIRCULO_PRETO);
-    //fg.Complementary(Speech.CHANGE_COLOR_LARANJA, Touch.SHAPE_CIRCULO, Output.CHANGE_COLOR_CIRCULO_LARANJA);
+    fg.Complementary(Speech.CHANGE_COLOR_LARANJA, Touch.SHAPE_CIRCULO, Output.CHANGE_COLOR_CIRCULO_LARANJA);
 
     /*
      * fg.Sequence(Speech.SQUARE, SecondMod.RED, Output.SQUARE_RED);
