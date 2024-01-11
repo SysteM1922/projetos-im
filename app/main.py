@@ -69,7 +69,7 @@ def speech_control(driver: Driver, message: dict):
     
     if message["intent"]["name"]:
         intent = message["intent"]["name"]
-        print("Intent:", intent)
+        print("SPEECH:", intent)
 
         if message["intent"]["confidence"] < 0.6:
             command_not_found()
@@ -280,7 +280,7 @@ def gesture_control(driver: Driver, message: str):
     elif message == "PUSHF":
         driver.press()
 
-    elif message == "RAISEH":
+    elif message == "RAISERH":
         driver.help_gestures()
 
     elif message == "SCROLLDL":
@@ -294,6 +294,9 @@ def gesture_control(driver: Driver, message: str):
 
     elif message == "SCROLLUR":
         driver.scroll_down_gestures()
+
+    elif message == "TRANSPORTR":
+        driver.add_to_cart()
 
 not_quit = True
 
