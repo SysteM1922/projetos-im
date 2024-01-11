@@ -22,7 +22,9 @@ public enum Touch implements IModality {
     SCROLL_DOWN("[GESTURE][SCROLLUR]", 3000),
     OPEN_PRODUCT("[GESTURE][PUSHF]", 3000),
 
-    ASK_HELP("[GESTURE][RAISEH]", 3000),
+    ASK_HELP("[GESTURE][RAISERH]", 3000),
+
+    ADD_TO_CART("[GESTURE][TRANSPORTR]", 3000),
 
     ;
 
