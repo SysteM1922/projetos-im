@@ -30,7 +30,7 @@ public class GenFusionSCXML {
     fg.Redundancy(Speech.SCROLL_DOWN, Touch.SCROLL_DOWN, Output.EXEC_SCROLL_DOWN_ACTION);
     fg.Redundancy(Speech.OPEN_PRODUCT, Touch.OPEN_PRODUCT, Output.EXEC_OPEN_PRODUCT_ACTION);
 
-    fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP, Output.EXEC_HELP_ACTION)
+    fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP, Output.EXEC_HELP_ACTION);
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_CARRINHO, Output.EXEC_HELP_CARRINHO_ACTION);
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_CODIGO_POSTAL, Output.EXEC_HELP_CODIGO_POSTAL_ACTION);
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_LOJA, Output.EXEC_HELP_LOJA_ACTION);
@@ -46,6 +46,7 @@ public class GenFusionSCXML {
     fg.Complementary(Speech.ASK_HELP_PRODUTO, Touch.ASK_HELP, Output.EXEC_HELP_PRODUTO_ACTION);
     fg.Complementary(Speech.ASK_HELP_TODAS, Touch.ASK_HELP, Output.EXEC_HELP_TODAS_ACTION);
 
+    fg.Complementary(Touch.ADD_TO_CART, Speech.INSERT_NUMBER, Output.EXEC_ADD_TO_CART_ACTION);
 
     // fg.Complementary(Speech.CHANGE_COLOR_AZUL, Touch.SHAPE_TRIANGULO, Output.CHANGE_COLOR_TRIANGULO_AZUL);
     // fg.Complementary(Speech.CHANGE_COLOR_VERDE, Touch.SHAPE_TRIANGULO, Output.CHANGE_COLOR_TRIANGULO_VERDE);
