@@ -33,10 +33,13 @@ public class GenFusionSCXML {
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP, Output.EXEC_HELP_ACTION);
     fg.Single(Speech.ASK_HELP, Output.EXEC_HELP_ACTION);
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_CARRINHO, Output.EXEC_HELP_CARRINHO_ACTION);
+    fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_PRODUTO, Output.EXEC_HELP_PRODUTO_ACTION);
+    fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_PRODUTOS, Output.EXEC_HELP_PRODUTOS_ACTION);
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_CODIGO_POSTAL, Output.EXEC_HELP_CODIGO_POSTAL_ACTION);
+    fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_MORADA, Output.EXEC_HELP_MORADA_ACTION);
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_LOJA, Output.EXEC_HELP_LOJA_ACTION);
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_OPERACOES, Output.EXEC_HELP_OPERACOES_ACTION);
-    fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_PRODUTO, Output.EXEC_HELP_PRODUTO_ACTION);
+    fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_GESTOS, Output.EXEC_HELP_GESTOS_ACTION);
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_TODAS, Output.EXEC_HELP_TODAS_ACTION);
 
     fg.Complementary(Touch.ADD_TO_CART, Speech.INSERT_NUMBER, Output.EXEC_ADD_TO_CART_ACTION);

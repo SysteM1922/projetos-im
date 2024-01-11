@@ -46,12 +46,20 @@ class Driver():
         self.driver.back()
 
     def scroll_down(self):
-        for _ in range(8):
-            self.driver.execute_script("window.scrollBy(0, 50);")
+        if self.on_products or self.last_product != None:
+            return self.change_product_gestures(Direction.DOWN)
+        else:
+            for _ in range(8):
+                self.driver.execute_script("window.scrollBy(0, 50);")
+            return True
 
     def scroll_up(self):
-        for _ in range(8):
-            self.driver.execute_script("window.scrollBy(0, -50);")
+        if self.on_products or self.last_product != None:
+            return self.change_product_gestures(Direction.UP)
+        else:
+            for _ in range(8):
+                self.driver.execute_script("window.scrollBy(0, -50);")
+            return True
 
     def add_to_cart(self, qty=1):
         if "/product/" not in self.driver.current_url:
@@ -442,10 +450,12 @@ class Driver():
                                 "Pode pedir mais ajudas sobre o carrinho, os produtos, o código postal ou morada e sobre as lojas."+
                                 "Pode pedir ajuda com as operações pedindo para ajuda.")
                 time.sleep(1)
+            if option == "gestos" or option == "todas":
+                self.help_gestures()
 
         else:
             self.sendToVoice("Bem-vindo ao Mercadão. Obrigado por solicitar ajuda."+
-                             "Posso ajudar com questões de interação por voz no site, nomeadamente sobre as lojas, os produtos, o carrinho, o código postal ou morada e com outras operações."+
+                             "Posso ajudar com questões de interação por gestos e por voz no site, nomeadamente sobre as lojas, os produtos, o carrinho, o código postal ou morada e com outras operações."+
                              "Em que posso ajudar?")
         return True
 
@@ -617,7 +627,16 @@ class Driver():
                         "Pode empurrar para a frente para abrir uma categoria ou para abrir um produto"+
                         "Pode bater continência para sair do Mercadão"+
                         "Pode levantar colocar a mão esquerda na orelha e levantar o braço direito novamente se precisar de ajuda novamente")
-        
+    
+    def open_product_gestures(self):
+        try:
+            self.last_product.click()
+            self.sendToVoice("A abrir o produto.")
+        except:
+            self.sendToVoice("Não foi possível abrir o produto.")
+            return False
+        return True
+    
     def press(self):
         if self.on_categories:
             try:
@@ -627,29 +646,10 @@ class Driver():
                 self.sendToVoice("Não foi possível abrir a categoria.")
                 return False
         elif self.on_products:
-            try:
-                self.last_product.click()
-                self.sendToVoice("A abrir o produto.")
-            except:
-                self.sendToVoice("Não foi possível abrir o produto.")
-                return False
+            return self.open_product_gestures()
         else:
             self.sendToVoice("Não existe nada selecionado para abrir.")
             return False
         time.sleep(1)
         self.check_page_change()
         return True
-        
-    def scroll_down_gestures(self):
-        if self.on_products or self.last_product != None:
-            return self.change_product_gestures(Direction.DOWN)
-        else:
-            self.scroll_down()
-            return True
-    
-    def scroll_up_gestures(self):
-        if self.on_products or self.last_product != None:
-            return self.change_product_gestures(Direction.UP)
-        else:
-            self.scroll_up()
-            return True

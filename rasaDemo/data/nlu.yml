@@ -504,6 +504,12 @@ nlu:
     - Quero ajuda em [todas](help_option) as interações disponíveis
     - Quero saber [todas](help_option) as interações
     - Quero [todas](help_option) as ajudas
+    - Que [gestos](help_option) posso fazer
+    - Que [gestos](help_option) existem
+    - Preciso de ajuda com os [gestos](help_option)
+    - Preciso de ajuda com os [gestos](help_option) por favor
+    - Quais são os [gestos](help_option) disponíveis
+    - Quais são os [gestos](help_option) que existem
 
 - lookup: help_option
   examples: |
@@ -514,6 +520,7 @@ nlu:
     - morada
     - loja
     - operações
+    - gestos
     - todas
 
 - intent: filter_products

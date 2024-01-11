@@ -298,13 +298,13 @@ def gesture_control(driver: Driver, message: str):
         driver.change_category_gestures(Direction.DOWN)
 
     elif message == "SCROLLDR":
-        driver.scroll_up_gestures()
+        driver.scroll_up()
 
     elif message == "SCROLLUL":
         driver.change_category_gestures(Direction.UP)
 
     elif message == "SCROLLUR":
-        driver.scroll_down_gestures()
+        driver.scroll_down()
 
     elif message == "TRANSPORTR":
         driver.add_to_cart()
@@ -312,8 +312,39 @@ def gesture_control(driver: Driver, message: str):
 def fusion_control(driver: Driver, message: str):
     command = message[0][0]
     print("Fusion:", command)
-
-    if command == "INSERT_NUMBER":
+    
+    if command == "QUIT":
+        if driver.quit():
+            global not_quit
+    elif command == "SCROLL":
+        if message[0][1] == "UP":
+            driver.scroll_up()
+        elif message[0][1] == "DOWN":
+            driver.scroll_down()
+    elif command == "OPEN_PRODUCT":
+        driver.open_product_gestures()
+    elif command == "HELP":
+        if len(message[0]) > 1:
+            help_option = message[0][1]
+            if help_option == "CARRINHO":
+                driver.help("carrinho")
+            elif help_option == "PRODUTO":
+                driver.help("produto")
+            elif help_option == "CODIGO_POSTAL" or help_option == "MORADA":
+                driver.help("morada")
+            elif help_option == "LOJA":
+                driver.help("loja")
+            elif help_option == "OPERACOES":
+                driver.help("operações")
+            elif help_option == "GESTOS":
+                driver.help("gestos")
+            elif help_option == "TODAS":
+                driver.help("todas")
+        else:
+            driver.help()
+    elif command == "ADD_TO_CART":
+        pass # TODO
+    elif command == "INSERT_NUMBER":
         speech_control(driver, json.loads(json.loads(message[1][0].text)["nlu"]))
 
 
