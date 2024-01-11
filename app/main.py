@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 import json
 import difflib
 import ssl
+import time
 from tts import TTS
 import re
 from unidecode import unidecode
@@ -32,6 +33,7 @@ not_found = ["Desculpe, não percebi o que disse, pode repetir?", "Não percebi,
              "Não consegui perceber, experimente dizer mais devagar", "Não percebi, pode repetir mais devagar por favor?", "Pode repetir por favor?"]
 
 categories_list = []
+
 with open("app\categorias.txt", "r", encoding="utf-8") as f:
     for line in f:
         categories_list.append(line.strip())
@@ -41,13 +43,17 @@ def process_message(message: str):
     if message == "OK":
         return message, Type.OK
     
-    json_command = ET.fromstring(message).find(".//command").text
+    commands = ET.fromstring(message).findall(".//command")
+    json_command = commands.pop(0).text
     command = json.loads(json_command)
+    modality = command["recognized"][0]
     
-    if "nlu" in command:
+    if modality == "SPEECH":
         return json.loads(command["nlu"]), Type.SPEECH
-    elif "recognized" in command:
+    elif modality == "GESTURES":
         return command["recognized"][1], Type.GESTURE
+    elif modality == "FUSION":
+        return (command["recognized"][1:], commands), Type.FUSION
 
 async def message_handler(driver: Driver, message: str):
 
@@ -57,6 +63,8 @@ async def message_handler(driver: Driver, message: str):
         speech_control(driver, message)
     elif typ == Type.GESTURE:
         gesture_control(driver, message)
+    elif typ == Type.FUSION:
+        fusion_control(driver, message)
     elif typ == Type.OK:
         return
 
@@ -66,10 +74,13 @@ def speech_control(driver: Driver, message: dict):
         not_found_msg = random.choice(not_found)
         driver.sendToVoice(not_found_msg)
         print("Command not found")
+
+    if message == None:
+        return
     
-    if message["intent"]["name"]:
+    elif message["intent"]["name"]:
         intent = message["intent"]["name"]
-        print("Intent:", intent)
+        print("SPEECH:", intent.upper())
 
         if message["intent"]["confidence"] < 0.6:
             command_not_found()
@@ -280,7 +291,7 @@ def gesture_control(driver: Driver, message: str):
     elif message == "PUSHF":
         driver.press()
 
-    elif message == "RAISEH":
+    elif message == "RAISERH":
         driver.help_gestures()
 
     elif message == "SCROLLDL":
@@ -294,6 +305,17 @@ def gesture_control(driver: Driver, message: str):
 
     elif message == "SCROLLUR":
         driver.scroll_down_gestures()
+
+    elif message == "TRANSPORTR":
+        driver.add_to_cart()
+
+def fusion_control(driver: Driver, message: str):
+    command = message[0][0]
+    print("Fusion:", command)
+
+    if command == "INSERT_NUMBER":
+        speech_control(driver, json.loads(json.loads(message[1][0].text)["nlu"]))
+
 
 not_quit = True
 

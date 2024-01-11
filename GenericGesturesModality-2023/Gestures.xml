@@ -22,8 +22,8 @@
   </Gesture>
   <Gesture>
     <ID>4</ID>
-    <NAME>Raise_Hand</NAME>
-    <SEMANTIC>RaiseH</SEMANTIC>
+    <NAME>Raise_Right_Help</NAME>
+    <SEMANTIC>RaiseRH</SEMANTIC>
   </Gesture>
   <Gesture>
     <ID>5</ID>
@@ -44,5 +44,10 @@
     <ID>8</ID>
     <NAME>Scroll_Up_Right</NAME>
     <SEMANTIC>ScrollUR</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>9</ID>
+    <NAME>Transport_Right</NAME>
+    <SEMANTIC>TransportR</SEMANTIC>
   </Gesture>
 </Gestures>

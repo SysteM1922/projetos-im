@@ -36,6 +36,7 @@ class Driver():
         self.current_product_row = 0
         self.last_product = None
 
+        self.last_timestamp = str(time.time())
         self.last_url = ""
 
         self.on_categories = False
@@ -490,25 +491,32 @@ class Driver():
             return False
         return True
 
-    def check_url_change(self):
+    def check_page_change(self):
         self.on_categories = False
         self.on_products = False
-        if self.driver.current_url != self.last_url:
+        stored_timestamp = self.driver.execute_script("return window.control_timestamp")
+        if stored_timestamp != self.last_timestamp or self.last_url != self.driver.current_url:
             self.current_side_bar_index = None
             self.current_product_index = None
-            self.last_url = self.driver.current_url
-            self.last_element = None
-        return False
+            self.current_product_row = 0
+            self.unmark_element()
+            self.unmark_product()
+        self.last_url = self.driver.current_url
+        self.last_timestamp = str(time.time())
+        self.driver.execute_script("window.control_timestamp = arguments[0]", self.last_timestamp)
     
     def get_products(self):
         rows = self.driver.find_elements(By.CLASS_NAME, "pdo-products-slider")
         products = []
-        for row in rows:
-            products += row.find_elements(By.TAG_NAME, "pdo-product-item")
+        if len(rows) > 1:
+            for row in rows:
+                products.append(row.find_elements(By.TAG_NAME, "pdo-product-item"))
+        else:
+            products.append(self.driver.find_elements(By.TAG_NAME, "pdo-product-item"))
         return products
     
     def change_category_gestures(self, direction: Direction):
-        self.check_url_change()
+        self.check_page_change()
         self.on_categories = True
         try:
             self.unmark_element()
@@ -538,7 +546,7 @@ class Driver():
         return True
     
     def change_product_gestures(self, direction: Direction):
-        self.check_url_change()
+        self.check_page_change()
         self.on_products = True
         try:
             self.unmark_product()
@@ -590,7 +598,14 @@ class Driver():
             self.navigate_to_element(self.last_product, direction)
             self.driver.execute_script("arguments[0].style.border='3px solid red'", self.last_product)
         except:
-            self.sendToVoice("Não foi possível mudar de produto.")
+            if self.last_product == None:
+                self.unmark_product()
+                self.on_products = False
+                self.current_product_index = None
+                self.current_product_row = 0
+            else:
+                self.sendToVoice("Não foi possível mudar de produto.")
+
             return False
         return True
         
@@ -598,9 +613,10 @@ class Driver():
         self.sendToVoice("Bem-vindo ao Mercadão. Obrigado por solicitar ajuda."+
                         "Pode utilizar o braço esquerdo para navegar pelas categorias e o braço direito para navegar pelos produtos e pela página deslizando para cima e para baixo"+
                         "Pode navegar pela lista de produtos abrindo ligeiramente os braços para os lados"+
-                        "Pode empurrar para a frente para abrir uma categoria, para abrir um produto e para o adicionar ao carrinho"+
+                        "Com o braço direito pode simular um trasnporte da esquerda para a direita para adicionar ao carrinho"+
+                        "Pode empurrar para a frente para abrir uma categoria ou para abrir um produto"+
                         "Pode bater continência para sair do Mercadão"+
-                        "Pode levantar o braço direito novamente se precisar de ajuda com as operações")
+                        "Pode levantar colocar a mão esquerda na orelha e levantar o braço direito novamente se precisar de ajuda novamente")
         
     def press(self):
         if self.on_categories:
@@ -610,7 +626,6 @@ class Driver():
             except:
                 self.sendToVoice("Não foi possível abrir a categoria.")
                 return False
-            return True
         elif self.on_products:
             try:
                 self.last_product.click()
@@ -618,39 +633,23 @@ class Driver():
             except:
                 self.sendToVoice("Não foi possível abrir o produto.")
                 return False
-            return True
         else:
-            if "/product/" not in self.driver.current_url:
-                self.sendToVoice("Não é possível adicionar o produto que deseja nesta página.")
-                return False
-            try:
-                self.driver.find_element(By.CSS_SELECTOR, ".-add > .pdo-inline-block > .ng-star-inserted").click()
-            except:
-                try:
-                    self.driver.find_element(By.CSS_SELECTOR, ".pdo-add-btn").click()
-                    time.sleep(1)
-                    self.sendToVoice(f"Produto adicionado ao carrinho com sucesso.")
-                except:
-                    self.sendToVoice("Não foi possível adicionar o produto ao carrinho.")
-                    return False
-                return True
-            return True
+            self.sendToVoice("Não existe nada selecionado para abrir.")
+            return False
+        time.sleep(1)
+        self.check_page_change()
+        return True
         
     def scroll_down_gestures(self):
-        if self.on_products:
+        if self.on_products or self.last_product != None:
             return self.change_product_gestures(Direction.DOWN)
         else:
             self.scroll_down()
             return True
     
     def scroll_up_gestures(self):
-        if self.on_products:
+        if self.on_products or self.last_product != None:
             return self.change_product_gestures(Direction.UP)
         else:
             self.scroll_up()
             return True
-        
-
-            
-        
-    

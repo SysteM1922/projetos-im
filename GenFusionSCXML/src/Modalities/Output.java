@@ -49,8 +49,10 @@ public enum Output implements IOutput {
     EXEC_HELP_PRODUTO_ACTION("[FUSION][HELP][PRODUTO]"),
     EXEC_HELP_TODAS_ACTION("[FUSION][HELP][TODAS]"),
     
-    
     EXEC_ADD_TO_CART_ACTION("[FUSION][ADD_TO_CART]"),
+
+    // Single
+    EXEC_INSERT_NUMBER_ACTION("[FUSION][INSERT_NUMBER]"),
 
     ;
 

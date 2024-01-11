@@ -31,6 +31,7 @@ public class GenFusionSCXML {
     fg.Redundancy(Speech.OPEN_PRODUCT, Touch.OPEN_PRODUCT, Output.EXEC_OPEN_PRODUCT_ACTION);
 
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP, Output.EXEC_HELP_ACTION);
+    fg.Single(Speech.ASK_HELP, Output.EXEC_HELP_ACTION);
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_CARRINHO, Output.EXEC_HELP_CARRINHO_ACTION);
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_CODIGO_POSTAL, Output.EXEC_HELP_CODIGO_POSTAL_ACTION);
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_LOJA, Output.EXEC_HELP_LOJA_ACTION);
@@ -38,15 +39,8 @@ public class GenFusionSCXML {
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_PRODUTO, Output.EXEC_HELP_PRODUTO_ACTION);
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_TODAS, Output.EXEC_HELP_TODAS_ACTION);
 
-    fg.Complementary(Speech.ASK_HELP, Touch.ASK_HELP, Output.EXEC_HELP_ACTION);
-    fg.Complementary(Speech.ASK_HELP_CARRINHO, Touch.ASK_HELP, Output.EXEC_HELP_CARRINHO_ACTION);
-    fg.Complementary(Speech.ASK_HELP_CODIGO_POSTAL, Touch.ASK_HELP, Output.EXEC_HELP_CODIGO_POSTAL_ACTION);
-    fg.Complementary(Speech.ASK_HELP_LOJA, Touch.ASK_HELP, Output.EXEC_HELP_LOJA_ACTION);
-    fg.Complementary(Speech.ASK_HELP_OPERACOES, Touch.ASK_HELP, Output.EXEC_HELP_OPERACOES_ACTION);
-    fg.Complementary(Speech.ASK_HELP_PRODUTO, Touch.ASK_HELP, Output.EXEC_HELP_PRODUTO_ACTION);
-    fg.Complementary(Speech.ASK_HELP_TODAS, Touch.ASK_HELP, Output.EXEC_HELP_TODAS_ACTION);
-
     fg.Complementary(Touch.ADD_TO_CART, Speech.INSERT_NUMBER, Output.EXEC_ADD_TO_CART_ACTION);
+    fg.Single(Speech.INSERT_NUMBER, Output.EXEC_INSERT_NUMBER_ACTION);
 
     // fg.Complementary(Speech.CHANGE_COLOR_AZUL, Touch.SHAPE_TRIANGULO, Output.CHANGE_COLOR_TRIANGULO_AZUL);
     // fg.Complementary(Speech.CHANGE_COLOR_VERDE, Touch.SHAPE_TRIANGULO, Output.CHANGE_COLOR_TRIANGULO_VERDE);

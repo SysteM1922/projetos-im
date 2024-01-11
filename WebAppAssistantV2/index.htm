@@ -445,7 +445,7 @@
                         result.recognized.push("HELP");
                         for (let i = 0; i < data.entities.length; i++) {
                             if (data.entities[i].entity == "help_option" && data.entities[i].extractor == "DIETClassifier") {
-                                result.recognized.push(data.entities[i].value.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
+                                result.recognized.push(data.entities[i].value.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(" ", "_"));
                                 break;
                             }
                         }
