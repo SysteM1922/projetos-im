@@ -636,6 +636,8 @@ class Driver():
         else:
             self.sendToVoice("Não existe nada selecionado para abrir.")
             return False
+        time.sleep(1)
+        self.check_page_change()
         return True
         
     def scroll_down_gestures(self):
