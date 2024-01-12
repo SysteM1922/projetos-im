@@ -214,7 +214,7 @@
     <onentry>
       <log label="[sspeech[speech][scroll][up]]" expr="READY" />
       <assign name="data1" expr="${_eventdata.data}" />
-      <send id="state1-timer-sspeech[speech][scroll][up]" event="timeout-sspeech[speech][scroll][up]" delay="0" target="" targettype="" namelist="" />
+      <send id="state1-timer-sspeech[speech][scroll][up]" event="timeout-sspeech[speech][scroll][up]" delay="2000" target="" targettype="" namelist="" />
     </onentry>
     <transition target="speech[speech][scroll][up]-final" event="timeout-sspeech[speech][scroll][up]" />
     <transition target="sspeech[speech][scroll][up]-touch[gestures][scrolldr]" event="[GESTURES][SCROLLDR]" />
@@ -264,7 +264,7 @@
     <onentry>
       <log label="[stouch[gestures][continence]]" expr="READY" />
       <assign name="data1" expr="${_eventdata.data}" />
-      <send id="state1-timer-stouch[gestures][continence]" event="timeout-stouch[gestures][continence]" delay="0" target="" targettype="" namelist="" />
+      <send id="state1-timer-stouch[gestures][continence]" event="timeout-stouch[gestures][continence]" delay="2000" target="" targettype="" namelist="" />
     </onentry>
     <transition target="touch[gestures][continence]-final" event="timeout-stouch[gestures][continence]" />
     <transition target="stouch[gestures][continence]-speech[speech][quit]" event="[SPEECH][QUIT]" />
@@ -335,7 +335,7 @@
     <onentry>
       <log label="[sspeech[speech][quit]]" expr="READY" />
       <assign name="data1" expr="${_eventdata.data}" />
-      <send id="state1-timer-sspeech[speech][quit]" event="timeout-sspeech[speech][quit]" delay="0" target="" targettype="" namelist="" />
+      <send id="state1-timer-sspeech[speech][quit]" event="timeout-sspeech[speech][quit]" delay="2000" target="" targettype="" namelist="" />
     </onentry>
     <transition target="speech[speech][quit]-final" event="timeout-sspeech[speech][quit]" />
     <transition target="sspeech[speech][quit]-touch[gestures][continence]" event="[GESTURES][CONTINENCE]" />
@@ -385,7 +385,7 @@
     <onentry>
       <log label="[stouch[gestures][scrolldr]]" expr="READY" />
       <assign name="data1" expr="${_eventdata.data}" />
-      <send id="state1-timer-stouch[gestures][scrolldr]" event="timeout-stouch[gestures][scrolldr]" delay="0" target="" targettype="" namelist="" />
+      <send id="state1-timer-stouch[gestures][scrolldr]" event="timeout-stouch[gestures][scrolldr]" delay="2000" target="" targettype="" namelist="" />
     </onentry>
     <transition target="touch[gestures][scrolldr]-final" event="timeout-stouch[gestures][scrolldr]" />
     <transition target="stouch[gestures][scrolldr]-speech[speech][scroll][up]" event="[SPEECH][SCROLL][UP]" />
@@ -435,7 +435,7 @@
     <onentry>
       <log label="[sspeech[speech][open_product]]" expr="READY" />
       <assign name="data1" expr="${_eventdata.data}" />
-      <send id="state1-timer-sspeech[speech][open_product]" event="timeout-sspeech[speech][open_product]" delay="0" target="" targettype="" namelist="" />
+      <send id="state1-timer-sspeech[speech][open_product]" event="timeout-sspeech[speech][open_product]" delay="2000" target="" targettype="" namelist="" />
     </onentry>
     <transition target="speech[speech][open_product]-final" event="timeout-sspeech[speech][open_product]" />
     <transition target="sspeech[speech][open_product]-touch[gestures][pushf]" event="[GESTURES][PUSHF]" />
@@ -485,7 +485,7 @@
     <onentry>
       <log label="[sspeech[speech][scroll][down]]" expr="READY" />
       <assign name="data1" expr="${_eventdata.data}" />
-      <send id="state1-timer-sspeech[speech][scroll][down]" event="timeout-sspeech[speech][scroll][down]" delay="0" target="" targettype="" namelist="" />
+      <send id="state1-timer-sspeech[speech][scroll][down]" event="timeout-sspeech[speech][scroll][down]" delay="2000" target="" targettype="" namelist="" />
     </onentry>
     <transition target="speech[speech][scroll][down]-final" event="timeout-sspeech[speech][scroll][down]" />
     <transition target="sspeech[speech][scroll][down]-touch[gestures][scrollur]" event="[GESTURES][SCROLLUR]" />
@@ -535,7 +535,7 @@
     <onentry>
       <log label="[stouch[gestures][scrollur]]" expr="READY" />
       <assign name="data1" expr="${_eventdata.data}" />
-      <send id="state1-timer-stouch[gestures][scrollur]" event="timeout-stouch[gestures][scrollur]" delay="0" target="" targettype="" namelist="" />
+      <send id="state1-timer-stouch[gestures][scrollur]" event="timeout-stouch[gestures][scrollur]" delay="2000" target="" targettype="" namelist="" />
     </onentry>
     <transition target="touch[gestures][scrollur]-final" event="timeout-stouch[gestures][scrollur]" />
     <transition target="stouch[gestures][scrollur]-speech[speech][scroll][down]" event="[SPEECH][SCROLL][DOWN]" />
@@ -614,7 +614,7 @@
     <onentry>
       <log label="[stouch[gestures][pushf]]" expr="READY" />
       <assign name="data1" expr="${_eventdata.data}" />
-      <send id="state1-timer-stouch[gestures][pushf]" event="timeout-stouch[gestures][pushf]" delay="0" target="" targettype="" namelist="" />
+      <send id="state1-timer-stouch[gestures][pushf]" event="timeout-stouch[gestures][pushf]" delay="2000" target="" targettype="" namelist="" />
     </onentry>
     <transition target="touch[gestures][pushf]-final" event="timeout-stouch[gestures][pushf]" />
     <transition target="stouch[gestures][pushf]-speech[speech][open_product]" event="[SPEECH][OPEN_PRODUCT]" />
