@@ -6,7 +6,6 @@ import xml.etree.ElementTree as ET
 import json
 import difflib
 import ssl
-import time
 from tts import TTS
 import re
 from unidecode import unidecode

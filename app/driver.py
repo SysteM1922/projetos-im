@@ -509,10 +509,10 @@ class Driver():
             self.current_side_bar_index = None
             self.current_product_index = None
             self.current_product_row = 0
-            self.unmark_element()
-            self.unmark_product()
+            self.driver.refresh()
         self.last_url = self.driver.current_url
         self.last_timestamp = str(time.time())
+        time.sleep(2)
         self.driver.execute_script("window.control_timestamp = arguments[0]", self.last_timestamp)
     
     def get_products(self):
@@ -638,18 +638,18 @@ class Driver():
         return True
     
     def press(self):
+        ret = False
         if self.on_categories:
             try:
                 self.last_element.click()
                 self.sendToVoice("A abrir a categoria.")
+                ret = True
             except:
                 self.sendToVoice("Não foi possível abrir a categoria.")
-                return False
         elif self.on_products:
-            return self.open_product_gestures()
+            ret = self.open_product_gestures()
         else:
             self.sendToVoice("Não existe nada selecionado para abrir.")
-            return False
-        time.sleep(1)
+        time.sleep(2)
         self.check_page_change()
-        return True
+        return ret
