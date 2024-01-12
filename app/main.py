@@ -32,6 +32,7 @@ not_found = ["Desculpe, não percebi o que disse, pode repetir?", "Não percebi,
              "Não consegui perceber, experimente dizer mais devagar", "Não percebi, pode repetir mais devagar por favor?", "Pode repetir por favor?"]
 
 categories_list = []
+
 with open("app\categorias.txt", "r", encoding="utf-8") as f:
     for line in f:
         categories_list.append(line.strip())
@@ -41,13 +42,17 @@ def process_message(message: str):
     if message == "OK":
         return message, Type.OK
     
-    json_command = ET.fromstring(message).find(".//command").text
+    commands = ET.fromstring(message).findall(".//command")
+    json_command = commands.pop(0).text
     command = json.loads(json_command)
+    modality = command["recognized"][0]
     
-    if "nlu" in command:
+    if modality == "SPEECH":
         return json.loads(command["nlu"]), Type.SPEECH
-    elif "recognized" in command:
+    elif modality == "GESTURES":
         return command["recognized"][1], Type.GESTURE
+    elif modality == "FUSION":
+        return (command["recognized"][1:], commands), Type.FUSION
 
 async def message_handler(driver: Driver, message: str):
 
@@ -57,6 +62,8 @@ async def message_handler(driver: Driver, message: str):
         speech_control(driver, message)
     elif typ == Type.GESTURE:
         gesture_control(driver, message)
+    elif typ == Type.FUSION:
+        fusion_control(driver, message)
     elif typ == Type.OK:
         return
 
@@ -66,10 +73,13 @@ def speech_control(driver: Driver, message: dict):
         not_found_msg = random.choice(not_found)
         driver.sendToVoice(not_found_msg)
         print("Command not found")
+
+    if message == None:
+        return
     
-    if message["intent"]["name"]:
+    elif message["intent"]["name"]:
         intent = message["intent"]["name"]
-        print("SPEECH:", intent)
+        print("SPEECH:", intent.upper())
 
         if message["intent"]["confidence"] < 0.6:
             command_not_found()
@@ -287,16 +297,65 @@ def gesture_control(driver: Driver, message: str):
         driver.change_category_gestures(Direction.DOWN)
 
     elif message == "SCROLLDR":
-        driver.scroll_up_gestures()
+        driver.scroll_up()
 
     elif message == "SCROLLUL":
         driver.change_category_gestures(Direction.UP)
 
     elif message == "SCROLLUR":
-        driver.scroll_down_gestures()
+        driver.scroll_down()
 
     elif message == "TRANSPORTR":
         driver.add_to_cart()
+
+def fusion_control(driver: Driver, message: str):
+    command = message[0][0]
+    print("Fusion:", " ".join(message[0]))
+    
+    if command == "QUIT":
+        if driver.quit():
+            global not_quit
+            not_quit = False
+    
+    elif command == "SCROLL":
+        if message[0][1] == "UP":
+            driver.scroll_up()
+        elif message[0][1] == "DOWN":
+            driver.scroll_down()
+    
+    elif command == "OPEN_PRODUCT":
+        driver.open_product_gestures()
+
+    elif command == "HELP":
+        if len(message[0]) > 1:
+            help_option = message[0][1]
+            if help_option == "CARRINHO":
+                driver.help("carrinho")
+            elif help_option == "PRODUTO" or help_option == "PRODUTOS":
+                driver.help("produto")
+            elif help_option == "CODIGO_POSTAL" or help_option == "MORADA":
+                driver.help("morada")
+            elif help_option == "LOJA":
+                driver.help("loja")
+            elif help_option == "OPERACOES":
+                driver.help("operações")
+            elif help_option == "GESTOS":
+                driver.help("gestos")
+            elif help_option == "TODAS":
+                driver.help("todas")
+        else:
+            driver.help()
+    
+    elif command == "ADD_TO_CART":
+        for c in message[1]:
+            command = json.loads(c.text)
+            if command["recognized"][0] == "SPEECH":
+                nlu = json.loads(command["nlu"])
+                for entity in nlu["entities"]:
+                    if entity["extractor"] == "DIETClassifier":
+                        driver.add_to_cart(int(entity["value"]))
+                        break
+                break
 
 not_quit = True
 
