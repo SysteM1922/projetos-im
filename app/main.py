@@ -311,24 +311,28 @@ def gesture_control(driver: Driver, message: str):
 
 def fusion_control(driver: Driver, message: str):
     command = message[0][0]
-    print("Fusion:", command)
+    print("Fusion:", " ".join(message[0]))
     
     if command == "QUIT":
         if driver.quit():
             global not_quit
+            not_quit = False
+    
     elif command == "SCROLL":
         if message[0][1] == "UP":
             driver.scroll_up()
         elif message[0][1] == "DOWN":
             driver.scroll_down()
+    
     elif command == "OPEN_PRODUCT":
         driver.open_product_gestures()
+
     elif command == "HELP":
         if len(message[0]) > 1:
             help_option = message[0][1]
             if help_option == "CARRINHO":
                 driver.help("carrinho")
-            elif help_option == "PRODUTO":
+            elif help_option == "PRODUTO" or help_option == "PRODUTOS":
                 driver.help("produto")
             elif help_option == "CODIGO_POSTAL" or help_option == "MORADA":
                 driver.help("morada")
@@ -342,11 +346,17 @@ def fusion_control(driver: Driver, message: str):
                 driver.help("todas")
         else:
             driver.help()
+    
     elif command == "ADD_TO_CART":
-        pass # TODO
-    elif command == "INSERT_NUMBER":
-        speech_control(driver, json.loads(json.loads(message[1][0].text)["nlu"]))
-
+        for c in message[1]:
+            command = json.loads(c.text)
+            if command["recognized"][0] == "SPEECH":
+                nlu = json.loads(command["nlu"])
+                for entity in nlu["entities"]:
+                    if entity["extractor"] == "DIETClassifier":
+                        driver.add_to_cart(int(entity["value"]))
+                        break
+                break
 
 not_quit = True
 

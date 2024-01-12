@@ -54,9 +54,6 @@ public enum Output implements IOutput {
     
     EXEC_ADD_TO_CART_ACTION("[FUSION][ADD_TO_CART]"),
 
-    // Single
-    EXEC_INSERT_NUMBER_ACTION("[FUSION][INSERT_NUMBER]"),
-
     ;
 
     private String event;

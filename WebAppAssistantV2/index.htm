@@ -297,7 +297,7 @@
                         }*/
                     }
 
-                    if (final_transcript.length > 2) {
+                    if (final_transcript.length > 0) {
                         final_transcript = final_transcript.charAt(0).toUpperCase() + final_transcript.slice(1);
                         transcriptDiv.innerHTML = "<span style='color:#00b44e'><b>" + final_transcript + "</b></span>";
 
@@ -467,8 +467,8 @@
                     else if (data.intent.name == "open_product") {
                         result.recognized.push("OPEN_PRODUCT");
                     }
-                    else if (data.intent.name == "insert_number") {
-                        result.recognized.push("INSERT_NUMBER");
+                    else if (data.intent.name == "add_to_cart") {
+                        result.recognized.push("ADD_TO_CART");
                     }
                 }
 

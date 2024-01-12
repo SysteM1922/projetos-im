@@ -42,8 +42,7 @@ public class GenFusionSCXML {
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_GESTOS, Output.EXEC_HELP_GESTOS_ACTION);
     fg.Complementary(Touch.ASK_HELP, Speech.ASK_HELP_TODAS, Output.EXEC_HELP_TODAS_ACTION);
 
-    fg.Complementary(Touch.ADD_TO_CART, Speech.INSERT_NUMBER, Output.EXEC_ADD_TO_CART_ACTION);
-    fg.Single(Speech.INSERT_NUMBER, Output.EXEC_INSERT_NUMBER_ACTION);
+    fg.Complementary(Touch.ADD_TO_CART, Speech.ADD_TO_CART, Output.EXEC_ADD_TO_CART_ACTION);
 
     // fg.Complementary(Speech.CHANGE_COLOR_AZUL, Touch.SHAPE_TRIANGULO, Output.CHANGE_COLOR_TRIANGULO_AZUL);
     // fg.Complementary(Speech.CHANGE_COLOR_VERDE, Touch.SHAPE_TRIANGULO, Output.CHANGE_COLOR_TRIANGULO_VERDE);
