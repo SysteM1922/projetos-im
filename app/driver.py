@@ -509,10 +509,10 @@ class Driver():
             self.current_side_bar_index = None
             self.current_product_index = None
             self.current_product_row = 0
-            self.driver.refresh()
+            self.unmark_element()
+            self.unmark_product()
         self.last_url = self.driver.current_url
         self.last_timestamp = str(time.time())
-        time.sleep(2)
         self.driver.execute_script("window.control_timestamp = arguments[0]", self.last_timestamp)
     
     def get_products(self):
@@ -626,7 +626,7 @@ class Driver():
                         "Com o braço direito pode simular um trasnporte da esquerda para a direita para adicionar ao carrinho"+
                         "Pode empurrar para a frente para abrir uma categoria ou para abrir um produto"+
                         "Pode bater continência para sair do Mercadão"+
-                        "Pode levantar colocar a mão esquerda na orelha e levantar o braço direito novamente se precisar de ajuda novamente")
+                        "Pode colocar a mão esquerda na orelha e levantar o braço direito novamente se precisar de ajuda novamente")
     
     def open_product_gestures(self):
         try:
