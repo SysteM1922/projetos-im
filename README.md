@@ -70,7 +70,7 @@ O seguinte comando deve ser corrido num novo terminal:
 ```bat
 py .\app\main.py
 ```
-Para conversar com o site encontra-se um icon de microfone na aba edge que foi aberta automaticamente no link https://127.0.0.1:8082/index.htm, que deve ser pressionado cada vez que se quer enviar uma nova fala. A ativação do microfone também funciona ao pressionar a barra de espaço, quando selecionado o navegador.
+Para conversar com o site encontra-se um icon de microfone na aba MS Edge que deve abrir no link https://127.0.0.1:8082/index.htm e que deve ser pressionado cada vez que se quer enviar uma nova fala. A ativação do microfone também funciona ao pressionar a barra de espaço, quando selecionado o navegador.
 ## Possible Bugs
 - Se não houver feedback de voz ao iniciar o programa experimentar enviar um comando de voz pelo microfone ou fazer refresh da página, o feedback deverá voltar na próxima oportunidade. Pode reiniciar o último processo python para testar. Caso o bug pressista reiniciar o computador.
-- Caso existam problemas de CORS na aba do Chrome que tem o microfone deve experimentar-se noutro navegador, como o MS Edge. Caso o problema persista certificar que todos os terminais correram em powershell e não em cmd. É possível que o conda não seja ativável na powershell, recomendando-se a instalação de um virtual environment em python normal.
+- Caso existam problemas de CORS na aba do MS Edge que tem o microfone deve-se certificar que todos os terminais correram em powershell e não em cmd. É possível que o conda não seja ativável na powershell, recomendando-se a instalação de um virtual environment normal de python 3.10.
