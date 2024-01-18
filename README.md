@@ -4,9 +4,8 @@
 103600 Guilherme Costa Antunes
 </h2>
 
-## Notas
-
 | Projeto | 1 | 2 | 3 |
+| ------- | --: | --: | --: |--:|
 | Nota | 18 | 18 | 17 |
 
 ## Requirements
