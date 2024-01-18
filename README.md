@@ -3,6 +3,7 @@
 <h2>103668 Gonçalo Rodrigues Silva<br>
 103600 Guilherme Costa Antunes
 </h2>
+<h3>Nota: 18</h3>
 
 ## Requirements
 - Chrome
