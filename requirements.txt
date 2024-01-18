@@ -1,0 +1,5 @@
+rasa
+selenium
+websockets
+unidecode
+httpx

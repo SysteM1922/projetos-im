@@ -1,0 +1,599 @@
+version: "3.1"
+nlu:
+
+- intent: affirm
+  examples: |
+    - Sim
+    - Claro
+    - Parece-me bem
+    - Correto
+    - Okay
+    - Ok
+    - Confirmar
+    - Afirmativo
+
+- intent: deny
+  examples: |
+    - Não
+    - Nope
+    - Nunca
+    - Acho que não
+    - Não gosto assim
+    - Nem por isso
+    - Negar
+    - Negativo
+
+- intent: return
+  examples: |
+    - Voltar atrás
+    - Andar para trás
+    - Página anterior
+    - Anterior
+    - Navegar para trás
+    - Navegar para a página anterior
+    - Voltar para a página anterior
+    - Ir para a página anterior
+    - Voltar para trás
+
+- intent: scroll
+  examples: |
+    - [Subir]{"entity":"direction", "value": 1} a página
+    - Andar para [cima]{"entity":"direction", "value": 1}
+    - Para [cima]{"entity":"direction", "value": 1}
+    - Scroll para [cima]{"entity":"direction", "value": 1}
+    - [Cima]{"entity":"direction", "value": 1}
+    - [Subir]{"entity":"direction", "value": 1}
+    - [Descer]{"entity":"direction", "value": 0} a página
+    - Andar para [baixo]{"entity":"direction", "value": 0} 
+    - Para [baixo]{"entity":"direction", "value": 0} 
+    - Scroll para [baixo]{"entity":"direction", "value": 0} 
+    - [Baixo]{"entity":"direction", "value": 0} 
+    - [Descer]{"entity":"direction", "value": 0} 
+    - Ver para [cima]{"entity":"direction", "value": "1"}
+    - Ver para [baixo]{"entity":"direction", "value": 0} 
+    - Puxar a página para [cima]{"entity":"direction", "value": "1"}
+    - Puxar a página para [baixo]{"entity":"direction", "value": 0} 
+    - Ir para [cima]{"entity":"direction", "value": "1"}
+    - Ir para [baixo]{"entity":"direction", "value": 0} 
+
+- intent: insert_number
+  examples: |
+    - [zero](number)
+    - [3](number)
+    - [2](number)
+    - [um](number)
+    - [três](number)
+    - [dois](number)
+    - [uma](number)
+    - [60](number)
+    - [104](number)
+
+- intent: add_to_cart
+  examples: |
+    - Adicionar ao carrinho
+    - Meter no carrinho
+    - Colocar no carrinho
+    - Adicionar [3](number) ao carrinho por favor
+    - Meter [2](number) no carrinho
+    - Colocar [um](number) no carrinho
+    - Adicionar [três](number) ao carrinho
+    - Adicionar
+    - Adicionar produto
+    - Comprar
+    - Comprar produto
+    - Quero adicionar [3](number) ao carrinho de compras
+    - Quero meter [2](number) no carrinho de compras
+    - Quero colocar [quatro](number) no carrinho de compras
+    - Acrescentar [cinco](number) produtos ao carrinho de compras
+    - Acrescentar produto
+    - Adicionar produto ao carrinho
+    - Quero levar [3](number) produtos 
+    - Quero levar [2](number) por favor
+    - Levar [2](number) produtos
+    - Levar [seis](number)
+    - Vamos levar [sete](number) destes
+    - Vamos levar [30](number) por favor
+    - Quero [31](number) por favor
+    - Levar [40](number)
+    - Quero comprar [oito](number)
+    - Quero comprar [nove](number) unidades
+    - Quero comprar [dez](number) produtos
+    - Quero comprar [zero](number) produtos
+
+- regex: number
+  examples: |
+    - \d{1,7}
+
+- synonym: "0"
+  examples: |
+    - zero
+
+- synonym: "1"
+  examples: |
+    - primeiro
+    - primeira
+    - um
+    - uma
+    - 1ª
+    - 1º
+
+- synonym: "2"
+  examples: |
+    - segunda
+    - segundo
+    - dois
+    - duas
+    - 2ª
+    - 2º
+
+- synonym: "3"
+  examples: |
+    - terceira
+    - terceiro
+    - três
+    - 3ª
+    - 3º
+
+- synonym: "4"
+  examples: |
+    - quarta
+    - quarto
+    - quatro
+    - 4ª
+    - 4º
+
+- synonym: "5"
+  examples: |
+    - quinta
+    - quinto
+    - cinco
+    - 5ª
+    - 5º
+
+- synonym: "6"
+  examples: |
+    - sexta
+    - sexto
+    - seis
+    - 6ª
+    - 6º
+
+- synonym: "7"
+  examples: |
+    - sétima
+    - sétimo
+    - sete
+    - 7ª
+    - 7º
+
+- synonym: "8"
+  examples: |
+    - oitava
+    - oitavo
+    - oito
+    - 8ª
+    - 8º
+
+- synonym: "9"
+  examples: |
+    - nona
+    - nono
+    - nove
+    - 9ª
+    - 9º
+
+- synonym: "10"
+  examples: |
+    - décima
+    - décimo
+    - dez
+    - 10ª
+    - 10º
+
+- intent: search_product
+  examples: |
+    - Quero um [melão](product)
+    - Procurar por [açucar amarelo](product)
+    - Vamos comprar [pão](product)
+    - Estou à procura de [chocolate](product)
+    - Quero comprar [peixe](product)
+    - Pesquisar por [carne de porco](product)
+    - Encontrar [legumes](product)
+    - Quero procurar [oregãos](product)
+
+- intent: quit
+  examples: |
+    - Sair
+    - Fechar
+    - Terminar
+    - Desligar
+    - Cancelar
+
+- intent: open_cart
+  examples: |
+    - Ver o carrinho
+    - Ver o carrinho de compras
+    - Ver o que está no carrinho
+    - Abrir o carrinho
+    - Quero ver o que está no carrinho
+    - Carrinho
+    - Mostra-me o meu carrinho de compras
+    - Quero ver o meu carrinho de compras
+    - Aceder ao carrinho
+    - Aceder ao carrinho de compras
+    - Mostra-me os meus produtos
+    - Mostra-me os meus produtos no carrinho
+    - Mostra-me os meus produtos no carrinho de compras
+    - Mostra-me os meus produtos no carrinho de compras por favor
+    - Mostra-me os meus produtos no carrinho por favor
+    - Mostra-me os meus produtos por favor
+    - A continha por favor
+    - A conta faz favor
+    - A conta se faz favor
+
+- intent:  close_cart
+  examples: |
+    - Fechar o carrinho
+    - Fechar o carrinho de compras
+    - Fechar carrinho
+    - Sair do carrinho
+    - Sair do carrinho de compras
+    - Quero sair do carrinho
+    - Quero fechar o carrinho de compras
+    - Fechar o carrinho de compras por favor
+    - Fechar o carrinho por favor
+
+- intent: clear_cart
+  examples: |
+    - Limpar o carrinho
+    - Limpar o carrinho de compras
+    - Limpar carrinho por favor
+    - Apagar o carrinho
+    - Apagar o carrinho de compras
+    - Apagar o carrinho por favor
+    - Quero limpar o carrinho por favor
+    - Quero limpar o carrinho de compras
+    - Tirar tudo do carrinho
+    - Tirar todos os produtos do carrinho
+    - Tirar tudo do carrinho de compras
+    - Remover tudo do carrinho
+
+- intent: clear_text
+  examples: |
+    - Limpar
+    - Apagar
+    - Limpar texto
+    - Apagar texto
+    - Recomeçar o texto
+    - Recomeçar
+    - Limpar a pesquisa
+
+- intent: sort_items
+  examples: |
+    - Ordenar por [Preço mais baixo](sort)
+    - Ver os produtos na ordem de [Promoção](sort)
+    - Ver produtos com [Preço crescente](sort)
+    - Ver na ordem [Preço mais alto](sort)
+    - Odernar por [Nome](sort)
+    - Ordenar
+    - Quero ordenar por [Preço mais baixo](sort)
+    - Quero ver os produtos na ordem de [Promoção](sort)
+    - Ordena por [Preço crescente](sort) por favor
+    - Ordena por [Preço mais alto](sort) por favor
+    - Mostra-me os produtos na ordem de [Promoção](sort) por favor
+    - Mostra-me os produtos na ordem de [Preço mais baixo](sort)
+
+- synonym: Nome
+  examples: |
+    - Nomes
+
+- synonym: Promoção
+  examples: |
+    - Promoções
+
+- synonym: Preço mais baixo
+  examples: |
+    - Preços mais baixos
+    - Preço mais barato
+    - Preços mais baratos
+    - Preço ascendente
+    - Preço crescente
+
+- synonym: Preço mais alto
+  examples: |
+    - Preços mais altos
+    - Preço mais caro
+    - Preços mais caros
+    - Preço descendente
+    - Preço decrescente
+
+- intent: checkout
+  examples: |
+    - Finalizar compra
+    - Comprar os produtos
+    - Fazer checkout
+    - Confirmar compra
+    - Pagar
+    - Pagar os produtos
+    - Pagar os produtos no carrinho
+    - Terminar compra
+    - Terminar a compra
+    - Desejo finalizar a compra por favor
+    - Desejo finalizar a compra
+    - Quero pagar tudo
+    - Quero pagar os produtos
+    - A conta por favor
+    - Quero pagar a conta
+    - Quero pagar a conta por favor
+    - Quero proceder ao pagamento
+    - Quero proceder ao pagamento por favor
+    - Quero finalizar a compra
+    - Quero fazer o pagamento
+    - Quero fazer o pagamento por favor
+    - Quero pagar
+    - Quero pagar por favor
+
+- intent: change_store
+  examples: |
+    - Mudar de loja
+    - Quero mudar de loja
+    - Quero mudar de loja para [Pindo Doce Solmar](store)
+    - Ir para o [Pingo Doce](store)
+    - Mudar para o [Pingo Doce Madeira](store)
+    - Mudar para [Medicamentos](store)
+    - Gostava de mudar para [Mercadão Solidário](store)
+    - Gostava de mudar de loja por favor
+    - Mudar a minha loja para [Sol Mar](store)
+
+- synonym: "Pindo Doce Madeira"
+  examples: |
+    - Madeira
+
+- synonym: "Pingo Doce Solmar"
+  examples: |
+    - Açores
+    - Solmar
+    - Sol Mar
+    - Pingo Doce Sol Mar
+    - Pingo Doce Solmar
+    - Pingo Doce Açores
+
+- synonym: "Solidário"
+  examples: |
+    - Mercadão Solidário
+
+- synonym: "Saúde"
+  examples: |
+    - Mercadão Saúde
+
+- synonym: "Medicamentos"
+  examples: |
+    - Mercadão Medicamentos
+
+- intent: change_zip_code
+  examples: |
+    - Mudar o código postal
+    - Mudar a morada
+    - Mudar o meu código postal
+    - Mudar a minha morada
+    - Alterar código postal
+    - Alterar morada
+    - Alterar a minha morada
+    - Alterar o meu código postal
+    - Editar código postal
+    - Editar morada
+    - Eidtar a minha morada
+    - Editar o meu código postal
+    - Quero mudar o código postal
+    - Quero mudar a morada
+    - Quero alterar o meu código postal
+    - Quero alterar a minha morada
+    - Quero alterar o código postal
+    - Quero alterar a morada
+    - Quero editar o código postal
+    - Quero editar a morada
+    - Quero editar o meu código postal
+    - Quero editar a minha morada
+    - Abrir o código postal
+    - Abrir a morada
+    - Código postal
+    - Morada
+
+- intent: remove_from_cart
+  examples: |
+    - Remover do carrinho [melão](product)
+    - Remover [açucar amarelo](product)
+    - Tirar do carrinho [pão](product)
+    - Tirar [chocolate](product)
+    - Apagar do carrinho [peixe](product)
+    - Apagar carne de porco](product)
+    - Eliminar do carrinho legumes](product)
+    - Eliminar oregãos](product)
+    - Remover  do carrinho o [produto pizza](product)
+    - Remover produto [salada](product)
+    - Tirar do carrinho produto [gomas](product)
+    - Tirar produto [farinha](product)
+    - Apagar do carrinho o produto [frango](product)
+    - Apagar produto [donuts](product)
+    - Eliminar do carrinho produto [gelatina](product)
+    - Eliminar produto [faca](product)
+
+- intent: change_category
+  examples: |
+    - Mudar para secção de [Campanhas](category) por favor
+    - Mudar para a categoria de [Campanhas](category)
+    - Ir para a categoria de [As Nossas Marcas](category) por favor
+    - Ir para a secção de [As Nossas Marcas](category)
+    - Categoria de [Mercearia](category)
+    - Secção de [Frutas e Legumes](category)
+    - Ir para a categoria de [Talho](category) por favor
+    - Ir para a secção de [Peixaria](category)
+    - Mudar para a categoria de [Peixaria](category) por favor
+    - Mudar para a secção de [Charcutaria](category)
+    - Quero ver a categoria de [Charcutaria](category) por favor
+    - Quero ver a categoria de [Padaria e Pastelaria](category)
+    - Quero ver a secção de [Padaria e Pastelaria](category) por favor
+    - Quero ver a secção de [Take Away](category)
+    - Quero ir para a categoria de [Take Away](category) por favor
+    - Quero ir para a categoria de [Congelados](category)
+    - Quero ir para a secção de [Congelados](category) por favor
+    - Quero ir para a secção de [Leite, Ovos e Natas](category)
+    - Mudar para a zona de [Leite, Ovos e Natas](category)
+    - Ir para a zona de [Frigorífico](category)
+    - Zona de [Alternativas Vegetais](category)
+    - Quero ir para a zona de [Bebidas](category)
+    - Mostrar a zoja de [Infatil](category)
+    - Mostrar a secção de [Higiene e Beleza](category)
+    - Mostrar a categoria de [Casa](category)
+    - Ir a [Animais](category)
+    - Ir à secção de [Tecnologia](category)
+    - [Voltar](category) secção
+    - [Voltar](category) categoria
+    - [Voltar](category) secção atrás por favor
+    - [Voltar](category) categoria atrás por favor
+    - [Voltar](category) secção por favor
+    - [Voltar](category) categoria por favor
+
+- intent: help
+  examples: |
+    - Ajuda
+    - Preciso de ajuda
+    - Não sei o que fazer
+    - Não sei o que fazer a seguir
+    - O que posso fazer
+    - Que interações existem
+    - Que interações posso fazer
+    - Suporte
+    - Preciso de suporte
+    - Ajuda com o [carrinho](help_option)
+    - Ajuda com o [produto](help_option)
+    - Ajuda com os [produtos](help_option)
+    - Ajuda com o [código postal](help_option)
+    - Ajuda com a [morada](help_option)
+    - Ajuda com a [loja](help_option)
+    - Ajuda com as [operações](help_option)
+    - O que posso fazer com o [carrinho](help_option)
+    - O que posso fazer com o [produto](help_option)
+    - O que posso fazer com os [produtos](help_option)
+    - Que interações existem com o [código postal](help_option)
+    - Que interações existem com a [morada](help_option)
+    - Como posso mudar de [loja](help_option)
+    - Como posso mudar o [código postal](help_option)
+    - Como posso mudar a [morada](help_option)
+    - Que [operações](help_option) posso fazer
+    - Que [operações](help_option) existem
+    - Como interagir com o [carrinho](help_option)
+    - Como interagir com o [produto](help_option)
+    - Quero saber como interagir com a [morada](help_option)
+    - Quero saber como mudar de [loja](help_option)
+    - Quero saber como mudar o [código postal](help_option)
+    - Quero saber como mudar a [morada](help_option)
+    - Quero saber que [operações](help_option) posso fazer
+    - Quero saber que [operações](help_option) existem
+    - Quero saber como interagir com o [carrinho](help_option)
+    - Quero saber como interagir com o [produto](help_option)
+    - Quero ajuda com o [carrinho](help_option)
+    - Quero ajuda com o [produto](help_option)
+    - Quero ajuda com os [produtos](help_option)
+    - Quero ajuda com o [código postal](help_option)
+    - Quero ajuda com a [morada](help_option)
+    - Quero ajuda com a [loja](help_option)
+    - Quero ajuda com as [operações](help_option)
+    - Quero ajuda com as [operações](help_option) disponíveis
+    - Quero ajuda em [todas](help_option) as interações
+    - Quero ajuda em [todas](help_option) as interações disponíveis
+    - Quero saber [todas](help_option) as interações
+    - Quero [todas](help_option) as ajudas
+    - Que [gestos](help_option) posso fazer
+    - Que [gestos](help_option) existem
+    - Preciso de ajuda com os [gestos](help_option)
+    - Preciso de ajuda com os [gestos](help_option) por favor
+    - Quais são os [gestos](help_option) disponíveis
+    - Quais são os [gestos](help_option) que existem
+
+- lookup: help_option
+  examples: |
+    - carrinho
+    - produto
+    - produtos
+    - código postal
+    - morada
+    - loja
+    - operações
+    - gestos
+    - todas
+
+- intent: filter_products
+  examples: |
+    - Filtrar por [Marca]{"entity":"filter_type", "role": "marca"}
+    - Filtrar por [Categoria]{"entity":"filter_type", "role": "categoria"}
+    - Quero filtrar por [Marcas]{"entity":"filter_type", "role": "marca"}
+    - Quero filtrar por [Categorias]{"entity":"filter_type", "role": "categoria"}
+    - Filtrar por [Marca]{"entity":"filter_type", "role": "marca"} por favor
+    - Filtrar por [Categoria]{"entity":"filter_type", "role": "categoria"} por favor
+    - Filtrar os produtos por [Marcas]{"entity":"filter_type", "role": "marca"}
+    - Filtrar os produtos por [Categorias]{"entity":"filter_type", "role": "categoria"}
+    - Filtrar a pesquisa por [Marca]{"entity":"filter_type", "role": "marca"}
+    - Filtrar a pesquisa por [Categoria]{"entity":"filter_type", "role": "categoria"}
+    - Quero filtrar os produtos por [Marcas]{"entity":"filter_type", "role": "marca"}
+    - Quero filtrar os produtos por [Categorias]{"entity":"filter_type", "role": "categoria"}
+    - Filtrar por [Categoria]{"entity":"filter_type", "role": "categoria"}
+    - Quero filtrar por [Marca]{"entity":"filter_type", "role": "marca"}
+    - Quero filtrar por [Categorias]{"entity":"filter_type", "role": "categoria"}
+    - Filtrar por [Marcas]{"entity":"filter_type", "role": "marca"} por favor
+    - Filtrar por [Categoria]{"entity":"filter_type", "role": "categoria"} por favor
+    - Filtrar os produtos por [Marca]{"entity":"filter_type", "role": "marca"}
+    - Filtrar os produtos por [Categorias]{"entity":"filter_type", "role": "categoria"}
+    - Filtrar a pesquisa por [Marcas]{"entity":"filter_type", "role": "marca"}
+    - Filtrar a pesquisa por [Categoria]{"entity":"filter_type", "role": "categoria"}
+    - Quero filtrar os produtos por [Marca]{"entity":"filter_type", "role": "marca"}
+    - Quero filtrar os produtos por [Categorias]{"entity":"filter_type", "role": "categoria"}
+
+- intent: choose_position
+  examples: |
+    - Escolher a [primeira](number) opção
+    - Escolher a [segunda](number) opção por favor
+    - Quero a [terceira](number) opção
+    - Quero a [quarta](number) opção por favor
+    - Filtrar pela [quinta](number) opção
+    - Filtrar pela [sexta](number) opção por favor
+    - A [sétima](number) opção
+    - A [oitava](number) opção por favor
+    - Abrir a [nona](number) opção
+    - Abrir a [décima](number) opção por favor
+    - Escolher a [primeira](number) opção
+    - Escolher a [segunda](number) opção por favor
+    - Quero a [terceira](number) opção
+    - Quero a [quarta](number) opção por favor
+    - Filtrar pela [quinta](number) opção
+    - Filtrar pela [sexta](number) opção por favor
+    - A [sétima](number) opção
+    - A [oitava](number) opção por favor
+    - Abrir a [nona](number) opção
+    - Abrir a [décima](number) opção por favor
+
+- intent: open_product
+  examples: |
+    - Abrir [melão](product)
+    - Abrir [açucar amarelo](product)
+    - Ver detalhes de [pão](product)
+    - Ver detalhes de [chocolate](product)
+    - Abrir o produto [peixe](product)
+    - Abrir o produto [carne de porco](product)
+    - Abrir [legumes](product)
+    - Abrir [oregãos](product)
+    - Ver [pizza](product)
+    - Ver [salada](product)
+    - Ver mais sobre [gomas](product)
+    - Ver mais sobre [farinha](product)
+    - Ver detalhes sobre o produto [frango](product)
+    - Ver detalhes sobre o produto [donuts](product)
+    - Quero ver mais sobre o produto [gelatina](product)
+    - Quero saber mais sobre o produto [faca](product)
+    - Quero mais detalhes sobre o produto [melão](product)
+    - Quero ver o produto [açucar amarelo](product)
+    - Quero ver detalhes de [pão](product)
+    - Quero abrir o produto [chocolate](product)
+    - Quero abrir o produto [peixe](product)
+    - Quero saber mais detalhes sobre o produto [carne de porco](product)
+    - Quero saber mais sobre o produto [legumes](product)
