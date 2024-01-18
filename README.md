@@ -3,6 +3,9 @@
 <h2>103668 Gonçalo Rodrigues Silva<br>
 103600 Guilherme Costa Antunes
 </h2>
+
+## Notas
+
 | Projeto | 1 | 2 | 3 |
 | Nota | 18 | 18 | 17 |
 
