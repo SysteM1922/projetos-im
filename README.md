@@ -4,7 +4,7 @@
 103600 Guilherme Costa Antunes
 </h2>
 
-| Projeto | 1 | 2 | 3 |
+| Projeto | Voz | Gestos | Fusão |
 | ------- | --: | --: | --: |
 | Nota | 18 | 18 | 17 |
 
