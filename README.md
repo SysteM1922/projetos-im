@@ -2,11 +2,11 @@
 <h1>Projeto da Unidade Curricular de Interação Multimodal 2023/2024</h1>
 <h2>103668 Gonçalo Rodrigues Silva<br>
 103600 Guilherme Costa Antunes
-</h2>
 
 | Projeto | Voz | Gestos | Fusão |
 | ------- | --: | --: | --: |
 | Nota | 18 | 18 | 17 |
+</h2>
 
 ## Requirements
 - Chrome
